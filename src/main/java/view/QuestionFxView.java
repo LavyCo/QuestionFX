@@ -61,6 +61,33 @@ public QuestionFxView(Stage theStage){
         @Override
         public void handle(ActionEvent actionEvent) {
             if(printrb.isSelected()){
+                theStage.hide();
+                Stage case1=new Stage();
+                case1.setTitle("All Questions");
+                GridPane gpRootCase1=new GridPane();
+                gpRootCase1.setPadding(new Insets((10)));
+                gpRootCase1.setHgap(10);
+                gpRootCase1.setHgap(10);
+                Button buttonCase1=new Button();
+                buttonCase1.setText("Return To Menu");
+                Label allQuastionslbl =new Label("The questions are:");
+                case1.setScene(new Scene(gpRootCase1, 450, 350));
+                buttonCase1.setOnAction(new EventHandler<ActionEvent>(){
+
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        case1.hide();
+                        theStage.show();
+                    }
+                });
+                gpRootCase1.add(allQuastionslbl,0,0);
+                gpRootCase1.add(buttonCase1, 1, 11);
+
+                case1.show();
+
+
+
+                case1.show();
                 JOptionPane.showMessageDialog(null, " print select");
             }
             else if (addQrb.isSelected()){
