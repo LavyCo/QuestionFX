@@ -29,12 +29,8 @@ public class Main implements Examble {
 //		qr1.addAmericanQuestion(aq2, aa2, tof2);
 //		System.out.println(qr1.getQuestionArray().size());
 //		qr1.saveBin();
-//
-//		ArrayList<Integer> indexOfAnswer = new ArrayList<Integer>();
-//		ArrayList<ArrayList<Integer>> indexOfQuestion = new ArrayList<>();
-
         QuestionReservoir qr1 = new QuestionReservoir();
-        qr1.readBin();
+//        qr1.readBin();
 
         Main main1 = new Main();
 

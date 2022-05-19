@@ -19,13 +19,13 @@ public class QuestionFxView implements AbstractQuestionView {
     private Vector<viewListener> allListeners = new Vector<viewListener>();
 public QuestionFxView(Stage theStage){
 
-    theStage.setTitle("make Exam");
+    theStage.setTitle("Exam generator");
     GridPane gpRoot=new GridPane();
     gpRoot.setPadding(new Insets((10)));
     gpRoot.setHgap(10);
     gpRoot.setHgap(10);
     Button button=new Button();
-    button.setText("select");
+    button.setText("Select");
 
 
     Label welcomelbl =new Label("Welcome to the Exam generator program");
@@ -119,7 +119,6 @@ public QuestionFxView(Stage theStage){
                 for(viewListener l:allListeners) {
                     String allQuestionsPrint = l.showAllQuestionsInUI();
                     Label printLbl = new Label(allQuestionsPrint);
-
                     case1.setTitle("All Questions");
                     GridPane gpRootCase1 = new GridPane();
                     gpRootCase1.setPadding(new Insets((10)));
@@ -127,15 +126,10 @@ public QuestionFxView(Stage theStage){
                     gpRootCase1.setHgap(10);
                     buttonreturn.setText("Return To Menu");
                     Label allQuestionLbl = new Label("The questions are:");
-                    case1.setScene(new Scene(gpRootCase1, 450, 350));
-
+                    case1.setScene(new Scene(gpRootCase1, 750, 750));
                     gpRootCase1.add(allQuestionLbl, 0, 0);
                     gpRootCase1.add(printLbl, 0, 1);
                     gpRootCase1.add(buttonreturn, 1, 11);
-
-
-
-
                     case1.show();
 
                 }
@@ -156,13 +150,33 @@ public QuestionFxView(Stage theStage){
                 ToggleGroup tglAmericanOrOpen=new ToggleGroup();
                 RadioButton americanrb=new RadioButton("American Question");
                 RadioButton openrb=new RadioButton("Open Question");
-                americanrb.setToggleGroup(tglAmericanOrOpen);
+                Label textQuestion=new Label("type the Question text:" ) ;
+                textQuestion.setVisible(false);
+                TextField questionTextField=new TextField();
+                questionTextField.setVisible(false);
+                americanrb.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                           textQuestion.setVisible(true);
+                            questionTextField.setVisible(true);
+                           openrb.setDisable(true);
+
+
+                    }
+                });
+
+
+                        americanrb.setToggleGroup(tglAmericanOrOpen);
                 openrb.setToggleGroup(tglAmericanOrOpen);
                 case2.setScene(new Scene(gpRootCase2, 450, 350));
 
                 gpRootCase2.add(choselbl,0,0);
                 gpRootCase2.add(americanrb,0,2);
-                gpRootCase2.add(openrb,1,2);
+                gpRootCase2.add(openrb,0,1);
+                gpRootCase2.add(questionTextField,1,3);
+                gpRootCase2.add(textQuestion,0,3);
                 gpRootCase2.add(buttonreturn, 1, 11);
 
                 case2.show();
@@ -219,12 +233,10 @@ public QuestionFxView(Stage theStage){
 
 }
 
+
     @Override
-    public void registerListener(AbstractQuestionView newListener) {
-        allListeners.add((viewListener) newListener);
+    public void registerListener(viewListener newListener) {
+        allListeners.add(newListener);
     }
-
-
-
 }
 

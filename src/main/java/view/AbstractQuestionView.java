@@ -1,8 +1,9 @@
 package view;
 
 import controller.Controller;
+import listeners.viewListener;
 
 public interface AbstractQuestionView {
-  void registerListener(AbstractQuestionView newListener);
+  void registerListener(viewListener newListener);
 
 }

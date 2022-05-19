@@ -12,8 +12,8 @@ public class Controller implements modelListener, viewListener {
     public Controller(QuestionReservoir qrModel,AbstractQuestionView questionView )throws Exception {
         this.qrModel=qrModel;
         this.questionView=questionView;
-        questionView.registerListener((AbstractQuestionView) this);
-        qrModel.registerListener(this);
+        this.questionView.registerListener(this);
+        this.qrModel.registerListener(this);
 
 
     }
