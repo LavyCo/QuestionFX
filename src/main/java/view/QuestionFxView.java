@@ -9,11 +9,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+import listeners.viewListener;
 
-public class QuestionFxView implements AbstractQuestionView{
+import javax.swing.JOptionPane;
+import java.util.Vector;
+
+public class QuestionFxView implements AbstractQuestionView {
     private ComboBox<String> cmdAllQuestions= new ComboBox<String>();
+    private Vector<viewListener> allListeners = new Vector<viewListener>();
 public QuestionFxView(Stage theStage){
+
     theStage.setTitle("make Exam");
     GridPane gpRoot=new GridPane();
     gpRoot.setPadding(new Insets((10)));
@@ -23,7 +28,7 @@ public QuestionFxView(Stage theStage){
     button.setText("select");
 
 
-    Label wellcomelbl =new Label("Welcome to the Exam generator program");
+    Label welcomelbl =new Label("Welcome to the Exam generator program");
     Label choselbl =new Label("Please choose an option from the menu below");
     ToggleGroup tglOpt=new ToggleGroup();
     RadioButton printrb=new RadioButton("Show all questions and their answers in the in the reservoir");
@@ -60,38 +65,109 @@ public QuestionFxView(Stage theStage){
     button.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
+            Stage case1=new Stage();
+            Stage case2=new Stage();
+            Stage case3=new Stage();
+            Stage case4=new Stage();
+            Stage case5=new Stage();
+            Stage case6=new Stage();
+            Stage case7=new Stage();
+            Stage case8=new Stage();
+            Stage case9=new Stage();
+            Button buttonreturn=new Button();
+            buttonreturn.setOnAction(new EventHandler<ActionEvent>(){
+
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if(printrb.isSelected()) {
+                        case1.hide();
+                    }
+                    else if (addQrb.isSelected()){
+                        case2.hide();
+                    }
+                    else if (changewordQrb.isSelected()){
+                        case3.hide();
+                    }
+                    else if (updateAnsWordrb.isSelected()){
+                        case4.hide();
+                    }
+                    else if (deleteAns.isSelected()){
+                        case5.hide();
+                    }
+                    else if (manualExamrb.isSelected()){
+                        case6.hide();
+                    }
+                    else if (autoExamrb.isSelected()){
+                        case7.hide();
+                    }
+                    else if (clonerb.isSelected()){
+                        case8.hide();
+                    }
+                    else if (saveExitrb.isSelected()){
+                        case9.hide();
+                    }
+
+
+
+                    theStage.show();
+                }
+
+            });
+            //case 1
             if(printrb.isSelected()){
                 theStage.hide();
-                Stage case1=new Stage();
-                case1.setTitle("All Questions");
-                GridPane gpRootCase1=new GridPane();
-                gpRootCase1.setPadding(new Insets((10)));
-                gpRootCase1.setHgap(10);
-                gpRootCase1.setHgap(10);
-                Button buttonCase1=new Button();
-                buttonCase1.setText("Return To Menu");
-                Label allQuastionslbl =new Label("The questions are:");
-                case1.setScene(new Scene(gpRootCase1, 450, 350));
-                buttonCase1.setOnAction(new EventHandler<ActionEvent>(){
+                for(viewListener l:allListeners) {
+                    String allQuestionsPrint = l.showAllQuestionsInUI();
+                    Label printLbl = new Label(allQuestionsPrint);
 
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        case1.hide();
-                        theStage.show();
-                    }
-                });
-                gpRootCase1.add(allQuastionslbl,0,0);
-                gpRootCase1.add(buttonCase1, 1, 11);
+                    case1.setTitle("All Questions");
+                    GridPane gpRootCase1 = new GridPane();
+                    gpRootCase1.setPadding(new Insets((10)));
+                    gpRootCase1.setHgap(10);
+                    gpRootCase1.setHgap(10);
+                    buttonreturn.setText("Return To Menu");
+                    Label allQuestionLbl = new Label("The questions are:");
+                    case1.setScene(new Scene(gpRootCase1, 450, 350));
 
-                case1.show();
+                    gpRootCase1.add(allQuestionLbl, 0, 0);
+                    gpRootCase1.add(printLbl, 0, 1);
+                    gpRootCase1.add(buttonreturn, 1, 11);
 
 
 
-                case1.show();
-                JOptionPane.showMessageDialog(null, " print select");
+
+                    case1.show();
+
+                }
+
+
+
+             //   JOptionPane.showMessageDialog(null, " print select");
             }
             else if (addQrb.isSelected()){
-                JOptionPane.showMessageDialog(null, " add select");
+                theStage.hide();
+                case2.setTitle("All Questions");
+                GridPane gpRootCase2=new GridPane();
+                gpRootCase2.setPadding(new Insets((10)));
+                gpRootCase2.setHgap(10);
+                gpRootCase2.setHgap(10);
+                buttonreturn.setText("Return To Menu");
+                Label choselbl =new Label("Choose which Question do you want ?");
+                ToggleGroup tglAmericanOrOpen=new ToggleGroup();
+                RadioButton americanrb=new RadioButton("American Question");
+                RadioButton openrb=new RadioButton("Open Question");
+                americanrb.setToggleGroup(tglAmericanOrOpen);
+                openrb.setToggleGroup(tglAmericanOrOpen);
+                case2.setScene(new Scene(gpRootCase2, 450, 350));
+
+                gpRootCase2.add(choselbl,0,0);
+                gpRootCase2.add(americanrb,0,2);
+                gpRootCase2.add(openrb,1,2);
+                gpRootCase2.add(buttonreturn, 1, 11);
+
+                case2.show();
+
+               // JOptionPane.showMessageDialog(null, " add select");
             }
             else if (changewordQrb.isSelected()){
                 JOptionPane.showMessageDialog(null, "  change wording select");
@@ -120,7 +196,7 @@ public QuestionFxView(Stage theStage){
         }
     });
     //Arrange the buttons on the stage
-    gpRoot.add(wellcomelbl, 0, 0);
+    gpRoot.add(welcomelbl, 0, 0);
     gpRoot.add(choselbl, 0, 1);
     gpRoot.add(printrb, 0, 2);
     gpRoot.add(addQrb, 0, 3);
@@ -142,5 +218,13 @@ public QuestionFxView(Stage theStage){
 
 
 }
+
+    @Override
+    public void registerListener(AbstractQuestionView newListener) {
+        allListeners.add((viewListener) newListener);
     }
+
+
+
+}
 

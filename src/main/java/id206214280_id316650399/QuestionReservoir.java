@@ -1,7 +1,10 @@
 package id206214280_id316650399;
 
+import listeners.modelListener;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class QuestionReservoir implements Serializable {
 
@@ -11,14 +14,23 @@ public class QuestionReservoir implements Serializable {
     private Exam manualExamClone;
     private Exam automaticExam;
     private Exam automaticExamClone;
+    private Vector <modelListener> qrListeners;
 
 
     public QuestionReservoir() {
         questionArray = new ArrayList<>();
         manualExam = new Exam();
         automaticExam = new Exam();
+        qrListeners = new Vector<modelListener>();
 
     }
+
+    public void fireQuestionsTextToController(){
+        for(modelListener l: qrListeners){
+
+        }
+    }
+
 
 
     public boolean changeAnswerWordingOfOpenQuestion(String newAnswerText, Questions editorQuestionAnswer, int numOfAnswer) {
@@ -412,5 +424,9 @@ public class QuestionReservoir implements Serializable {
     }
 
 
+
+    public void registerListener( modelListener qrListener) {
+        qrListeners.add(qrListener);
+    }
 }
 
