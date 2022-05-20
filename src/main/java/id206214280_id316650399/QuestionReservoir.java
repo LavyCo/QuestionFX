@@ -266,12 +266,16 @@ public class QuestionReservoir implements Serializable {
 
 
     public boolean addOpenQuestion(String questionText, String answerText) {
+        String updateUserMessage="Eror";
         OpenQuestions newQuestion = new OpenQuestions(questionText, answerText);
         if (this.equals(newQuestion.getQuestionText())) {
             System.out.println("Cannot add:This question is already in the reservoir");
+            updateUserMessage="Cannot add:This question is already in the reservoir";
             //decreasing id counter by 1
             newQuestion.decreaseIdCounter();
+
             return false;
+
         }
 
 
@@ -280,6 +284,7 @@ public class QuestionReservoir implements Serializable {
             for (int i = 0; i < numberOfQuestions; i++) {
                 if (questionArray.get(i).equals(newOpenQuestion)) {
                     System.out.println("Cannot add:This question is already in the reservoir");
+                    updateUserMessage="Cannot add:This question is already in the reservoir";
                     //decreasing id counter by 1
                     newQuestion.decreaseIdCounter();
                     return false;
@@ -287,8 +292,12 @@ public class QuestionReservoir implements Serializable {
             }
             questionArray.add(newOpenQuestion);
             numberOfQuestions++;
+            updateUserMessage="Successful";
             return true;
 
+        }
+        for (modelListener l: qrListeners){
+            l.addOpenQuestionmsg(updateUserMessage);
         }
         return false;
     }

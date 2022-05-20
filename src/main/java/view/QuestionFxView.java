@@ -207,6 +207,7 @@ public QuestionFxView(Stage theStage){
                         for (viewListener l:allListeners){
                             l.AddOpenQuestion(questionTextField.getText(),answerTextField.getText());
 
+
                         }
 
                     }
@@ -329,6 +330,15 @@ public QuestionFxView(Stage theStage){
     @Override
     public void registerListener(viewListener newListener) {
         allListeners.add(newListener);
+    }
+
+    @Override
+    public void addOpenQuestionToUI(String updateUserMessage) {
+
+        JOptionPane.showMessageDialog(null, updateUserMessage);
+
+
+
     }
 }
 
