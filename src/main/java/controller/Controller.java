@@ -24,4 +24,9 @@ public class Controller implements modelListener, viewListener {
 
         return qrModel.toString() ;
     }
+
+    @Override
+    public void AddOpenQuestion(String questionText, String answerText) {
+        qrModel.addOpenQuestion(questionText,answerText);
+    }
 }

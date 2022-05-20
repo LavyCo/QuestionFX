@@ -1,6 +1,8 @@
 package view;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -140,7 +142,7 @@ public QuestionFxView(Stage theStage){
             }
             else if (addQrb.isSelected()){
                 theStage.hide();
-                case2.setTitle("All Questions");
+                case2.setTitle("Add Question");
                 GridPane gpRootCase2=new GridPane();
                 gpRootCase2.setPadding(new Insets((10)));
                 gpRootCase2.setHgap(10);
@@ -154,7 +156,84 @@ public QuestionFxView(Stage theStage){
                 textQuestion.setVisible(false);
                 TextField questionTextField=new TextField();
                 questionTextField.setVisible(false);
+
+
+                Button addAmricanQuestionText=new Button("Add Question Text");
+                Label countOfQuestionslbl=new Label("Chose How Many Answers Do You Want: ");
+                countOfQuestionslbl.setVisible(false);
+                ComboBox<Integer> cmdCountOfQuestions=new ComboBox<Integer>();
+                for (int i=2;i<=12;i++){
+                    cmdCountOfQuestions.getItems().add(i);
+                }
+
+
+
+                cmdCountOfQuestions.setVisible(false);
+                Label AnsTextlbl=new Label("Type a Text Answer:");
+                TextField answerTextField=new TextField();
+                answerTextField.setVisible(false);
+                Button addAmericanAnsbt=new Button("Add Answer");
+                addAmericanAnsbt.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        cmdCountOfQuestions.setDisable(true);
+
+                    }
+                });
+                addAmericanAnsbt.setVisible(false);
+
+                AnsTextlbl.setVisible(false);
+                addAmricanQuestionText.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        AnsTextlbl.setVisible(true);
+                        addAmricanQuestionText.setDisable(true);
+                        questionTextField.setDisable(true);
+                        cmdCountOfQuestions.setVisible(true);
+                        countOfQuestionslbl.setVisible(true);
+                        answerTextField.setVisible(true);
+                        addAmericanAnsbt.setVisible(true);
+                    }
+                });
+                addAmricanQuestionText.setVisible(false);
+                Button addOpenQuestionText= new Button("Add Question Text");
+                addOpenQuestionText.setVisible(false);
+                Button addOpenAnsbt=new Button("Add Answer");
+                addOpenAnsbt.setVisible(false);
+                addOpenAnsbt.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        answerTextField.setDisable(true);
+                        for (viewListener l:allListeners){
+                            l.AddOpenQuestion(questionTextField.getText(),answerTextField.getText());
+
+                        }
+
+                    }
+                });
+                addOpenQuestionText.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        AnsTextlbl.setVisible(true);
+                        answerTextField.setVisible(true);
+                        questionTextField.setDisable(true);
+                        addOpenAnsbt.setVisible(true);
+
+                    }
+                });
+       openrb.setOnAction(new EventHandler<ActionEvent>() {
+          @Override
+        public void handle(ActionEvent actionEvent) {
+              americanrb.setDisable(true);
+              textQuestion.setVisible(true);
+              questionTextField.setVisible(true);
+              addOpenQuestionText.setVisible(true);
+
+
+       }
+        });
                 americanrb.setOnAction(new EventHandler<ActionEvent>() {
+
 
                     @Override
                     public void handle(ActionEvent actionEvent) {
@@ -162,6 +241,11 @@ public QuestionFxView(Stage theStage){
                            textQuestion.setVisible(true);
                             questionTextField.setVisible(true);
                            openrb.setDisable(true);
+                           addAmricanQuestionText.setVisible(true);
+
+
+
+
 
 
                     }
@@ -177,6 +261,14 @@ public QuestionFxView(Stage theStage){
                 gpRootCase2.add(openrb,0,1);
                 gpRootCase2.add(questionTextField,1,3);
                 gpRootCase2.add(textQuestion,0,3);
+                gpRootCase2.add(addAmricanQuestionText,1,4);
+                gpRootCase2.add(addOpenQuestionText,1,4);
+                gpRootCase2.add(countOfQuestionslbl,0,5);
+                gpRootCase2.add(cmdCountOfQuestions,1,5);
+                gpRootCase2.add(AnsTextlbl,0,6);
+                gpRootCase2.add(answerTextField,1,6);
+                gpRootCase2.add(addAmericanAnsbt,1,7);
+                gpRootCase2.add(addOpenAnsbt,1,7);
                 gpRootCase2.add(buttonreturn, 1, 11);
 
                 case2.show();
