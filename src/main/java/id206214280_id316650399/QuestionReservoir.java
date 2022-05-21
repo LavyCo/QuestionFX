@@ -265,16 +265,16 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-    public boolean addOpenQuestion(String questionText, String answerText) {
-        String updateUserMessage="Eror";
+    public String addOpenQuestion(String questionText, String answerText) {
+        String updateUserMessage="Error";
         OpenQuestions newQuestion = new OpenQuestions(questionText, answerText);
         if (this.equals(newQuestion.getQuestionText())) {
             System.out.println("Cannot add:This question is already in the reservoir");
             updateUserMessage="Cannot add:This question is already in the reservoir";
             //decreasing id counter by 1
             newQuestion.decreaseIdCounter();
+            return updateUserMessage;
 
-            return false;
 
         }
 
@@ -287,32 +287,34 @@ public class QuestionReservoir implements Serializable {
                     updateUserMessage="Cannot add:This question is already in the reservoir";
                     //decreasing id counter by 1
                     newQuestion.decreaseIdCounter();
-                    return false;
+                    return updateUserMessage;
+
                 }
             }
             questionArray.add(newOpenQuestion);
             numberOfQuestions++;
             updateUserMessage="Successful";
-            return true;
+            return updateUserMessage;
+
 
         }
-        for (modelListener l: qrListeners){
-            l.addOpenQuestionmsg(updateUserMessage);
-        }
-        return false;
+        return null;
     }
 
-    public boolean addAmericanQuestion(String questionText, String[] answersArray, boolean[] correctnessArray) {
+    public String addAmericanQuestion(String questionText, ArrayList<String> answersArray, ArrayList<Boolean> correctnessArray) {
+        String updateUserMessage="Error";
         Set<AmericanAnswer> answerArrayList = new Set<>();
-        for (int i = 0; i < answersArray.length; i++) {
-            answerArrayList.add(new AmericanAnswer(answersArray[i], correctnessArray[i]));
+        for (int i = 0; i < answersArray.size(); i++) {
+            answerArrayList.add(new AmericanAnswer(answersArray.get(i), correctnessArray.get(i)));
         }
         AmericanQuestions newAmericanQuestion = new AmericanQuestions(questionText, answerArrayList);
         questionArray.add(newAmericanQuestion);
         numberOfQuestions++;
         System.out.println("American Question added");
+        updateUserMessage="American Question added";
 
-        return true;
+
+        return updateUserMessage;
 
 
     }

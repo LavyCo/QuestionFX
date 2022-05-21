@@ -6,6 +6,8 @@ import listeners.viewListener;
 import view.AbstractQuestionView;
 import view.QuestionFxView;
 
+import java.util.ArrayList;
+
 public class Controller implements modelListener, viewListener {
     private QuestionReservoir qrModel;
     private AbstractQuestionView questionView;
@@ -26,9 +28,15 @@ public class Controller implements modelListener, viewListener {
     }
 
     @Override
-    public void AddOpenQuestion(String questionText, String answerText) {
-        qrModel.addOpenQuestion(questionText,answerText);
+    public String addOpenQuestion(String questionText, String answerText) {
+       return  qrModel.addOpenQuestion(questionText,answerText);
     }
+
+    @Override
+    public String addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray) {
+      return  qrModel.addAmericanQuestion(text,answerArray,correctnessArray);
+    }
+
 
     @Override
     public void addOpenQuestionmsg(String updateUserMessage) {

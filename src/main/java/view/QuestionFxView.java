@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import listeners.viewListener;
 
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class QuestionFxView implements AbstractQuestionView {
@@ -119,10 +121,12 @@ public QuestionFxView(Stage theStage){
             if(printrb.isSelected()){
                 theStage.hide();
                 for(viewListener l:allListeners) {
+                    ScrollBar s = new ScrollBar();
                     String allQuestionsPrint = l.showAllQuestionsInUI();
                     Label printLbl = new Label(allQuestionsPrint);
                     case1.setTitle("All Questions");
                     GridPane gpRootCase1 = new GridPane();
+                    gpRootCase1.getChildren().add(s);
                     gpRootCase1.setPadding(new Insets((10)));
                     gpRootCase1.setHgap(10);
                     gpRootCase1.setHgap(10);
@@ -159,7 +163,7 @@ public QuestionFxView(Stage theStage){
 
 
                 Button addAmricanQuestionText=new Button("Add Question Text");
-                Label countOfQuestionslbl=new Label("Chose How Many Answers Do You Want: ");
+                Label countOfQuestionslbl=new Label("Choose How Many Answers Do You Want: ");
                 countOfQuestionslbl.setVisible(false);
                 ComboBox<Integer> cmdCountOfQuestions=new ComboBox<Integer>();
                 for (int i=2;i<=12;i++){
@@ -173,16 +177,62 @@ public QuestionFxView(Stage theStage){
                 TextField answerTextField=new TextField();
                 answerTextField.setVisible(false);
                 Button addAmericanAnsbt=new Button("Add Answer");
+                ArrayList<String> answerArray=new ArrayList<String>();
+                ArrayList<Boolean> correctnessArray=new ArrayList<>();
+                Label chooseTrueOrFalselbl=new Label("Choose true or false: ");
+                chooseTrueOrFalselbl.setVisible(false);
+                RadioButton trueBt=new RadioButton("True");
+                trueBt.setVisible(false);
+                RadioButton falseBt=new RadioButton("False");
+                falseBt.setVisible(false);
+                ToggleGroup tgChooseTOrF=new ToggleGroup();
+                trueBt.setToggleGroup(tgChooseTOrF);
+                falseBt.setToggleGroup(tgChooseTOrF);
+
+
                 addAmericanAnsbt.setOnAction(new EventHandler<ActionEvent>() {
+                    int count=0;
                     @Override
+
                     public void handle(ActionEvent actionEvent) {
                         cmdCountOfQuestions.setDisable(true);
+                        System.out.println(cmdCountOfQuestions.getValue());
+
+
+                            answerArray.add(answerTextField.getText());
+                            if(trueBt.isSelected()){
+                                correctnessArray.add(trueBt.isSelected());
+                            }
+                            else if (falseBt.isSelected()){
+                                correctnessArray.add(!falseBt.isSelected());
+                            }
+
+                            count++;
+                            answerTextField.clear();
+                            System.out.println(cmdCountOfQuestions.getValue());
+                            if(count==cmdCountOfQuestions.getValue()){
+                                trueBt.setDisable(true);
+                                falseBt.setDisable(true);
+                                answerTextField.setDisable(true);
+                            }
+                            for(viewListener l:allListeners){
+                               String americanMassege= l.addAmericanQuestion(questionTextField.getText(),answerArray,correctnessArray);
+                                JOptionPane.showMessageDialog(null, americanMassege);
+                            }
+
+
+                        System.out.println(correctnessArray.toString());
+
+
+
+
 
                     }
                 });
                 addAmericanAnsbt.setVisible(false);
 
                 AnsTextlbl.setVisible(false);
+
                 addAmricanQuestionText.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
@@ -193,6 +243,10 @@ public QuestionFxView(Stage theStage){
                         countOfQuestionslbl.setVisible(true);
                         answerTextField.setVisible(true);
                         addAmericanAnsbt.setVisible(true);
+                        falseBt.setVisible(true);
+                        trueBt.setVisible(true);
+                        chooseTrueOrFalselbl.setVisible(true);
+
                     }
                 });
                 addAmricanQuestionText.setVisible(false);
@@ -205,8 +259,8 @@ public QuestionFxView(Stage theStage){
                     public void handle(ActionEvent actionEvent) {
                         answerTextField.setDisable(true);
                         for (viewListener l:allListeners){
-                            l.AddOpenQuestion(questionTextField.getText(),answerTextField.getText());
-
+                           String addOpenUpdate= l.addOpenQuestion(questionTextField.getText(),answerTextField.getText());
+                            JOptionPane.showMessageDialog(null,addOpenUpdate );
 
                         }
 
@@ -255,7 +309,7 @@ public QuestionFxView(Stage theStage){
 
                         americanrb.setToggleGroup(tglAmericanOrOpen);
                 openrb.setToggleGroup(tglAmericanOrOpen);
-                case2.setScene(new Scene(gpRootCase2, 450, 350));
+                case2.setScene(new Scene(gpRootCase2, 650, 350));
 
                 gpRootCase2.add(choselbl,0,0);
                 gpRootCase2.add(americanrb,0,2);
@@ -268,8 +322,12 @@ public QuestionFxView(Stage theStage){
                 gpRootCase2.add(cmdCountOfQuestions,1,5);
                 gpRootCase2.add(AnsTextlbl,0,6);
                 gpRootCase2.add(answerTextField,1,6);
-                gpRootCase2.add(addAmericanAnsbt,1,7);
+
                 gpRootCase2.add(addOpenAnsbt,1,7);
+                gpRootCase2.add(chooseTrueOrFalselbl,0,8);
+                gpRootCase2.add(trueBt,1,8);
+                gpRootCase2.add(falseBt,2,8);
+                gpRootCase2.add(addAmericanAnsbt,1,9);
                 gpRootCase2.add(buttonreturn, 1, 11);
 
                 case2.show();
@@ -333,9 +391,8 @@ public QuestionFxView(Stage theStage){
     }
 
     @Override
-    public void addOpenQuestionToUI(String updateUserMessage) {
-
-        JOptionPane.showMessageDialog(null, updateUserMessage);
+    public String addOpenQuestionToUI(String updateUserMessage) {
+        return updateUserMessage;
 
 
 
