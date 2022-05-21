@@ -52,6 +52,11 @@ public class Controller implements modelListener, viewListener {
     }
 
     @Override
+    public int getSizeOfQuestionArray() {
+        return qrModel.getNumberOfQuestions();
+    }
+
+    @Override
     public String ChangeWording(String text, int id) {
 
         return qrModel.changeQuestionWording(text,id);
@@ -59,7 +64,7 @@ public class Controller implements modelListener, viewListener {
 
 
     @Override
-    public void addOpenQuestionmsg(String updateUserMessage) {
+    public void addOpenQuestionMsg(String updateUserMessage) {
         questionView.addOpenQuestionToUI(updateUserMessage);
     }
 }

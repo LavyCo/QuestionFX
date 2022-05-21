@@ -14,5 +14,7 @@ public interface viewListener {
 
     ArrayList<Integer> GetAllIDfromModel();
 
+    int getSizeOfQuestionArray();
+
     String ChangeWording(String text, int id);
 }

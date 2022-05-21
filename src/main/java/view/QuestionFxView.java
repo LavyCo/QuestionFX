@@ -7,9 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import listeners.viewListener;
@@ -19,444 +20,476 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class QuestionFxView implements AbstractQuestionView {
-    private ComboBox<String> cmdAllQuestions= new ComboBox<String>();
+    private ComboBox<String> cmdAllQuestions = new ComboBox<String>();
     private Vector<viewListener> allListeners = new Vector<viewListener>();
-public QuestionFxView(Stage theStage){
 
-    theStage.setTitle("Exam generator");
-    GridPane gpRoot=new GridPane();
-    gpRoot.setPadding(new Insets((10)));
-    gpRoot.setHgap(10);
-    gpRoot.setHgap(10);
-    Button button=new Button();
-    button.setText("Select");
+    public QuestionFxView(Stage theStage) {
 
-
-    Label welcomelbl =new Label("Welcome to the Exam generator program");
-    Label choselbl =new Label("Please choose an option from the menu below");
-    ToggleGroup tglOpt=new ToggleGroup();
-    RadioButton printrb=new RadioButton("Show all questions and their answers in the in the reservoir");
-    RadioButton addQrb=new RadioButton("Add questions");
-    RadioButton changewordQrb=new RadioButton("Change the question wording");
-    RadioButton updateAnsWordrb=new RadioButton("Update the wording of an answer");
-    RadioButton deleteAns=new RadioButton("Delete an answer to a question");
-    RadioButton manualExamrb=new RadioButton("Create a test manually");
-    RadioButton autoExamrb=new RadioButton("Create a test automatically");
-    RadioButton clonerb=new RadioButton("Clone an exam");
-    RadioButton saveExitrb=new RadioButton("Save changes in questions reservoir and exit program");
-    //make the radio button group
-    printrb.setToggleGroup(tglOpt);
-    addQrb.setToggleGroup(tglOpt);
-    changewordQrb.setToggleGroup(tglOpt);
-    updateAnsWordrb.setToggleGroup(tglOpt);
-    deleteAns.setToggleGroup(tglOpt);
-    manualExamrb.setToggleGroup(tglOpt);
-    autoExamrb.setToggleGroup(tglOpt);
-    clonerb.setToggleGroup(tglOpt);
-    saveExitrb.setToggleGroup(tglOpt);
-    //change color text
-    printrb.setTextFill(Color.GREEN);
-    addQrb.setTextFill(Color.GREEN);
-    changewordQrb.setTextFill(Color.GREEN);
-    updateAnsWordrb.setTextFill(Color.GREEN);
-    deleteAns.setTextFill(Color.GREEN);
-    manualExamrb.setTextFill(Color.GREEN);
-    autoExamrb.setTextFill(Color.GREEN);
-    clonerb.setTextFill(Color.GREEN);
-    saveExitrb.setTextFill(Color.GREEN);
-
-    //connect between the radio button to select button
-    button.setOnAction(new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            Stage case1=new Stage();
-            Stage case2=new Stage();
-            Stage case3=new Stage();
-            Stage case4=new Stage();
-            Stage case5=new Stage();
-            Stage case6=new Stage();
-            Stage case7=new Stage();
-            Stage case8=new Stage();
-            Stage case9=new Stage();
-            Button buttonreturn=new Button();
-            buttonreturn.setOnAction(new EventHandler<ActionEvent>(){
-
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if(printrb.isSelected()) {
-                        case1.hide();
-                    }
-                    else if (addQrb.isSelected()){
-                        case2.hide();
-                    }
-                    else if (changewordQrb.isSelected()){
-                        case3.hide();
-                    }
-                    else if (updateAnsWordrb.isSelected()){
-                        case4.hide();
-                    }
-                    else if (deleteAns.isSelected()){
-                        case5.hide();
-                    }
-                    else if (manualExamrb.isSelected()){
-                        case6.hide();
-                    }
-                    else if (autoExamrb.isSelected()){
-                        case7.hide();
-                    }
-                    else if (clonerb.isSelected()){
-                        case8.hide();
-                    }
-                    else if (saveExitrb.isSelected()){
-                        case9.hide();
-                    }
+        theStage.setTitle("Exam generator");
+        GridPane gpRoot = new GridPane();
+        gpRoot.setPadding(new Insets((10)));
+        gpRoot.setHgap(10);
+        gpRoot.setHgap(10);
+        Button button = new Button();
+        button.setText("Select");
 
 
+        Label welcomelbl = new Label("Welcome to the Exam generator program");
+        Label choselbl = new Label("Please choose an option from the menu below");
+        ToggleGroup tglOpt = new ToggleGroup();
+        RadioButton printrb = new RadioButton("Show all questions and their answers in the in the reservoir");
+        RadioButton addQrb = new RadioButton("Add questions");
+        RadioButton changeWordQrb = new RadioButton("Change the question wording");
+        RadioButton updateAnsWordrb = new RadioButton("Update the wording of an answer");
+        RadioButton deleteAns = new RadioButton("Delete an answer to a question");
+        RadioButton manualExamrb = new RadioButton("Create a test manually");
+        RadioButton autoExamrb = new RadioButton("Create a test automatically");
+        RadioButton clonerb = new RadioButton("Clone an exam");
+        RadioButton saveExitrb = new RadioButton("Save changes in questions reservoir and exit program");
+        //make the radio button group
+        printrb.setToggleGroup(tglOpt);
+        addQrb.setToggleGroup(tglOpt);
+        changeWordQrb.setToggleGroup(tglOpt);
+        updateAnsWordrb.setToggleGroup(tglOpt);
+        deleteAns.setToggleGroup(tglOpt);
+        manualExamrb.setToggleGroup(tglOpt);
+        autoExamrb.setToggleGroup(tglOpt);
+        clonerb.setToggleGroup(tglOpt);
+        saveExitrb.setToggleGroup(tglOpt);
+        //change color text
+        printrb.setTextFill(Color.GREEN);
+        addQrb.setTextFill(Color.GREEN);
+        changeWordQrb.setTextFill(Color.GREEN);
+        updateAnsWordrb.setTextFill(Color.GREEN);
+        deleteAns.setTextFill(Color.GREEN);
+        manualExamrb.setTextFill(Color.GREEN);
+        autoExamrb.setTextFill(Color.GREEN);
+        clonerb.setTextFill(Color.GREEN);
+        saveExitrb.setTextFill(Color.GREEN);
 
-                    theStage.show();
-                }
-
-            });
-            //case 1
-            if(printrb.isSelected()){
-                theStage.hide();
-                for(viewListener l:allListeners) {
-
-                    String allQuestionsPrint = l.showAllQuestionsInUI();
-                    Label printLbl = new Label(allQuestionsPrint);
-                    case1.setTitle("All Questions");
-                    GridPane gpRootCase1 = new GridPane();
-
-                    gpRootCase1.setPadding(new Insets((10)));
-                    gpRootCase1.setHgap(10);
-                    gpRootCase1.setHgap(10);
-                    buttonreturn.setText("Return To Menu");
-                    Label allQuestionLbl = new Label("The questions are:");
-                    case1.setScene(new Scene(gpRootCase1, 750, 750));
-                    gpRootCase1.add(allQuestionLbl, 0, 0);
-                    gpRootCase1.add(printLbl, 0, 1);
-                    gpRootCase1.add(buttonreturn, 1, 11);
-                    case1.show();
-
-                }
-
-
-
-             //   JOptionPane.showMessageDialog(null, " print select");
-            }
-            else if (addQrb.isSelected()){
-                theStage.hide();
-                case2.setTitle("Add Question");
-                GridPane gpRootCase2=new GridPane();
-                gpRootCase2.setPadding(new Insets((10)));
-                gpRootCase2.setHgap(10);
-                gpRootCase2.setHgap(10);
-                buttonreturn.setText("Return To Menu");
-                Label choselbl =new Label("Choose which Question do you want ?");
-                ToggleGroup tglAmericanOrOpen=new ToggleGroup();
-                RadioButton americanrb=new RadioButton("American Question");
-                RadioButton openrb=new RadioButton("Open Question");
-                Label textQuestion=new Label("type the Question text:" ) ;
-                textQuestion.setVisible(false);
-                TextField questionTextField=new TextField();
-                questionTextField.setVisible(false);
-
-
-                Button addAmricanQuestionText=new Button("Add Question Text");
-                Label countOfQuestionslbl=new Label("Choose How Many Answers Do You Want: ");
-                countOfQuestionslbl.setVisible(false);
-                ComboBox<Integer> cmdCountOfQuestions=new ComboBox<Integer>();
-                for (int i=2;i<=12;i++){
-                    cmdCountOfQuestions.getItems().add(i);
-                }
-
-
-
-                cmdCountOfQuestions.setVisible(false);
-                Label AnsTextlbl=new Label("Type a Text Answer:");
-                TextField answerTextField=new TextField();
-                answerTextField.setVisible(false);
-                Button addAmericanAnsbt=new Button("Add Answer");
-                ArrayList<String> answerArray=new ArrayList<String>();
-                ArrayList<Boolean> correctnessArray=new ArrayList<>();
-                Label chooseTrueOrFalselbl=new Label("Choose true or false: ");
-                chooseTrueOrFalselbl.setVisible(false);
-                RadioButton trueBt=new RadioButton("True");
-                trueBt.setVisible(false);
-                RadioButton falseBt=new RadioButton("False");
-                falseBt.setVisible(false);
-                ToggleGroup tgChooseTOrF=new ToggleGroup();
-                trueBt.setToggleGroup(tgChooseTOrF);
-                falseBt.setToggleGroup(tgChooseTOrF);
-                Button addAmericanQuestionbt=new Button("Add Question");
-                addAmericanQuestionbt.setVisible(false);
-                addAmericanQuestionbt.setOnAction(new EventHandler<ActionEvent>() {
+        //connect between the radio button to select button
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage case1 = new Stage();
+                Stage case2 = new Stage();
+                Stage case3 = new Stage();
+                Stage case4 = new Stage();
+                Stage case5 = new Stage();
+                Stage case6 = new Stage();
+                Stage case7 = new Stage();
+                Stage case8 = new Stage();
+                Stage case9 = new Stage();
+                Button buttonReturn = new Button();
+                buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
 
                     @Override
                     public void handle(ActionEvent actionEvent) {
-
-                        for(viewListener l:allListeners){
-
-                            String americanMassege= l.addAmericanQuestion(questionTextField.getText(),answerArray,correctnessArray);
-                            JOptionPane.showMessageDialog(null, americanMassege);
-                        }
-                    }
-                });
-
-                addAmericanAnsbt.setOnAction(new EventHandler<ActionEvent>() {
-                    int count=0;
-                    @Override
-
-                    public void handle(ActionEvent actionEvent) {
-                        if(!answerTextField.getText().isEmpty()){
-                            answerArray.add(answerTextField.getText());
-                        }
-
-                        if(trueBt.isSelected()){
-                            correctnessArray.add(trueBt.isSelected());
-                        }
-                        else if (falseBt.isSelected()){
-                            correctnessArray.add(!falseBt.isSelected());
-                        }
-                        cmdCountOfQuestions.setDisable(true);
-                        count++;
-                        if(count==cmdCountOfQuestions.getValue()){
-                            trueBt.setDisable(true);
-                            falseBt.setDisable(true);
-                            answerTextField.setDisable(true);
-                            addAmericanQuestionbt.setVisible(true);
-                            addAmericanAnsbt.setVisible(false);
-
+                        if (printrb.isSelected()) {
+                            case1.hide();
+                        } else if (addQrb.isSelected()) {
+                            case2.hide();
+                        } else if (changeWordQrb.isSelected()) {
+                            case3.hide();
+                        } else if (updateAnsWordrb.isSelected()) {
+                            case4.hide();
+                        } else if (deleteAns.isSelected()) {
+                            case5.hide();
+                        } else if (manualExamrb.isSelected()) {
+                            case6.hide();
+                        } else if (autoExamrb.isSelected()) {
+                            case7.hide();
+                        } else if (clonerb.isSelected()) {
+                            case8.hide();
+                        } else if (saveExitrb.isSelected()) {
+                            case9.hide();
                         }
 
 
-                        answerTextField.clear();
+                        theStage.show();
                     }
+
                 });
-                addAmericanAnsbt.setVisible(false);
-
-                AnsTextlbl.setVisible(false);
-
-                addAmricanQuestionText.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        AnsTextlbl.setVisible(true);
-                        addAmricanQuestionText.setDisable(true);
-                        questionTextField.setDisable(true);
-                        cmdCountOfQuestions.setVisible(true);
-                        countOfQuestionslbl.setVisible(true);
-                        answerTextField.setVisible(true);
-                        addAmericanAnsbt.setVisible(true);
-                        falseBt.setVisible(true);
-                        trueBt.setVisible(true);
-                        chooseTrueOrFalselbl.setVisible(true);
-
-                    }
-                });
-                addAmricanQuestionText.setVisible(false);
-                Button addOpenQuestionText= new Button("Add Question Text");
-                addOpenQuestionText.setVisible(false);
-                Button addOpenAnsbt=new Button("Add Answer");
-                addOpenAnsbt.setVisible(false);
-                addOpenAnsbt.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        answerTextField.setDisable(true);
-                        for (viewListener l:allListeners){
-                           String addOpenUpdate= l.addOpenQuestion(questionTextField.getText(),answerTextField.getText());
-                            JOptionPane.showMessageDialog(null,addOpenUpdate );
-
-                        }
+                //case 1
+                if (printrb.isSelected()) {
+                    theStage.hide();
+                    for (viewListener l : allListeners) {
+                        BorderPane borderPane = new BorderPane();
+                        ScrollPane scrollPane = new ScrollPane();
+                        String allQuestionsPrint = l.showAllQuestionsInUI();
+                        Label printLbl = new Label(allQuestionsPrint);
+                        case1.setTitle("All Questions");
+                        borderPane.setCenter(printLbl);
+                        scrollPane.setContent(borderPane);
+                        case1.setScene(new Scene(scrollPane, 750, 750));
+                        Label allQuestionLbl = new Label("The questions are:");
+                        borderPane.setTop(allQuestionLbl);
+                        VBox vBoxReturnButton = new VBox(buttonReturn);
+                        vBoxReturnButton.setAlignment(Pos.CENTER);
+                        buttonReturn.setText("Return to menu");
+                        borderPane.setBottom(vBoxReturnButton);
+                        case1.show();
 
                     }
-                });
-                addOpenQuestionText.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        AnsTextlbl.setVisible(true);
-                        answerTextField.setVisible(true);
-                        questionTextField.setDisable(true);
-                        addOpenAnsbt.setVisible(true);
 
+
+                    //   JOptionPane.showMessageDialog(null, " print select");
+                } else if (addQrb.isSelected()) {
+                    theStage.hide();
+                    case2.setTitle("Add Question");
+                    GridPane gpRootCase2 = new GridPane();
+                    gpRootCase2.setPadding(new Insets((10)));
+                    gpRootCase2.setHgap(10);
+                    gpRootCase2.setHgap(10);
+                    buttonReturn.setText("Return To Menu");
+                    Label choselbl = new Label("Choose which Question do you want ?");
+                    ToggleGroup tglAmericanOrOpen = new ToggleGroup();
+                    RadioButton americanrb = new RadioButton("American Question");
+                    RadioButton openRb = new RadioButton("Open Question");
+                    Label textQuestion = new Label("type the Question text:");
+                    textQuestion.setVisible(false);
+                    TextField questionTextField = new TextField();
+                    questionTextField.setVisible(false);
+
+
+                    Button addAmricanQuestionText = new Button("Add Question Text");
+                    Label countOfQuestionslbl = new Label("Choose How Many Answers Do You Want: ");
+                    countOfQuestionslbl.setVisible(false);
+                    ComboBox<Integer> cmdCountOfQuestions = new ComboBox<>();
+                    for (int i = 2; i <= 12; i++) {
+                        cmdCountOfQuestions.getItems().add(i);
                     }
-                });
-       openrb.setOnAction(new EventHandler<ActionEvent>() {
-          @Override
-        public void handle(ActionEvent actionEvent) {
-              americanrb.setDisable(true);
-              textQuestion.setVisible(true);
-              questionTextField.setVisible(true);
-              addOpenQuestionText.setVisible(true);
 
+                    cmdCountOfQuestions.setVisible(false);
+                    Label andTextLbl = new Label("Type a Text Answer:");
+                    TextField answerTextField = new TextField();
+                    answerTextField.setVisible(false);
+                    Button addAmericanAnsBt = new Button("Add Answer");
+                    ArrayList<String> answerArray = new ArrayList<>();
+                    ArrayList<Boolean> correctnessArray = new ArrayList<>();
+                    Label chooseTrueOrFalselbl = new Label("Choose true or false: ");
+                    chooseTrueOrFalselbl.setVisible(false);
+                    RadioButton trueBt = new RadioButton("True");
+                    trueBt.setVisible(false);
+                    RadioButton falseBt = new RadioButton("False");
+                    falseBt.setVisible(false);
+                    ToggleGroup tgChooseTOrF = new ToggleGroup();
+                    trueBt.setToggleGroup(tgChooseTOrF);
+                    falseBt.setToggleGroup(tgChooseTOrF);
+                    Button addAmericanQuestionbt = new Button("Add Question");
+                    addAmericanQuestionbt.setVisible(false);
+                    addAmericanQuestionbt.setOnAction(new EventHandler<ActionEvent>() {
 
-       }
-        });
-                americanrb.setOnAction(new EventHandler<ActionEvent>() {
-
-
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-
-                           textQuestion.setVisible(true);
-                            questionTextField.setVisible(true);
-                           openrb.setDisable(true);
-                           addAmricanQuestionText.setVisible(true);
-
-
-
-
-
-
-                    }
-                });
-
-
-                        americanrb.setToggleGroup(tglAmericanOrOpen);
-                openrb.setToggleGroup(tglAmericanOrOpen);
-                case2.setScene(new Scene(gpRootCase2, 650, 350));
-
-                gpRootCase2.add(choselbl,0,0);
-                gpRootCase2.add(americanrb,0,2);
-                gpRootCase2.add(openrb,0,1);
-                gpRootCase2.add(questionTextField,1,3);
-                gpRootCase2.add(textQuestion,0,3);
-                gpRootCase2.add(addAmricanQuestionText,1,4);
-                gpRootCase2.add(addOpenQuestionText,1,4);
-                gpRootCase2.add(countOfQuestionslbl,0,5);
-                gpRootCase2.add(cmdCountOfQuestions,1,5);
-                gpRootCase2.add(AnsTextlbl,0,6);
-                gpRootCase2.add(answerTextField,1,6);
-
-                gpRootCase2.add(addOpenAnsbt,1,7);
-                gpRootCase2.add(chooseTrueOrFalselbl,0,8);
-                gpRootCase2.add(trueBt,1,8);
-                gpRootCase2.add(falseBt,2,8);
-                gpRootCase2.add(addAmericanAnsbt,1,9);
-                gpRootCase2.add(addAmericanQuestionbt,1,9);
-                gpRootCase2.add(buttonreturn, 1, 11);
-
-                case2.show();
-
-               // JOptionPane.showMessageDialog(null, " add select");
-            }
-            else if (changewordQrb.isSelected()){
-                theStage.hide();
-                case3.setTitle("Change Question wording");
-                GridPane gpRootCase3=new GridPane();
-                gpRootCase3.setPadding(new Insets((10)));
-                gpRootCase3.setHgap(10);
-                gpRootCase3.setHgap(10);
-                Label chooseFromListlbl=new Label("Choose from the list the Question do you want to Change: ");
-                Button viewQuestionsbt=new Button("view Questions");
-                viewQuestionsbt.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-
-                    }
-                });
-
-
-                for(viewListener l:allListeners){
-                    String allQuestions=l.PrintAllQuestions();
-                    Label allQustionslbl=new Label(allQuestions);
-                    gpRootCase3.add(allQustionslbl,0,1);
-              ArrayList<Integer>allId= new ArrayList<>();
-                    allId= l.GetAllIDfromModel();
-                    ComboBox<Integer>cmdId=new ComboBox<>();
-                    for (int i=0;i<allId.size();i++){
-                        cmdId.getItems().add(allId.get(i));
-                    }
-                    TextField newWordingtf=new TextField();
-                    newWordingtf.setVisible(false);
-                    Label newWordinglbl=new Label("Type new Wording for the Question:");
-                    newWordinglbl.setVisible(false);
-                    Button changeWordingbt=new Button("Change Wording");
-                    changeWordingbt.setVisible(false);
-                    changeWordingbt.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
-                         String msg=   l.ChangeWording(newWordingtf.getText(),cmdId.getValue());
-                            JOptionPane.showMessageDialog(null, msg);
 
-                        }
-                    });
-                    gpRootCase3.add(cmdId,1,1);
-                    cmdId.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent actionEvent) {
-                            if(cmdId.getValue()!=null){
-                                newWordingtf.setVisible(true);
-                                newWordinglbl.setVisible(true);
-                                changeWordingbt.setVisible(true);
+                            for (viewListener l : allListeners) {
+                                String americanMassege = l.addAmericanQuestion(questionTextField.getText(), answerArray, correctnessArray);
+                                JOptionPane.showMessageDialog(null, americanMassege);
                             }
                         }
-
-
                     });
-                    gpRootCase3.add(newWordinglbl,0,2);
-                    gpRootCase3.add(newWordingtf,1,2);
-                    gpRootCase3.add(changeWordingbt,1,3);
 
 
+                    addAmericanAnsBt.setOnAction(new EventHandler<ActionEvent>() {
+                        int count = 0;
+
+                        @Override
+
+                        public void handle(ActionEvent actionEvent) {
+                            if (!answerTextField.getText().isEmpty()) {
+                                answerArray.add(answerTextField.getText());
+                                if (trueBt.isSelected()) {
+                                    correctnessArray.add(trueBt.isSelected());
+                                } else if (falseBt.isSelected()) {
+                                    correctnessArray.add(!falseBt.isSelected());
+                                }
+                                cmdCountOfQuestions.setDisable(true);
+                                count++;
+                                if (count == cmdCountOfQuestions.getValue()) {
+                                    trueBt.setDisable(true);
+                                    falseBt.setDisable(true);
+                                    answerTextField.setDisable(true);
+                                    addAmericanQuestionbt.setVisible(true);
+                                    addAmericanAnsBt.setVisible(false);
+
+                                }
+
+                                answerTextField.clear();
+
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null,"Error:answer text cannot be empty");
+                            }
+
+                        }
+                    });
+                    addAmericanAnsBt.setVisible(false);
+
+                    andTextLbl.setVisible(false);
+
+                    addAmricanQuestionText.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            if(!questionTextField.getText().isEmpty()) {
+                                andTextLbl.setVisible(true);
+                                addAmricanQuestionText.setDisable(true);
+                                questionTextField.setDisable(true);
+                                cmdCountOfQuestions.setVisible(true);
+                                countOfQuestionslbl.setVisible(true);
+                                answerTextField.setVisible(true);
+                                addAmericanAnsBt.setVisible(true);
+                                falseBt.setVisible(true);
+                                trueBt.setVisible(true);
+                                chooseTrueOrFalselbl.setVisible(true);
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null,"Error:question text cannot be empty\"");
+                            }
+                        }
+                    });
+                    addAmricanQuestionText.setVisible(false);
+                    Button addOpenQuestionText = new Button("Add Question Text");
+                    addOpenQuestionText.setVisible(false);
+                    Button addOpenAnsBt = new Button("Add Answer");
+                    addOpenAnsBt.setVisible(false);
+
+                    //user selected open question button
+                    openRb.setOnAction(new EventHandler<ActionEvent>() {
+
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            americanrb.setDisable(true);
+                            textQuestion.setVisible(true);
+                            questionTextField.setVisible(true);
+                            addOpenQuestionText.setVisible(true);
+                        }
+                    });
+
+                    //user entered add open question text button
+                    addOpenQuestionText.setOnAction(new EventHandler<ActionEvent>() {
+
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            if (!questionTextField.getText().isEmpty()) {
+                                andTextLbl.setVisible(true);
+                                answerTextField.setVisible(true);
+                                questionTextField.setDisable(true);
+                                addOpenAnsBt.setVisible(true);
+                            }
+                            else{
+                                String questionTextEmptyString=new String("Error:question text cannot be empty");
+                                JOptionPane.showMessageDialog(null,questionTextEmptyString);
+                            }
+                        }
+                    });
+
+
+                    addOpenAnsBt.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            if (!answerTextField.getText().isEmpty()) {
+                                answerTextField.setDisable(true);
+                                for (viewListener l : allListeners) {
+                                    String addOpenUpdate = l.addOpenQuestion(questionTextField.getText(), answerTextField.getText());
+                                    JOptionPane.showMessageDialog(null, addOpenUpdate);
+                                }
+                            }
+                            else{
+                                String questionTextFieldEmptyString=new String("Error:answer text cannot be empty");
+                                JOptionPane.showMessageDialog(null,questionTextFieldEmptyString);
+                            }
+                        }
+                    });
+
+
+                    americanrb.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+
+                            textQuestion.setVisible(true);
+                            questionTextField.setVisible(true);
+                            openRb.setDisable(true);
+                            addAmricanQuestionText.setVisible(true);
+
+
+                        }
+                    });
+
+
+                    americanrb.setToggleGroup(tglAmericanOrOpen);
+                    openRb.setToggleGroup(tglAmericanOrOpen);
+                    case2.setScene(new Scene(gpRootCase2, 650, 350));
+
+                    gpRootCase2.add(choselbl, 0, 0);
+                    gpRootCase2.add(americanrb, 0, 2);
+                    gpRootCase2.add(openRb, 0, 1);
+                    gpRootCase2.add(questionTextField, 1, 3);
+                    gpRootCase2.add(textQuestion, 0, 3);
+                    gpRootCase2.add(addAmricanQuestionText, 1, 4);
+                    gpRootCase2.add(addOpenQuestionText, 1, 4);
+                    gpRootCase2.add(countOfQuestionslbl, 0, 5);
+                    gpRootCase2.add(cmdCountOfQuestions, 1, 5);
+                    gpRootCase2.add(andTextLbl, 0, 6);
+                    gpRootCase2.add(answerTextField, 1, 6);
+
+                    gpRootCase2.add(addOpenAnsBt, 1, 7);
+                    gpRootCase2.add(chooseTrueOrFalselbl, 0, 8);
+                    gpRootCase2.add(trueBt, 1, 8);
+                    gpRootCase2.add(falseBt, 2, 8);
+                    gpRootCase2.add(addAmericanAnsBt, 1, 9);
+                    gpRootCase2.add(addAmericanQuestionbt, 1, 9);
+                    gpRootCase2.add(buttonReturn, 1, 11);
+
+                    case2.show();
+
+                    // JOptionPane.showMessageDialog(null, " add select");
+                } else if (changeWordQrb.isSelected()) {
+                    theStage.hide();
+                    case3.setTitle("Change Question wording");
+                    GridPane gpRootCase3 = new GridPane();
+                    gpRootCase3.setPadding(new Insets((10)));
+                    gpRootCase3.setHgap(10);
+                    gpRootCase3.setHgap(10);
+                    Label chooseFromListlbl = new Label("Choose from the list the Question do you want to Change: ");
+                    Button viewQuestionsbt = new Button("view Questions");
+
+                    for (viewListener l : allListeners) {
+                        String allQuestions = l.PrintAllQuestions();
+                        Label allQustionslbl = new Label(allQuestions);
+                        gpRootCase3.add(allQustionslbl, 0, 1);
+                        ArrayList<Integer> allId = new ArrayList<>();
+                        allId = l.GetAllIDfromModel();
+                        ComboBox<Integer> cmdId = new ComboBox<>();
+                        for (int i = 0; i < allId.size(); i++) {
+                            cmdId.getItems().add(allId.get(i));
+                        }
+                        TextField newWordingtf = new TextField();
+                        newWordingtf.setVisible(false);
+                        Label newWordinglbl = new Label("Type new Wording for the Question:");
+                        newWordinglbl.setVisible(false);
+                        Button changeWordingbt = new Button("Change Wording");
+                        changeWordingbt.setVisible(false);
+                        changeWordingbt.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                String msg = l.ChangeWording(newWordingtf.getText(), cmdId.getValue());
+                                JOptionPane.showMessageDialog(null, msg);
+
+                            }
+                        });
+                        gpRootCase3.add(cmdId, 1, 1);
+                        cmdId.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                if (cmdId.getValue() != null) {
+                                    newWordingtf.setVisible(true);
+                                    newWordinglbl.setVisible(true);
+                                    changeWordingbt.setVisible(true);
+                                }
+                            }
+
+
+                        });
+                        gpRootCase3.add(newWordinglbl, 0, 2);
+                        gpRootCase3.add(newWordingtf, 1, 2);
+                        gpRootCase3.add(changeWordingbt, 1, 3);
+                    }
+
+
+                    buttonReturn.setText("Return To Menu");
+                    case3.setScene(new Scene(gpRootCase3, 850, 350));
+                    gpRootCase3.add(chooseFromListlbl, 0, 0);
+
+                    gpRootCase3.add(buttonReturn, 1, 11);
+                    case3.show();
+
+
+                    //JOptionPane.showMessageDialog(null, "  change wording select");
+                } else if (updateAnsWordrb.isSelected()) {
+                    theStage.hide();
+                    //print all questions and their answers and allow user to choose a question by radio button
+                    BorderPane bpCase4 =new BorderPane();
+                    HBox hbCase4=new HBox();
+                    int numOfQuestions = 0;
+                    Label questionComboBoxLbl=new Label("Please choose a question by ID");
+                    ComboBox<Integer> questionIdComboBox=new ComboBox<>();
+
+                    for (viewListener l : allListeners) {
+                        String allQuestions = l.showAllQuestionsInUI();
+                        Label allQustionslbl = new Label(allQuestions);
+                        bpCase4.setCenter(allQustionslbl);
+                        ArrayList<Integer> allId;
+                        allId = l.GetAllIDfromModel();
+                        ComboBox<Integer> cmdId = new ComboBox<>();
+                        for (int i = 0; i < allId.size(); i++) {
+                            cmdId.getItems().add(allId.get(i));
+                        }
+                        Button chooseIdBtn=new Button();
+                        chooseIdBtn.setText("choose");
+                        hbCase4.getChildren().addAll(questionComboBoxLbl,cmdId,chooseIdBtn);
+
+
+
+                    }
+                    hbCase4.setSpacing(5);
+                    hbCase4.setPadding(new Insets(20));
+                    Stage case4comboBox=new Stage();
+                    case4comboBox.setTitle("Choose ID");
+                    case4.setScene(new Scene(bpCase4));
+                    case4.show();
+                    case4comboBox.setScene(new Scene(hbCase4));
+                    case4comboBox.show();
+
+
+
+
+
+
+
+                    //print answer/s of the question and allow users to chose with radio button
+
+
+
+                    //print result
+
+                } else if (deleteAns.isSelected()) {
+                    JOptionPane.showMessageDialog(null, "  delete answer select");
+                } else if (manualExamrb.isSelected()) {
+                    JOptionPane.showMessageDialog(null, "  manual exam select");
+                } else if (autoExamrb.isSelected()) {
+                    JOptionPane.showMessageDialog(null, "  automatic exam select");
+                } else if (clonerb.isSelected()) {
+                    JOptionPane.showMessageDialog(null, "  clone wording select");
+                } else if (saveExitrb.isSelected()) {
+                    JOptionPane.showMessageDialog(null, "  save and exit select");
                 }
 
 
-                buttonreturn.setText("Return To Menu");
-                case3.setScene(new Scene(gpRootCase3, 850, 350));
-                gpRootCase3.add(chooseFromListlbl, 0, 0);
-
-                gpRootCase3.add(buttonreturn, 1, 11);
-                case3.show();
-
-
-                //JOptionPane.showMessageDialog(null, "  change wording select");
             }
-            else if (updateAnsWordrb.isSelected()){
-                JOptionPane.showMessageDialog(null, "  update answer wording select");
-            }
-            else if (deleteAns.isSelected()){
-                JOptionPane.showMessageDialog(null, "  delete answer select");
-            }
-            else if (manualExamrb.isSelected()){
-                JOptionPane.showMessageDialog(null, "  manual exam select");
-            }
-            else if (autoExamrb.isSelected()){
-                JOptionPane.showMessageDialog(null, "  automatic exam select");
-            }
-            else if (clonerb.isSelected()){
-                JOptionPane.showMessageDialog(null, "  clone wording select");
-            }
-            else if (saveExitrb.isSelected()){
-                JOptionPane.showMessageDialog(null, "  save and exit select");
-            }
-
-
-
-        }
-    });
-    //Arrange the buttons on the stage
-    gpRoot.add(welcomelbl, 0, 0);
-    gpRoot.add(choselbl, 0, 1);
-    gpRoot.add(printrb, 0, 2);
-    gpRoot.add(addQrb, 0, 3);
-    gpRoot.add(changewordQrb, 0, 4);
-    gpRoot.add(updateAnsWordrb, 0, 5);
-    gpRoot.add(deleteAns, 0, 6);
-    gpRoot.add(manualExamrb, 0, 7);
-    gpRoot.add(autoExamrb, 0, 8);
-    gpRoot.add(clonerb, 0, 9);
-    gpRoot.add(saveExitrb, 0, 10);
-    gpRoot.add(button, 1, 11);
-
+        });
+        //Arrange the buttons on the stage
+        gpRoot.add(welcomelbl, 0, 0);
+        gpRoot.add(choselbl, 0, 1);
+        gpRoot.add(printrb, 0, 2);
+        gpRoot.add(addQrb, 0, 3);
+        gpRoot.add(changeWordQrb, 0, 4);
+        gpRoot.add(updateAnsWordrb, 0, 5);
+        gpRoot.add(deleteAns, 0, 6);
+        gpRoot.add(manualExamrb, 0, 7);
+        gpRoot.add(autoExamrb, 0, 8);
+        gpRoot.add(clonerb, 0, 9);
+        gpRoot.add(saveExitrb, 0, 10);
+        gpRoot.add(button, 1, 11);
 
 
 //size of the stage
-    theStage.setScene(new Scene(gpRoot, 450, 350));
-    //show stage
-    theStage.show();
+        theStage.setScene(new Scene(gpRoot, 450, 350));
+        //show stage
+        theStage.show();
 
 
-}
+    }
 
 
     @Override
@@ -467,7 +500,6 @@ public QuestionFxView(Stage theStage){
     @Override
     public String addOpenQuestionToUI(String updateUserMessage) {
         return updateUserMessage;
-
 
 
     }
