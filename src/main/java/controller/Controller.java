@@ -4,7 +4,6 @@ import id206214280_id316650399.QuestionReservoir;
 import listeners.modelListener;
 import listeners.viewListener;
 import view.AbstractQuestionView;
-import view.QuestionFxView;
 
 import java.util.ArrayList;
 
@@ -35,6 +34,27 @@ public class Controller implements modelListener, viewListener {
     @Override
     public String addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray) {
       return  qrModel.addAmericanQuestion(text,answerArray,correctnessArray);
+    }
+
+    @Override
+    public String PrintAllQuestions() {
+        return qrModel.PrintAllQustionsModel();
+    }
+
+    @Override
+    public ArrayList<Integer> GetAllIDfromModel() {
+        ArrayList<Integer>allID=new ArrayList<>();
+        for (int i=0;i<qrModel.getNumberOfQuestions();i++){
+            allID.add(qrModel.getQuestionArray().get(i).getQuestionId());
+
+        }
+        return allID;
+    }
+
+    @Override
+    public String ChangeWording(String text, int id) {
+
+        return qrModel.changeQuestionWording(text,id);
     }
 
 

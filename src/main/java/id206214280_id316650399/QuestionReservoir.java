@@ -8,6 +8,15 @@ import java.util.Vector;
 
 public class QuestionReservoir implements Serializable {
 
+
+
+
+
+
+
+
+
+
     private int numberOfQuestions = 0;
     private ArrayList<Questions> questionArray;
     private Exam manualExam;
@@ -107,13 +116,15 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-    public boolean changeQuestionWording(String newQuestionText, int choosenId) {
+    public String changeQuestionWording(String newQuestionText, int choosenId) {
         // loop that checks if the question exists
+        String msg=null;
         Questions testQuestionText = new Questions(newQuestionText);
         for (int i = 0; i < this.numberOfQuestions; i++) {
             if (testQuestionText.equals(this.questionArray.get(i))) {
                 System.out.println("Can't change question text-There a Question with the same text");
-                return false;
+              return   msg="Can't change question text-There a Question with the same text";
+
             }
 
         }
@@ -125,7 +136,8 @@ public class QuestionReservoir implements Serializable {
 
         }
         System.out.println("Question wording changed succesfully!");
-        return true;
+       return msg="Question wording changed succesfully!";
+
     }
 
     public Set<AmericanAnswer> copyArrayListToSet(ArrayList arrayList) {
@@ -439,5 +451,15 @@ public class QuestionReservoir implements Serializable {
     public void registerListener( modelListener qrListener) {
         qrListeners.add(qrListener);
     }
+    public String PrintAllQustionsModel() {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < this.getNumberOfQuestions(); i++) {
+            sb.append("id is:(" + this.getQuestionArray().get(i).getQuestionId() + ")" + " ");
+            sb.append("Question text is: " + this.getQuestionArray().get(i).getQuestionText()+"'\n");
+
+        }
+        return sb.toString();
+    }
+
 }
 

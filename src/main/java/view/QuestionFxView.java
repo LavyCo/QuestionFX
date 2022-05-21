@@ -121,12 +121,12 @@ public QuestionFxView(Stage theStage){
             if(printrb.isSelected()){
                 theStage.hide();
                 for(viewListener l:allListeners) {
-                    ScrollBar s = new ScrollBar();
+
                     String allQuestionsPrint = l.showAllQuestionsInUI();
                     Label printLbl = new Label(allQuestionsPrint);
                     case1.setTitle("All Questions");
                     GridPane gpRootCase1 = new GridPane();
-                    gpRootCase1.getChildren().add(s);
+
                     gpRootCase1.setPadding(new Insets((10)));
                     gpRootCase1.setHgap(10);
                     gpRootCase1.setHgap(10);
@@ -188,45 +188,49 @@ public QuestionFxView(Stage theStage){
                 ToggleGroup tgChooseTOrF=new ToggleGroup();
                 trueBt.setToggleGroup(tgChooseTOrF);
                 falseBt.setToggleGroup(tgChooseTOrF);
+                Button addAmericanQuestionbt=new Button("Add Question");
+                addAmericanQuestionbt.setVisible(false);
+                addAmericanQuestionbt.setOnAction(new EventHandler<ActionEvent>() {
 
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                        for(viewListener l:allListeners){
+
+                            String americanMassege= l.addAmericanQuestion(questionTextField.getText(),answerArray,correctnessArray);
+                            JOptionPane.showMessageDialog(null, americanMassege);
+                        }
+                    }
+                });
 
                 addAmericanAnsbt.setOnAction(new EventHandler<ActionEvent>() {
                     int count=0;
                     @Override
 
                     public void handle(ActionEvent actionEvent) {
-                        cmdCountOfQuestions.setDisable(true);
-                        System.out.println(cmdCountOfQuestions.getValue());
-
-
+                        if(!answerTextField.getText().isEmpty()){
                             answerArray.add(answerTextField.getText());
-                            if(trueBt.isSelected()){
-                                correctnessArray.add(trueBt.isSelected());
-                            }
-                            else if (falseBt.isSelected()){
-                                correctnessArray.add(!falseBt.isSelected());
-                            }
+                        }
 
-                            count++;
-                            answerTextField.clear();
-                            System.out.println(cmdCountOfQuestions.getValue());
-                            if(count==cmdCountOfQuestions.getValue()){
-                                trueBt.setDisable(true);
-                                falseBt.setDisable(true);
-                                answerTextField.setDisable(true);
-                            }
-                            for(viewListener l:allListeners){
-                               String americanMassege= l.addAmericanQuestion(questionTextField.getText(),answerArray,correctnessArray);
-                                JOptionPane.showMessageDialog(null, americanMassege);
-                            }
+                        if(trueBt.isSelected()){
+                            correctnessArray.add(trueBt.isSelected());
+                        }
+                        else if (falseBt.isSelected()){
+                            correctnessArray.add(!falseBt.isSelected());
+                        }
+                        cmdCountOfQuestions.setDisable(true);
+                        count++;
+                        if(count==cmdCountOfQuestions.getValue()){
+                            trueBt.setDisable(true);
+                            falseBt.setDisable(true);
+                            answerTextField.setDisable(true);
+                            addAmericanQuestionbt.setVisible(true);
+                            addAmericanAnsbt.setVisible(false);
 
-
-                        System.out.println(correctnessArray.toString());
+                        }
 
 
-
-
-
+                        answerTextField.clear();
                     }
                 });
                 addAmericanAnsbt.setVisible(false);
@@ -328,6 +332,7 @@ public QuestionFxView(Stage theStage){
                 gpRootCase2.add(trueBt,1,8);
                 gpRootCase2.add(falseBt,2,8);
                 gpRootCase2.add(addAmericanAnsbt,1,9);
+                gpRootCase2.add(addAmericanQuestionbt,1,9);
                 gpRootCase2.add(buttonreturn, 1, 11);
 
                 case2.show();
@@ -335,7 +340,76 @@ public QuestionFxView(Stage theStage){
                // JOptionPane.showMessageDialog(null, " add select");
             }
             else if (changewordQrb.isSelected()){
-                JOptionPane.showMessageDialog(null, "  change wording select");
+                theStage.hide();
+                case3.setTitle("Change Question wording");
+                GridPane gpRootCase3=new GridPane();
+                gpRootCase3.setPadding(new Insets((10)));
+                gpRootCase3.setHgap(10);
+                gpRootCase3.setHgap(10);
+                Label chooseFromListlbl=new Label("Choose from the list the Question do you want to Change: ");
+                Button viewQuestionsbt=new Button("view Questions");
+                viewQuestionsbt.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                    }
+                });
+
+
+                for(viewListener l:allListeners){
+                    String allQuestions=l.PrintAllQuestions();
+                    Label allQustionslbl=new Label(allQuestions);
+                    gpRootCase3.add(allQustionslbl,0,1);
+              ArrayList<Integer>allId= new ArrayList<>();
+                    allId= l.GetAllIDfromModel();
+                    ComboBox<Integer>cmdId=new ComboBox<>();
+                    for (int i=0;i<allId.size();i++){
+                        cmdId.getItems().add(allId.get(i));
+                    }
+                    TextField newWordingtf=new TextField();
+                    newWordingtf.setVisible(false);
+                    Label newWordinglbl=new Label("Type new Wording for the Question:");
+                    newWordinglbl.setVisible(false);
+                    Button changeWordingbt=new Button("Change Wording");
+                    changeWordingbt.setVisible(false);
+                    changeWordingbt.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                         String msg=   l.ChangeWording(newWordingtf.getText(),cmdId.getValue());
+                            JOptionPane.showMessageDialog(null, msg);
+
+                        }
+                    });
+                    gpRootCase3.add(cmdId,1,1);
+                    cmdId.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            if(cmdId.getValue()!=null){
+                                newWordingtf.setVisible(true);
+                                newWordinglbl.setVisible(true);
+                                changeWordingbt.setVisible(true);
+                            }
+                        }
+
+
+                    });
+                    gpRootCase3.add(newWordinglbl,0,2);
+                    gpRootCase3.add(newWordingtf,1,2);
+                    gpRootCase3.add(changeWordingbt,1,3);
+
+
+                }
+
+
+                buttonreturn.setText("Return To Menu");
+                case3.setScene(new Scene(gpRootCase3, 850, 350));
+                gpRootCase3.add(chooseFromListlbl, 0, 0);
+
+                gpRootCase3.add(buttonreturn, 1, 11);
+                case3.show();
+
+
+                //JOptionPane.showMessageDialog(null, "  change wording select");
             }
             else if (updateAnsWordrb.isSelected()){
                 JOptionPane.showMessageDialog(null, "  update answer wording select");
