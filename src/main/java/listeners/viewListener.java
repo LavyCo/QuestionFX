@@ -23,6 +23,8 @@ public interface viewListener {
 
     int addAmericanAnswersSizeToUI(int size);
 
+    String changeAmericanAnswerUI(int id,String answerText,boolean correctness,int numOfAnswer);
+
 
     int getNumOfAnswersToUI(int id);
 }

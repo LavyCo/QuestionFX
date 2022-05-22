@@ -52,6 +52,18 @@ public class Controller implements modelListener, viewListener {
     }
 
     @Override
+    public String changeAmericanAnswerUI(int id, String answerText, boolean correctness, int numOfAnswer) {
+        return changeAmericanQuestionAnswerInModel(id,answerText,correctness,numOfAnswer);
+    }
+
+
+    @Override
+    public String changeAmericanQuestionAnswerInModel(int id, String answerText, boolean correctness,int numOfAnswer) {
+        return qrModel.changeAnswerWordingOfAmericanQuestions(answerText,(AmericanQuestions)qrModel.fetchQuestionById(id),numOfAnswer,correctness);
+    }
+
+
+    @Override
     public int getNumOfAnswersToUI(int id) {
         return ((AmericanQuestions)qrModel.fetchQuestionById(id)).getNumOfAmericanAnswers();
     }

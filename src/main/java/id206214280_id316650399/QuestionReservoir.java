@@ -75,7 +75,7 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-    public boolean changeAnswerWordingOfAmericanQuestions(String newAnswerText, AmericanQuestions editorQuestionAnswer, int numOfAnswer, boolean opt) {
+    public String changeAnswerWordingOfAmericanQuestions(String newAnswerText, AmericanQuestions editorQuestionAnswer, int numOfAnswer, boolean opt) {
 
 
         if (editorQuestionAnswer instanceof AmericanQuestions) {
@@ -85,8 +85,7 @@ public class QuestionReservoir implements Serializable {
                 americanAnswerArr = editorQuestionAnswer.getAnswerArray().toArray();
 
                 if (((AmericanAnswer) americanAnswerArr[i]).getAnswerText().equalsIgnoreCase(newAnswerText)) {
-                    System.out.println("Can't change Answer text-There's an Answer with the same text");
-                    return false;
+                    return "Can't change Answer text-There's an Answer with the same text";
                 }
             }
 
@@ -94,9 +93,9 @@ public class QuestionReservoir implements Serializable {
             ((AmericanAnswer) americanAnswerArr[numOfAnswer]).setAnswerText(newAnswerText);
 
 
-            return true;
+            return "Answer changed successfully !";
         }
-        return false;
+        return null;
     }
 
 

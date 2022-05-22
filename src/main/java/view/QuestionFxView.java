@@ -56,14 +56,14 @@ public class QuestionFxView implements AbstractQuestionView {
         clonerb.setToggleGroup(tglOpt);
         saveExitrb.setToggleGroup(tglOpt);
         //change color text
-        printrb.setTextFill(Color.GREEN);
-        addQrb.setTextFill(Color.GREEN);
-        changeWordQrb.setTextFill(Color.GREEN);
-        updateAnsWordrb.setTextFill(Color.GREEN);
-        deleteAns.setTextFill(Color.GREEN);
-        manualExamrb.setTextFill(Color.GREEN);
-        autoExamrb.setTextFill(Color.GREEN);
-        clonerb.setTextFill(Color.GREEN);
+        printrb.setTextFill(Color.RED);
+        addQrb.setTextFill(Color.RED);
+        changeWordQrb.setTextFill(Color.RED);
+        updateAnsWordrb.setTextFill(Color.RED);
+        deleteAns.setTextFill(Color.RED);
+        manualExamrb.setTextFill(Color.RED);
+        autoExamrb.setTextFill(Color.RED);
+        clonerb.setTextFill(Color.RED);
         saveExitrb.setTextFill(Color.RED);
 
         //connect between the radio button to select button
@@ -348,8 +348,6 @@ public class QuestionFxView implements AbstractQuestionView {
                     gpRootCase3.setHgap(10);
                     gpRootCase3.setHgap(10);
                     Label chooseFromListlbl = new Label("Choose from the list the Question do you want to Change: ");
-                    Button viewQuestionsbt = new Button("view Questions");
-
                     for (viewListener l : allListeners) {
                         String allQuestions = l.PrintAllQuestions();
                         Label allQustionslbl = new Label(allQuestions);
@@ -371,7 +369,6 @@ public class QuestionFxView implements AbstractQuestionView {
                             public void handle(ActionEvent actionEvent) {
                                 String msg = l.ChangeWording(newWordingtf.getText(), cmdId.getValue());
                                 JOptionPane.showMessageDialog(null, msg);
-
                             }
                         });
                         gpRootCase3.add(cmdId, 1, 1);
@@ -384,8 +381,6 @@ public class QuestionFxView implements AbstractQuestionView {
                                     changeWordingbt.setVisible(true);
                                 }
                             }
-
-
                         });
                         gpRootCase3.add(newWordinglbl, 0, 2);
                         gpRootCase3.add(newWordingtf, 1, 2);
@@ -406,9 +401,11 @@ public class QuestionFxView implements AbstractQuestionView {
                     theStage.hide();
                     //print all questions and their answers and allow user to choose a question by radio button
                     BorderPane bpCase4 = new BorderPane();
+                    ScrollPane spCase4=new ScrollPane(bpCase4);
+                    spCase4.setContent(bpCase4);
                     HBox hbCase4 = new HBox();
+                    bpCase4.setBottom(hbCase4);
                     Label questionComboBoxLbl = new Label("Please choose a question by ID");
-
                     for (viewListener l : allListeners) {
                         String allQuestions = l.showAllQuestionsInUI();
                         Label allQustionslbl = new Label(allQuestions);
@@ -425,11 +422,8 @@ public class QuestionFxView implements AbstractQuestionView {
                         hbCase4.setSpacing(5);
                         hbCase4.setPadding(new Insets(20));
                         Stage case4ComboBox = new Stage();
-                        case4ComboBox.setTitle("Choose ID");
-                        case4.setScene(new Scene(bpCase4));
+                        case4.setScene(new Scene(spCase4,400,400));
                         case4.show();
-                        case4ComboBox.setScene(new Scene(hbCase4));
-                        case4ComboBox.show();
 
                         chooseIdBtn.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
@@ -470,62 +464,92 @@ public class QuestionFxView implements AbstractQuestionView {
                                     });
                                     //else-question is american
                                 } else {
+                                    BorderPane mainSelectAnswerFrame = new BorderPane();
                                     TextField americanAnswerTextField = new TextField();
                                     americanAnswerTextField.setDisable(true);
                                     Label americanAnswerTextFieldLbl = new Label("Please enter a new answer");
-                                    selectAnswerGp.add(printSelectedQuestion, 0, 0);
-                                    selectAnswerGp.add(americanAnswerTextField, 0, 2);
-                                    selectAnswerGp.add(americanAnswerTextFieldLbl, 0, 1);
-                                    int numOfAnswers=l.getNumOfAnswersToUI(cmdId.getValue());
-                                    ComboBox<Integer> answerIndexCmb=new ComboBox<>();
-                                    JOptionPane.showMessageDialog(null,numOfAnswers);
-                                    for(int i=0;i<numOfAnswers;i++){
-                                        answerIndexCmb.getItems().add(i+1);
+                                    mainSelectAnswerFrame.setLeft(printSelectedQuestion);
+                                    mainSelectAnswerFrame.setPadding(new Insets(10));
+                                    int numOfAnswers = l.getNumOfAnswersToUI(cmdId.getValue());
+                                    ComboBox<Integer> answerIndexCmb = new ComboBox<>();
+                                    for (int i = 0; i < numOfAnswers; i++) {
+                                        answerIndexCmb.getItems().add(i + 1);
                                     }
                                     selectAnswerGp.setPadding(new Insets(10));
                                     selectAnswerGp.setHgap(10);
-                                    Button answerSubmitBtn=new Button("Submit answer");
-                                    RadioButton trueRb=new RadioButton("True");
-                                    RadioButton falseRb=new RadioButton("False");
-                                    selectAnswerGp.add(trueRb,1,3);
-                                    selectAnswerGp.add(falseRb,2,3);
-                                    selectAnswerGp.add(answerSubmitBtn,1,4);
-                                    selectAnswerGp.add(answerIndexCmb,1,0);
-                                    selectAnswerGp.add(buttonReturn,2,4);
-                                    ToggleGroup TFrb=new ToggleGroup();
+
+                                    Label chooseAnswerIndexLbl = new Label("Please choose answer index");
+                                    Button answerSubmitBtn = new Button("Submit answer");
+                                    VBox answerIndexSelectionVbox = new VBox(chooseAnswerIndexLbl, answerIndexCmb);
+                                    answerIndexSelectionVbox.setAlignment(Pos.CENTER);
+                                    answerIndexSelectionVbox.setPadding(new Insets(10));
+                                    mainSelectAnswerFrame.setCenter(answerIndexSelectionVbox);
+
+                                    RadioButton trueRb = new RadioButton("True");
+                                    RadioButton falseRb = new RadioButton("False");
+                                    ToggleGroup TFrb = new ToggleGroup();
                                     trueRb.setToggleGroup(TFrb);
                                     falseRb.setToggleGroup(TFrb);
+                                    Label correctnessLabel = new Label("Please choose if question is true or false");
+                                    HBox answerTextAndCorrectnessHbox = new HBox(americanAnswerTextFieldLbl, americanAnswerTextField, trueRb, falseRb, answerSubmitBtn, buttonReturn);
+                                    answerTextAndCorrectnessHbox.setPadding(new Insets(10));
+                                    answerTextAndCorrectnessHbox.setSpacing(10);
                                     trueRb.setDisable(true);
                                     falseRb.setDisable(true);
-                                    Scene selectAnswerScene = new Scene(selectAnswerGp);
+                                    answerSubmitBtn.setDisable(true);
+
+                                    mainSelectAnswerFrame.setBottom(answerTextAndCorrectnessHbox);
+                                    Scene selectAnswerScene = new Scene(mainSelectAnswerFrame);
                                     Stage case4SelectedQuestion = new Stage();
                                     case4SelectedQuestion.setScene(selectAnswerScene);
                                     case4SelectedQuestion.setTitle("Select answer");
                                     case4SelectedQuestion.show();
+                                    buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
+                                        @Override
+                                        public void handle(ActionEvent actionEvent) {
+                                            case4SelectedQuestion.hide();
+                                            theStage.show();
+
+                                        }
+                                    });
+
                                     answerIndexCmb.setOnAction(new EventHandler<ActionEvent>() {
                                         @Override
                                         public void handle(ActionEvent actionEvent) {
+                                            answerSubmitBtn.setDisable(false);
                                             trueRb.setDisable(false);
                                             falseRb.setDisable(false);
                                             americanAnswerTextField.setDisable(false);
+                                            answerSubmitBtn.setOnAction(new EventHandler<ActionEvent>() {
+                                                @Override
+                                                public void handle(ActionEvent actionEvent) {
+                                                    if (!americanAnswerTextField.getText().isEmpty() && (trueRb.isSelected() || falseRb.isSelected())) {
+                                                        if (trueRb.isSelected()) {
+                                                            JOptionPane.showMessageDialog(null, l.changeAmericanAnswerUI(cmdId.getValue(), americanAnswerTextField.getText(), true, answerIndexCmb.getValue()));
+                                                            answerSubmitBtn.setDisable(true);
+                                                            trueRb.setDisable(true);
+                                                            falseRb.setDisable(true);
+                                                            americanAnswerTextField.setDisable(true);
+                                                        } else {
+                                                            JOptionPane.showMessageDialog(null, l.changeAmericanAnswerUI(cmdId.getValue(), americanAnswerTextField.getText(), false, answerIndexCmb.getValue()));
+                                                            answerSubmitBtn.setDisable(true);
+                                                            trueRb.setDisable(true);
+                                                            falseRb.setDisable(true);
+                                                            americanAnswerTextField.setDisable(true);
+                                                        }
+
+                                                    } else {
+                                                        JOptionPane.showMessageDialog(null, "Error:Text Field or Correctness missing");
+                                                    }
+                                                }
+                                            });
+
                                         }
                                     });
-
-                                    answerSubmitBtn.setOnAction(new EventHandler<ActionEvent>() {
-                                        @Override
-                                        public void handle(ActionEvent actionEvent) {
-
-                                        }
-                                    });
-
-
-
-
                                 }
                             }
                         });
                     }
-                    //print answer/s of the question and allow users to choose with combo box
 
 
                 } else if (deleteAns.isSelected()) {
