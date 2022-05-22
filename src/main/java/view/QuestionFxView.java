@@ -33,7 +33,6 @@ public class QuestionFxView implements AbstractQuestionView {
         Button button = new Button();
         button.setText("Select");
 
-
         Label welcomelbl = new Label("Welcome to the Exam generator program");
         Label choselbl = new Label("Please choose an option from the menu below");
         ToggleGroup tglOpt = new ToggleGroup();
@@ -65,7 +64,7 @@ public class QuestionFxView implements AbstractQuestionView {
         manualExamrb.setTextFill(Color.GREEN);
         autoExamrb.setTextFill(Color.GREEN);
         clonerb.setTextFill(Color.GREEN);
-        saveExitrb.setTextFill(Color.GREEN);
+        saveExitrb.setTextFill(Color.RED);
 
         //connect between the radio button to select button
         button.setOnAction(new EventHandler<ActionEvent>() {
@@ -80,7 +79,7 @@ public class QuestionFxView implements AbstractQuestionView {
                 Stage case7 = new Stage();
                 Stage case8 = new Stage();
                 Stage case9 = new Stage();
-                Button buttonReturn = new Button();
+                Button buttonReturn = new Button("Return to menu");
                 buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
 
                     @Override
@@ -187,6 +186,7 @@ public class QuestionFxView implements AbstractQuestionView {
                                 String americanMassege = l.addAmericanQuestion(questionTextField.getText(), answerArray, correctnessArray);
                                 JOptionPane.showMessageDialog(null, americanMassege);
                             }
+                            addAmericanQuestionbt.setDisable(true);
                         }
                     });
 
@@ -438,7 +438,6 @@ public class QuestionFxView implements AbstractQuestionView {
                                 case4.hide();
                                 Label printSelectedQuestion = new Label(l.showChosenQuestion(cmdId.getValue()));
                                 GridPane selectAnswerGp = new GridPane();
-                                ComboBox<String> answersIndexComboBox = new ComboBox<>();
                                 //checks if answer is open
                                 if (l.addAmericanAnswersSizeToUI(cmdId.getValue()) == 0) {
                                     TextField openAnswerTextField = new TextField();
@@ -448,31 +447,74 @@ public class QuestionFxView implements AbstractQuestionView {
                                     selectAnswerGp.add(openAnswerTextFieldLbl, 0, 1);
                                     selectAnswerGp.setPadding(new Insets(20));
                                     selectAnswerGp.setVgap(10);
-                                    Button openAnswerSubmitBtn=new Button("Submit new text");
-                                    selectAnswerGp.add(openAnswerSubmitBtn,0,4);
+                                    Button openAnswerSubmitBtn = new Button("Submit new text");
+                                    selectAnswerGp.add(openAnswerSubmitBtn, 0, 4);
                                     Scene selectAnswerScene = new Scene(selectAnswerGp);
                                     Stage case4SelectedQuestion = new Stage();
                                     case4SelectedQuestion.setScene(selectAnswerScene);
                                     case4SelectedQuestion.setTitle("Select answer");
                                     case4SelectedQuestion.show();
-
-
-
-
                                     openAnswerSubmitBtn.setOnAction(new EventHandler<ActionEvent>() {
                                         @Override
                                         public void handle(ActionEvent actionEvent) {
-                                            if(openAnswerTextField.getText().isEmpty()){
-                                                JOptionPane.showMessageDialog(null,"Error:answer text cannot be empty");
-                                            }
-                                            else{
-                                                String result=new String(l.changeOpenQuestionAnswerUI(openAnswerTextField.getText(),cmdId.getValue()));
-                                                JOptionPane.showMessageDialog(null,result);
+                                            if (openAnswerTextField.getText().isEmpty()) {
+                                                JOptionPane.showMessageDialog(null, "Error:answer text cannot be empty");
+                                            } else {
+                                                String result = new String(l.changeOpenQuestionAnswerUI(openAnswerTextField.getText(), cmdId.getValue()));
+                                                JOptionPane.showMessageDialog(null, result);
                                                 case4SelectedQuestion.hide();
                                                 theStage.show();
 
-
                                             }
+                                        }
+                                    });
+                                    //else-question is american
+                                } else {
+                                    TextField americanAnswerTextField = new TextField();
+                                    americanAnswerTextField.setDisable(true);
+                                    Label americanAnswerTextFieldLbl = new Label("Please enter a new answer");
+                                    selectAnswerGp.add(printSelectedQuestion, 0, 0);
+                                    selectAnswerGp.add(americanAnswerTextField, 0, 2);
+                                    selectAnswerGp.add(americanAnswerTextFieldLbl, 0, 1);
+                                    int numOfAnswers=l.getNumOfAnswersToUI(cmdId.getValue());
+                                    ComboBox<Integer> answerIndexCmb=new ComboBox<>();
+                                    JOptionPane.showMessageDialog(null,numOfAnswers);
+                                    for(int i=0;i<numOfAnswers;i++){
+                                        answerIndexCmb.getItems().add(i+1);
+                                    }
+                                    selectAnswerGp.setPadding(new Insets(10));
+                                    selectAnswerGp.setHgap(10);
+                                    Button answerSubmitBtn=new Button("Submit answer");
+                                    RadioButton trueRb=new RadioButton("True");
+                                    RadioButton falseRb=new RadioButton("False");
+                                    selectAnswerGp.add(trueRb,1,3);
+                                    selectAnswerGp.add(falseRb,2,3);
+                                    selectAnswerGp.add(answerSubmitBtn,1,4);
+                                    selectAnswerGp.add(answerIndexCmb,1,0);
+                                    selectAnswerGp.add(buttonReturn,2,4);
+                                    ToggleGroup TFrb=new ToggleGroup();
+                                    trueRb.setToggleGroup(TFrb);
+                                    falseRb.setToggleGroup(TFrb);
+                                    trueRb.setDisable(true);
+                                    falseRb.setDisable(true);
+                                    Scene selectAnswerScene = new Scene(selectAnswerGp);
+                                    Stage case4SelectedQuestion = new Stage();
+                                    case4SelectedQuestion.setScene(selectAnswerScene);
+                                    case4SelectedQuestion.setTitle("Select answer");
+                                    case4SelectedQuestion.show();
+                                    answerIndexCmb.setOnAction(new EventHandler<ActionEvent>() {
+                                        @Override
+                                        public void handle(ActionEvent actionEvent) {
+                                            trueRb.setDisable(false);
+                                            falseRb.setDisable(false);
+                                            americanAnswerTextField.setDisable(false);
+                                        }
+                                    });
+
+                                    answerSubmitBtn.setOnAction(new EventHandler<ActionEvent>() {
+                                        @Override
+                                        public void handle(ActionEvent actionEvent) {
+
                                         }
                                     });
 

@@ -14,7 +14,6 @@ public interface viewListener {
 
     ArrayList<Integer> GetAllIDfromModel();
 
-    String changeOpenQuestionAnswerInModel(String newAnswerText, int id);
 
     String changeOpenQuestionAnswerUI(String newAnswerText, int id);
 
@@ -25,8 +24,5 @@ public interface viewListener {
     int addAmericanAnswersSizeToUI(int size);
 
 
-
-
-
-
+    int getNumOfAnswersToUI(int id);
 }

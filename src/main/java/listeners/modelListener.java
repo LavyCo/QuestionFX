@@ -8,5 +8,6 @@ public interface modelListener {
     String returnChosenQuestion(int id);
     int returnAnswersSizeFromModel(int id);
     String changeOpenQuestionAnswerInModel(String newAnswerText,int id);
+    int sendNumOfAnswersFromModel(int id);
 
 }

@@ -34,7 +34,7 @@ public class Controller implements modelListener, viewListener {
 
     @Override
     public String returnChosenQuestion(int id) {
-        return qrModel.getQuestionArray().get(id).toString();
+        return qrModel.fetchQuestionById(id).toString();
     }
 
     @Override
@@ -51,11 +51,23 @@ public class Controller implements modelListener, viewListener {
         return returnAnswersSizeFromModel(id);
     }
 
+    @Override
+    public int getNumOfAnswersToUI(int id) {
+        return ((AmericanQuestions)qrModel.fetchQuestionById(id)).getNumOfAmericanAnswers();
+    }
+
+    @Override
+    public int sendNumOfAnswersFromModel(int id) {
+        return getNumOfAnswersToUI(id);
+    }
+
+
 
     @Override
     public String changeOpenQuestionAnswerInModel(String newAnswerText, int id) {
         return qrModel.changeAnswerWordingOfOpenQuestion(newAnswerText,qrModel.fetchQuestionById(id));
     }
+
 
 
     @Override
