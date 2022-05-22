@@ -420,15 +420,15 @@ public class QuestionFxView implements AbstractQuestionView {
                         chooseIdBtn.setText("choose");
                         hbCase4.getChildren().addAll(questionComboBoxLbl, cmdId, chooseIdBtn);
                         hbCase4.setSpacing(5);
+
                         hbCase4.setPadding(new Insets(20));
-                        Stage case4ComboBox = new Stage();
-                        case4.setScene(new Scene(spCase4,400,400));
+                        case4.setTitle("Change answer wording");
+                        case4.setScene(new Scene(spCase4,700,700));
                         case4.show();
 
                         chooseIdBtn.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
-                                case4ComboBox.hide();
                                 case4.hide();
                                 Label printSelectedQuestion = new Label(l.showChosenQuestion(cmdId.getValue()));
                                 GridPane selectAnswerGp = new GridPane();
@@ -553,7 +553,22 @@ public class QuestionFxView implements AbstractQuestionView {
 
 
                 } else if (deleteAns.isSelected()) {
-                    JOptionPane.showMessageDialog(null, "  delete answer select");
+                    BorderPane bpCase5=new BorderPane();
+                    ScrollPane spCase5=new ScrollPane(bpCase5);
+                    Scene case5Scene=new Scene(spCase5,700,700);
+                    case5.setScene(case5Scene);
+                    for(viewListener l:allListeners){
+                        Label americanQuestionsLbl=new Label(l.showAmericanQuestionUI());
+                        bpCase5.setCenter(americanQuestionsLbl);
+                        ComboBox<Integer> americanQuestionIdCmb=new ComboBox<>();
+                        ArrayList<Integer> americanQuestionIDArrayList=l.getAmericanQuestionIDArrayListUI();
+                        for(int i=0;i<americanQuestionIDArrayList.size();i++){
+                            americanQuestionIdCmb.getItems().add(americanQuestionIDArrayList.get(i));
+                        }
+                        bpCase5.setBottom(americanQuestionIdCmb);
+                    }
+                    case5.setTitle("Delete answer of an american question");
+                    case5.show();
                 } else if (manualExamrb.isSelected()) {
                     JOptionPane.showMessageDialog(null, "  manual exam select");
                 } else if (autoExamrb.isSelected()) {

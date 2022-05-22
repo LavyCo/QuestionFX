@@ -453,5 +453,31 @@ public class QuestionReservoir implements Serializable {
         return sb.toString();
     }
 
+    public String getAmericanQuestionsToPrint() {
+        for(modelListener l:qrListeners) {
+            StringBuffer americanQuestionString = new StringBuffer();
+            for (Questions q : questionArray) {
+                if (q instanceof AmericanQuestions) {
+                    americanQuestionString.append(q.toString());
+                }
+            }
+            return americanQuestionString.toString();
+        }
+        return null;
+    }
+
+    public ArrayList<Integer> fireAmericanQuestionIDArrayList() {
+        ArrayList<Integer> americanQuestionIDArray = null;
+        for (modelListener l : qrListeners) {
+            americanQuestionIDArray = new ArrayList<>();
+            for (Questions q : questionArray) {
+                if (q instanceof AmericanQuestions) {
+                    americanQuestionIDArray.add(q.getQuestionId());
+                }
+            }
+        }
+        return americanQuestionIDArray;
+
+    }
 }
 

@@ -1,5 +1,7 @@
 package listeners;
 
+import java.util.ArrayList;
+
 public interface modelListener {
 
 
@@ -10,5 +12,7 @@ public interface modelListener {
     String changeOpenQuestionAnswerInModel(String newAnswerText,int id);
     int sendNumOfAnswersFromModel(int id);
     String changeAmericanQuestionAnswerInModel(int id,String answerText,boolean correctness,int numOfAnswer);
+    String getAmericanQuestionsStringFromModel();
+    ArrayList getAmericanQuestionIDArrayFromModel();
 
 }

@@ -27,4 +27,8 @@ public interface viewListener {
 
 
     int getNumOfAnswersToUI(int id);
+
+    String showAmericanQuestionUI();
+
+    ArrayList<Integer> getAmericanQuestionIDArrayListUI();
 }

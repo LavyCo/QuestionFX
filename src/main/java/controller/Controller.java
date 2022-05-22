@@ -63,10 +63,33 @@ public class Controller implements modelListener, viewListener {
     }
 
 
+
     @Override
     public int getNumOfAnswersToUI(int id) {
         return ((AmericanQuestions)qrModel.fetchQuestionById(id)).getNumOfAmericanAnswers();
     }
+
+    @Override
+    public String showAmericanQuestionUI() {
+        return getAmericanQuestionsStringFromModel();
+    }
+
+    @Override
+    public ArrayList<Integer> getAmericanQuestionIDArrayListUI() {
+        return getAmericanQuestionIDArrayFromModel();
+    }
+
+
+    @Override
+    public String getAmericanQuestionsStringFromModel() {
+        return qrModel.getAmericanQuestionsToPrint();
+    }
+
+    @Override
+    public ArrayList getAmericanQuestionIDArrayFromModel() {
+        return qrModel.fireAmericanQuestionIDArrayList();
+    }
+
 
     @Override
     public int sendNumOfAnswersFromModel(int id) {
