@@ -217,9 +217,8 @@ public class QuestionFxView implements AbstractQuestionView {
 
                                 answerTextField.clear();
 
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(null,"Error:answer text cannot be empty");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error:answer text cannot be empty");
                             }
 
                         }
@@ -231,7 +230,7 @@ public class QuestionFxView implements AbstractQuestionView {
                     addAmricanQuestionText.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
-                            if(!questionTextField.getText().isEmpty()) {
+                            if (!questionTextField.getText().isEmpty()) {
                                 andTextLbl.setVisible(true);
                                 addAmricanQuestionText.setDisable(true);
                                 questionTextField.setDisable(true);
@@ -242,9 +241,8 @@ public class QuestionFxView implements AbstractQuestionView {
                                 falseBt.setVisible(true);
                                 trueBt.setVisible(true);
                                 chooseTrueOrFalselbl.setVisible(true);
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(null,"Error:question text cannot be empty\"");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error:question text cannot be empty\"");
                             }
                         }
                     });
@@ -276,10 +274,9 @@ public class QuestionFxView implements AbstractQuestionView {
                                 answerTextField.setVisible(true);
                                 questionTextField.setDisable(true);
                                 addOpenAnsBt.setVisible(true);
-                            }
-                            else{
-                                String questionTextEmptyString=new String("Error:question text cannot be empty");
-                                JOptionPane.showMessageDialog(null,questionTextEmptyString);
+                            } else {
+                                String questionTextEmptyString = new String("Error:question text cannot be empty");
+                                JOptionPane.showMessageDialog(null, questionTextEmptyString);
                             }
                         }
                     });
@@ -294,10 +291,9 @@ public class QuestionFxView implements AbstractQuestionView {
                                     String addOpenUpdate = l.addOpenQuestion(questionTextField.getText(), answerTextField.getText());
                                     JOptionPane.showMessageDialog(null, addOpenUpdate);
                                 }
-                            }
-                            else{
-                                String questionTextFieldEmptyString=new String("Error:answer text cannot be empty");
-                                JOptionPane.showMessageDialog(null,questionTextFieldEmptyString);
+                            } else {
+                                String questionTextFieldEmptyString = new String("Error:answer text cannot be empty");
+                                JOptionPane.showMessageDialog(null, questionTextFieldEmptyString);
                             }
                         }
                     });
@@ -409,11 +405,9 @@ public class QuestionFxView implements AbstractQuestionView {
                 } else if (updateAnsWordrb.isSelected()) {
                     theStage.hide();
                     //print all questions and their answers and allow user to choose a question by radio button
-                    BorderPane bpCase4 =new BorderPane();
-                    HBox hbCase4=new HBox();
-                    int numOfQuestions = 0;
-                    Label questionComboBoxLbl=new Label("Please choose a question by ID");
-                    ComboBox<Integer> questionIdComboBox=new ComboBox<>();
+                    BorderPane bpCase4 = new BorderPane();
+                    HBox hbCase4 = new HBox();
+                    Label questionComboBoxLbl = new Label("Please choose a question by ID");
 
                     for (viewListener l : allListeners) {
                         String allQuestions = l.showAllQuestionsInUI();
@@ -425,33 +419,72 @@ public class QuestionFxView implements AbstractQuestionView {
                         for (int i = 0; i < allId.size(); i++) {
                             cmdId.getItems().add(allId.get(i));
                         }
-                        Button chooseIdBtn=new Button();
+                        Button chooseIdBtn = new Button();
                         chooseIdBtn.setText("choose");
-                        hbCase4.getChildren().addAll(questionComboBoxLbl,cmdId,chooseIdBtn);
+                        hbCase4.getChildren().addAll(questionComboBoxLbl, cmdId, chooseIdBtn);
+                        hbCase4.setSpacing(5);
+                        hbCase4.setPadding(new Insets(20));
+                        Stage case4ComboBox = new Stage();
+                        case4ComboBox.setTitle("Choose ID");
+                        case4.setScene(new Scene(bpCase4));
+                        case4.show();
+                        case4ComboBox.setScene(new Scene(hbCase4));
+                        case4ComboBox.show();
+
+                        chooseIdBtn.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                case4ComboBox.hide();
+                                case4.hide();
+                                Label printSelectedQuestion = new Label(l.showChosenQuestion(cmdId.getValue()));
+                                GridPane selectAnswerGp = new GridPane();
+                                ComboBox<String> answersIndexComboBox = new ComboBox<>();
+                                //checks if answer is open
+                                if (l.addAmericanAnswersSizeToUI(cmdId.getValue()) == 0) {
+                                    TextField openAnswerTextField = new TextField();
+                                    Label openAnswerTextFieldLbl = new Label("Please enter a new answer");
+                                    selectAnswerGp.add(printSelectedQuestion, 0, 0);
+                                    selectAnswerGp.add(openAnswerTextField, 0, 2);
+                                    selectAnswerGp.add(openAnswerTextFieldLbl, 0, 1);
+                                    selectAnswerGp.setPadding(new Insets(20));
+                                    selectAnswerGp.setVgap(10);
+                                    Button openAnswerSubmitBtn=new Button("Submit new text");
+                                    selectAnswerGp.add(openAnswerSubmitBtn,0,4);
+                                    Scene selectAnswerScene = new Scene(selectAnswerGp);
+                                    Stage case4SelectedQuestion = new Stage();
+                                    case4SelectedQuestion.setScene(selectAnswerScene);
+                                    case4SelectedQuestion.setTitle("Select answer");
+                                    case4SelectedQuestion.show();
 
 
 
+
+                                    openAnswerSubmitBtn.setOnAction(new EventHandler<ActionEvent>() {
+                                        @Override
+                                        public void handle(ActionEvent actionEvent) {
+                                            if(openAnswerTextField.getText().isEmpty()){
+                                                JOptionPane.showMessageDialog(null,"Error:answer text cannot be empty");
+                                            }
+                                            else{
+                                                String result=new String(l.changeOpenQuestionAnswerUI(openAnswerTextField.getText(),cmdId.getValue()));
+                                                JOptionPane.showMessageDialog(null,result);
+                                                case4SelectedQuestion.hide();
+                                                theStage.show();
+
+
+                                            }
+                                        }
+                                    });
+
+
+
+
+                                }
+                            }
+                        });
                     }
-                    hbCase4.setSpacing(5);
-                    hbCase4.setPadding(new Insets(20));
-                    Stage case4comboBox=new Stage();
-                    case4comboBox.setTitle("Choose ID");
-                    case4.setScene(new Scene(bpCase4));
-                    case4.show();
-                    case4comboBox.setScene(new Scene(hbCase4));
-                    case4comboBox.show();
+                    //print answer/s of the question and allow users to choose with combo box
 
-
-
-
-
-
-
-                    //print answer/s of the question and allow users to chose with radio button
-
-
-
-                    //print result
 
                 } else if (deleteAns.isSelected()) {
                     JOptionPane.showMessageDialog(null, "  delete answer select");
@@ -500,8 +533,8 @@ public class QuestionFxView implements AbstractQuestionView {
     @Override
     public String addOpenQuestionToUI(String updateUserMessage) {
         return updateUserMessage;
-
-
     }
+
+
 }
 

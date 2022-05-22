@@ -9,14 +9,6 @@ import java.util.Vector;
 public class QuestionReservoir implements Serializable {
 
 
-
-
-
-
-
-
-
-
     private int numberOfQuestions = 0;
     private ArrayList<Questions> questionArray;
     private Exam manualExam;
@@ -34,27 +26,19 @@ public class QuestionReservoir implements Serializable {
 
     }
 
-    public void fireQuestionsTextToController(){
-        for(modelListener l: qrListeners){
 
-        }
-    }
-
-
-
-    public boolean changeAnswerWordingOfOpenQuestion(String newAnswerText, Questions editorQuestionAnswer, int numOfAnswer) {
+    public String changeAnswerWordingOfOpenQuestion(String newAnswerText, Questions editorQuestionAnswer) {
         if (editorQuestionAnswer instanceof OpenQuestions) {
             if (((OpenQuestions) editorQuestionAnswer).getAnswerText().equalsIgnoreCase(newAnswerText)) {
-                System.out.println("Can't change Answer text-There a Answer with the same text");
 
-                return false;
+                return "Can't change Answer text-There a Answer with the same text";
             } else {
                 ((OpenQuestions) editorQuestionAnswer).setAnswerText(newAnswerText);
-                return true;
+                return "Question answer changed successfully !";
             }
 
         }
-        return false;
+        return null;
     }
 
 
@@ -434,6 +418,15 @@ public class QuestionReservoir implements Serializable {
 
     public int getNumberOfQuestions() {
         return numberOfQuestions;
+    }
+
+    public Questions fetchQuestionById(int id){
+        for(int i=0;i<numberOfQuestions;i++){
+            if(questionArray.get(i).getQuestionId()==id){
+                return questionArray.get(i);
+            }
+        }
+        return null;
     }
 
     @Override

@@ -8,4 +8,5 @@ public interface AbstractQuestionView {
 
   String addOpenQuestionToUI(String updateUserMessage);
 
+
 }

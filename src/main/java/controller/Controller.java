@@ -1,5 +1,6 @@
 package controller;
 
+import id206214280_id316650399.AmericanQuestions;
 import id206214280_id316650399.QuestionReservoir;
 import listeners.modelListener;
 import listeners.viewListener;
@@ -32,6 +33,43 @@ public class Controller implements modelListener, viewListener {
     }
 
     @Override
+    public String returnChosenQuestion(int id) {
+        return qrModel.getQuestionArray().get(id).toString();
+    }
+
+    @Override
+    public int returnAnswersSizeFromModel(int id) {
+        if(qrModel.fetchQuestionById(id) instanceof AmericanQuestions){
+        return ((AmericanQuestions)qrModel.fetchQuestionById(id)).getNumOfAmericanAnswers();}
+        return 0;
+
+    }
+
+
+    @Override
+    public int addAmericanAnswersSizeToUI(int id) {
+        return returnAnswersSizeFromModel(id);
+    }
+
+
+    @Override
+    public String changeOpenQuestionAnswerInModel(String newAnswerText, int id) {
+        return qrModel.changeAnswerWordingOfOpenQuestion(newAnswerText,qrModel.fetchQuestionById(id));
+    }
+
+
+    @Override
+    public String changeOpenQuestionAnswerUI(String newAnswerText, int id) {
+        return changeOpenQuestionAnswerInModel(newAnswerText,id);
+    }
+
+
+    @Override
+    public String showChosenQuestion(int id) {
+        return returnChosenQuestion(id);
+    }
+
+    @Override
     public String addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray) {
       return  qrModel.addAmericanQuestion(text,answerArray,correctnessArray);
     }
@@ -51,16 +89,12 @@ public class Controller implements modelListener, viewListener {
         return allID;
     }
 
-    @Override
-    public int getSizeOfQuestionArray() {
-        return qrModel.getNumberOfQuestions();
-    }
 
     @Override
     public String ChangeWording(String text, int id) {
-
         return qrModel.changeQuestionWording(text,id);
     }
+
 
 
     @Override
