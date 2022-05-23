@@ -693,7 +693,26 @@ public class QuestionFxView implements AbstractQuestionView {
                                                        indexesOfQuestionsAndIndexesOfAnswers.add(k);
                                                        manualQuestionArrayList.add(indexesOfQuestionsAndIndexesOfAnswers);
                                                    }
-                                                   
+                                                   GridPane gpselectedQuestion=new GridPane();
+                                                   gpselectedQuestion.setPadding(new Insets((10)));
+                                                   gpselectedQuestion.setHgap(10);
+                                                   gpselectedQuestion.setHgap(10);
+                                                   ScrollPane scselect=new ScrollPane();
+                                                   scselect.setContent(gpselectedQuestion);
+
+                                                   qusstionSelectedSt.setScene(new Scene(scselect, 800, 500));
+                                                   ArrayList<Label> lblSelectedQ=new ArrayList<>();
+
+
+                                                   for (int i=0;i<manualQuestionArrayList.size();i++){
+//                                                       for(int j=0;j<manualQuestionArrayList.get(i).size();j++)
+                                                    String selectStr=   l.showChosenQuestion(manualQuestionArrayList.get(i).get(0));
+                                                       Label label=new Label(selectStr);
+                                                       lblSelectedQ.add(label);
+                                                       gpselectedQuestion.add(lblSelectedQ.get(i),0,i+1);
+
+
+                                                   }
                                                    qusstionSelectedSt.show();
                                                }
                                                System.out.println(manualQuestionArrayList.toString());
