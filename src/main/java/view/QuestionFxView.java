@@ -570,7 +570,16 @@ public class QuestionFxView implements AbstractQuestionView {
                     case5.setTitle("Delete answer of an american question");
                     case5.show();
                 } else if (manualExamrb.isSelected()) {
+                    theStage.hide();
+                    case6.show();
+                    case6.setTitle("Create Exam");
+                    GridPane gpRootCase6 = new GridPane();
+                    gpRootCase6.setPadding(new Insets((10)));
+                    gpRootCase6.setHgap(10);
+                    gpRootCase6.setHgap(10);
+
                     JOptionPane.showMessageDialog(null, "  manual exam select");
+
                 } else if (autoExamrb.isSelected()) {
                     JOptionPane.showMessageDialog(null, "  automatic exam select");
                 } else if (clonerb.isSelected()) {
@@ -601,6 +610,7 @@ public class QuestionFxView implements AbstractQuestionView {
         theStage.setScene(new Scene(gpRoot, 450, 350));
         //show stage
         theStage.show();
+
 
 
     }
