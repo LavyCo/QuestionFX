@@ -479,5 +479,12 @@ public class QuestionReservoir implements Serializable {
         return americanQuestionIDArray;
 
     }
+
+    public boolean checkIfAmerican(int id) {
+        if(this.fetchQuestionById(id) instanceof AmericanQuestions){
+            return true;
+        }
+        return false;
+    }
 }
 

@@ -31,4 +31,6 @@ public interface viewListener {
     String showAmericanQuestionUI();
 
     ArrayList<Integer> getAmericanQuestionIDArrayListUI();
+
+    boolean checkIfAmerican(int id);
 }

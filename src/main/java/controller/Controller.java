@@ -79,6 +79,12 @@ public class Controller implements modelListener, viewListener {
         return getAmericanQuestionIDArrayFromModel();
     }
 
+    @Override
+    public boolean checkIfAmerican(int id) {
+
+        return qrModel.checkIfAmerican(id);
+    }
+
 
     @Override
     public String getAmericanQuestionsStringFromModel() {

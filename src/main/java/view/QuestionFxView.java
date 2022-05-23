@@ -554,32 +554,173 @@ public class QuestionFxView implements AbstractQuestionView {
 
 
                 } else if (deleteAns.isSelected()) {
-                    BorderPane bpCase5=new BorderPane();
-                    ScrollPane spCase5=new ScrollPane(bpCase5);
-                    Scene case5Scene=new Scene(spCase5,700,700);
+                    theStage.hide();
+                    BorderPane bpCase5 = new BorderPane();
+                    ScrollPane spCase5 = new ScrollPane(bpCase5);
+                    Scene case5Scene = new Scene(bpCase5, 700, 500);
                     case5.setScene(case5Scene);
-                    for(viewListener l:allListeners){
-                        Label americanQuestionsLbl=new Label(l.showAmericanQuestionUI());
+                    Label selectQuestionLbl = new Label("Please select a Question by ID");
+                    Button selectQuestion = new Button("Select");
+                    ComboBox<Integer> americanQuestionIdCmb = new ComboBox<>();
+
+                    //First stage choose a question to delete its answer
+                    VBox vBoxForDataFromUser = null;
+                    VBox vBoxForQuestions = null;
+                    for (viewListener l : allListeners) {
+                        Label americanQuestionsLbl = new Label(l.showAmericanQuestionUI());
                         bpCase5.setCenter(americanQuestionsLbl);
-                        ComboBox<Integer> americanQuestionIdCmb=new ComboBox<>();
-                        ArrayList<Integer> americanQuestionIDArrayList=l.getAmericanQuestionIDArrayListUI();
-                        for(int i=0;i<americanQuestionIDArrayList.size();i++){
+                        ArrayList<Integer> americanQuestionIDArrayList = l.getAmericanQuestionIDArrayListUI();
+                        for (int i = 0; i < americanQuestionIDArrayList.size(); i++) {
                             americanQuestionIdCmb.getItems().add(americanQuestionIDArrayList.get(i));
                         }
-                        bpCase5.setBottom(americanQuestionIdCmb);
+                        vBoxForQuestions = new VBox(americanQuestionsLbl);
+                        vBoxForDataFromUser = new VBox(selectQuestionLbl, americanQuestionIdCmb, selectQuestion, buttonReturn);
                     }
+                    vBoxForDataFromUser.setAlignment(Pos.CENTER);
+                    vBoxForDataFromUser.setSpacing(50);
+                    vBoxForDataFromUser.setPadding(new Insets(20));
+                    spCase5.setContent(vBoxForQuestions);
+                    bpCase5.setRight(vBoxForDataFromUser);
+                    bpCase5.setCenter(spCase5);
+
+
+                    //SecondStage choose the answer to delete
+                    selectQuestion.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            if(americanQuestionIdCmb.getValue()!=null){
+                                case5.hide();
+                                Stage case5Stage2=new Stage();
+                                VBox answersVbox=new VBox();
+                                VBox chosenAnswerVbox=new VBox();
+                                BorderPane bpCase5Stage2=new BorderPane();
+                                bpCase5Stage2.setCenter(answersVbox);
+                                bpCase5Stage2.setRight(chosenAnswerVbox);
+                                Scene case5Scene2=new Scene(bpCase5Stage2);
+                                case5Stage2.setScene(case5Scene2);
+                                case5Stage2.show();
+
+                                Vector<RadioButton> chooseAnswerToDeleteRb=new Vector<>();
+                                //print the chosen question with its answers
+                                for(viewListener l:allListeners){
+                                    RadioButton generalRb=new RadioButton(""+l);
+                                    answersVbox.getChildren().add(generalRb);
+                                    chooseAnswerToDeleteRb.add(generalRb);
+                                }
+
+
+
+
+
+
+
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null,"Error:No question was chosen");
+                            }
+
+                        }
+                    });
+
+
                     case5.setTitle("Delete answer of an american question");
-                    case5.show();
-                } else if (manualExamrb.isSelected()) {
+                    case5.show();                } else if (manualExamrb.isSelected()) {
                     theStage.hide();
-                    case6.show();
-                    case6.setTitle("Create Exam");
+                    case6.setTitle("Create Manual Exam");
                     GridPane gpRootCase6 = new GridPane();
                     gpRootCase6.setPadding(new Insets((10)));
                     gpRootCase6.setHgap(10);
                     gpRootCase6.setHgap(10);
+                    Label selectQuestionlbl=new Label("select the Questions do you want in the test:");
+                    ScrollPane scCase6=new ScrollPane();
+                    scCase6.setContent(gpRootCase6);
+                    Button selectQuestions=new Button("Select Questions");
+                    for (viewListener l:allListeners){
 
-                    JOptionPane.showMessageDialog(null, "  manual exam select");
+                        String allQuestions= l.PrintAllQuestions();
+                        Label printAllQustionlbl=new Label(allQuestions);
+                      //  gpRootCase6.add(printAllQustionlbl,2,1);
+                       ArrayList <CheckBox> idCb=new ArrayList<>();
+                       ArrayList<Integer>id =l.GetAllIDfromModel();
+                       ArrayList<Label>questionsOneByOne=new ArrayList<>();
+                        System.out.println(id.toString());
+                        System.out.println(idCb.toString());
+                        selectQuestions.setDisable(true);
+
+
+
+
+
+                        for (int i=0;i<id.size();i++){
+                           String question= l.showChosenQuestion(id.get(i));
+                           Label showQuestionlbl=new Label(question);
+                           questionsOneByOne.add(showQuestionlbl);
+                           CheckBox checkBox=new CheckBox(""+id.get(i));
+                           idCb.add(checkBox);
+                           gpRootCase6.add(idCb.get(i),0,i+1);
+                           gpRootCase6.add(questionsOneByOne.get(i),2,i+1);
+                           Vector<Integer> countVector=new Vector<>();
+                            selectQuestions.setDisable(true);
+
+
+                            idCb.get(i).setOnAction(new EventHandler<ActionEvent>() {
+
+                               @Override
+
+                               public void handle(ActionEvent actionEvent) {
+
+                                   selectQuestions.setDisable(true);
+                                   for(int j=0;j<idCb.size();j++){
+
+                                       if(idCb.get(j).isSelected()){
+                                           selectQuestions.setDisable(false);
+                                       }
+
+                                       selectQuestions.setOnAction(new EventHandler<ActionEvent>() {
+                                     // if the question is American what comes after the 0 elements are the answers
+                                    //indexes
+                                    // this list holds arrays of the indexes
+                                    ArrayList<ArrayList<Integer>> manualQuestionArrayList = new ArrayList<ArrayList<Integer>>();
+                                    Stage qusstionSelectedSt=new Stage();
+                                           @Override
+                                           public void handle(ActionEvent actionEvent) {
+                                               case6.hide();
+                                               for(int k=0;k<idCb.size();k++){
+                                                   ArrayList<Integer> indexesOfQuestionsAndIndexesOfAnswers = new ArrayList<Integer>();
+
+                                                   if(idCb.get(k).isSelected()){
+                                                       //if question is open
+                                                       indexesOfQuestionsAndIndexesOfAnswers.add(k);
+                                                       manualQuestionArrayList.add(indexesOfQuestionsAndIndexesOfAnswers);
+                                                   }
+                                                   
+                                                   qusstionSelectedSt.show();
+                                               }
+                                               System.out.println(manualQuestionArrayList.toString());
+
+
+                                           }
+                                       });
+
+                                   }
+
+
+
+
+                               }
+                           });
+
+
+                       }
+
+                    }
+
+                    case6.setScene(new Scene(scCase6, 800, 500));
+                    gpRootCase6.add(selectQuestionlbl,2,0);
+                    gpRootCase6.add(selectQuestions,2,11);
+                    gpRootCase6.add(buttonReturn,1,11);
+                    case6.show();
+                   // JOptionPane.showMessageDialog(null, "  manual exam select");
 
                 } else if (autoExamrb.isSelected()) {
                     JOptionPane.showMessageDialog(null, "  automatic exam select");

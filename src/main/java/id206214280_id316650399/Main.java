@@ -384,7 +384,7 @@
 //
 //        for (int i = 0; i < numOfQuestionsInTheTest; i++) {
 //            System.out.println(
-//                    "Hi please choose from below the id of the question from the list of the questions for the test:");
+//            "Hi please choose from below the id of the question from the list of the questions for the test:");
 //            // let user choose a question id by input
 //            int expId = exceptionId(qr1);
 //            for (int j = 0; j < qr1.getNumberOfQuestions(); j++) {
