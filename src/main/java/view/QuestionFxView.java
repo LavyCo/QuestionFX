@@ -405,6 +405,7 @@ public class QuestionFxView implements AbstractQuestionView {
                     spCase4.setContent(bpCase4);
                     HBox hbCase4 = new HBox();
                     bpCase4.setBottom(hbCase4);
+                    System.out.println("sss");
                     Label questionComboBoxLbl = new Label("Please choose a question by ID");
                     for (viewListener l : allListeners) {
                         String allQuestions = l.showAllQuestionsInUI();
