@@ -296,8 +296,8 @@ public class QuestionReservoir implements Serializable {
         return null;
     }
 
-    public String addAmericanQuestion(String questionText, ArrayList<String> answersArray, ArrayList<Boolean> correctnessArray) {
-        String updateUserMessage="Error";
+    public void addAmericanQuestion(String questionText, ArrayList<String> answersArray, ArrayList<Boolean> correctnessArray) {
+
         Set<AmericanAnswer> answerArrayList = new Set<>();
         for (int i = 0; i < answersArray.size(); i++) {
             answerArrayList.add(new AmericanAnswer(answersArray.get(i), correctnessArray.get(i)));
@@ -306,10 +306,13 @@ public class QuestionReservoir implements Serializable {
         questionArray.add(newAmericanQuestion);
         numberOfQuestions++;
         System.out.println("American Question added");
-        updateUserMessage="American Question added";
+
+        for (modelListener l:qrListeners){
+          l.fireUpdateUserAddAmerican("American Question added");
+        }
 
 
-        return updateUserMessage;
+
 
 
     }
@@ -434,6 +437,9 @@ public class QuestionReservoir implements Serializable {
         sb.append("The number of questions in the Reservoir is: " + numberOfQuestions + "\n" + "\nThe questions are:\n");
         for (int i = 0; i < numberOfQuestions; i++) {
             sb.append(questionArray.get(i).toString());
+        }
+        for (modelListener l:qrListeners){
+            l.fireSbToString(sb.toString());
         }
         return sb.toString();
     }

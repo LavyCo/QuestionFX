@@ -56,15 +56,15 @@ public class QuestionFxView implements AbstractQuestionView {
         clonerb.setToggleGroup(tglOpt);
         saveExitrb.setToggleGroup(tglOpt);
         //change color text
-        printrb.setTextFill(Color.RED);
-        addQrb.setTextFill(Color.RED);
-        changeWordQrb.setTextFill(Color.RED);
-        updateAnsWordrb.setTextFill(Color.RED);
-        deleteAns.setTextFill(Color.RED);
-        manualExamrb.setTextFill(Color.RED);
-        autoExamrb.setTextFill(Color.RED);
-        clonerb.setTextFill(Color.RED);
-        saveExitrb.setTextFill(Color.RED);
+        printrb.setTextFill(Color.GREEN);
+        addQrb.setTextFill(Color.GREEN);
+        changeWordQrb.setTextFill(Color.GREEN);
+        updateAnsWordrb.setTextFill(Color.GREEN);
+        deleteAns.setTextFill(Color.GREEN);
+        manualExamrb.setTextFill(Color.GREEN);
+        autoExamrb.setTextFill(Color.GREEN);
+        clonerb.setTextFill(Color.GREEN);
+        saveExitrb.setTextFill(Color.GREEN);
 
         //connect between the radio button to select button
         button.setOnAction(new EventHandler<ActionEvent>() {
@@ -183,8 +183,9 @@ public class QuestionFxView implements AbstractQuestionView {
                         public void handle(ActionEvent actionEvent) {
 
                             for (viewListener l : allListeners) {
-                                String americanMassege = l.addAmericanQuestion(questionTextField.getText(), answerArray, correctnessArray);
-                                JOptionPane.showMessageDialog(null, americanMassege);
+                                 l.addAmericanQuestion(questionTextField.getText(), answerArray, correctnessArray);
+
+
                             }
                             addAmericanQuestionbt.setDisable(true);
                         }
@@ -785,6 +786,17 @@ public class QuestionFxView implements AbstractQuestionView {
     @Override
     public String addOpenQuestionToUI(String updateUserMessage) {
         return updateUserMessage;
+    }
+
+    @Override
+    public void showAmricanQuestionMsg(String american_question_added) {
+        JOptionPane.showMessageDialog(null,american_question_added);
+
+    }
+
+    @Override
+    public void printAllQuestionstoString(String allQuestions) {
+        JOptionPane.showMessageDialog(null,allQuestions);
     }
 
 

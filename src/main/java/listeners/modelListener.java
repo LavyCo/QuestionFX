@@ -15,4 +15,7 @@ public interface modelListener {
     String getAmericanQuestionsStringFromModel();
     ArrayList getAmericanQuestionIDArrayFromModel();
 
+    void fireUpdateUserAddAmerican(String american_question_added);
+
+    void fireSbToString(String toString);
 }

@@ -1,6 +1,5 @@
 package view;
 
-import controller.Controller;
 import listeners.viewListener;
 
 public interface AbstractQuestionView {
@@ -9,4 +8,7 @@ public interface AbstractQuestionView {
   String addOpenQuestionToUI(String updateUserMessage);
 
 
+  void showAmricanQuestionMsg(String american_question_added);
+
+  void printAllQuestionstoString(String allQuestions);
 }

@@ -96,6 +96,17 @@ public class Controller implements modelListener, viewListener {
         return qrModel.fireAmericanQuestionIDArrayList();
     }
 
+    @Override
+    public void fireUpdateUserAddAmerican(String american_question_added) {
+        questionView.showAmricanQuestionMsg(american_question_added);
+    }
+
+    @Override
+    public void fireSbToString(String toString) {
+        questionView.printAllQuestionstoString(toString);
+
+    }
+
 
     @Override
     public int sendNumOfAnswersFromModel(int id) {
@@ -123,8 +134,8 @@ public class Controller implements modelListener, viewListener {
     }
 
     @Override
-    public String addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray) {
-      return  qrModel.addAmericanQuestion(text,answerArray,correctnessArray);
+    public void addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray) {
+      qrModel.addAmericanQuestion(text,answerArray,correctnessArray);
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface viewListener {
 
     String addOpenQuestion(String questionText, String answerText);
 
-    String addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray);
+    void addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray);
 
     String PrintAllQuestions();
 
