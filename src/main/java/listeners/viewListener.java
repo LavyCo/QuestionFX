@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public interface viewListener {
 
-    String showAllQuestionsInUI();
+    void showAllQuestionsInUI();
 
-    String addOpenQuestion(String questionText, String answerText);
+    void addOpenQuestion(String questionText, String answerText);
 
     void addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray);
 

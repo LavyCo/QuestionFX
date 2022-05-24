@@ -260,15 +260,15 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-    public String addOpenQuestion(String questionText, String answerText) {
+    public void addOpenQuestion(String questionText, String answerText) {
         String updateUserMessage="Error";
         OpenQuestions newQuestion = new OpenQuestions(questionText, answerText);
+
         if (this.equals(newQuestion.getQuestionText())) {
             System.out.println("Cannot add:This question is already in the reservoir");
             updateUserMessage="Cannot add:This question is already in the reservoir";
             //decreasing id counter by 1
             newQuestion.decreaseIdCounter();
-            return updateUserMessage;
 
 
         }
@@ -282,18 +282,16 @@ public class QuestionReservoir implements Serializable {
                     updateUserMessage="Cannot add:This question is already in the reservoir";
                     //decreasing id counter by 1
                     newQuestion.decreaseIdCounter();
-                    return updateUserMessage;
-
                 }
             }
+
             questionArray.add(newOpenQuestion);
             numberOfQuestions++;
             updateUserMessage="Successful";
-            return updateUserMessage;
 
 
         }
-        return null;
+
     }
 
     public void addAmericanQuestion(String questionText, ArrayList<String> answersArray, ArrayList<Boolean> correctnessArray) {
@@ -307,8 +305,9 @@ public class QuestionReservoir implements Serializable {
         numberOfQuestions++;
         System.out.println("American Question added");
 
+
         for (modelListener l:qrListeners){
-          l.fireUpdateUserAddAmerican("American Question added");
+          l.fireUpdateUserAddedQuestion("American Question added");
         }
 
 
@@ -402,8 +401,6 @@ public class QuestionReservoir implements Serializable {
             } while (!hasChanged);
         }
         return randomNumberArray;
-
-
     }
 
     public Exam getManualExam() {
@@ -439,7 +436,7 @@ public class QuestionReservoir implements Serializable {
             sb.append(questionArray.get(i).toString());
         }
         for (modelListener l:qrListeners){
-            l.fireSbToString(sb.toString());
+            l.fireQuestionString(sb.toString());
         }
         return sb.toString();
     }

@@ -8,7 +8,7 @@ public interface AbstractQuestionView {
   String addOpenQuestionToUI(String updateUserMessage);
 
 
-  void showAmricanQuestionMsg(String american_question_added);
+  void showAmericanQuestionMsg(String american_question_added);
 
   void printAllQuestionstoString(String allQuestions);
 }

@@ -113,26 +113,9 @@ public class QuestionFxView implements AbstractQuestionView {
                 if (printrb.isSelected()) {
                     theStage.hide();
                     for (viewListener l : allListeners) {
-                        BorderPane borderPane = new BorderPane();
-                        ScrollPane scrollPane = new ScrollPane();
-                        String allQuestionsPrint = l.showAllQuestionsInUI();
-                        Label printLbl = new Label(allQuestionsPrint);
-                        case1.setTitle("All Questions");
-                        borderPane.setCenter(printLbl);
-                        scrollPane.setContent(borderPane);
-                        case1.setScene(new Scene(scrollPane, 750, 750));
-                        Label allQuestionLbl = new Label("The questions are:");
-                        borderPane.setTop(allQuestionLbl);
-                        VBox vBoxReturnButton = new VBox(buttonReturn);
-                        vBoxReturnButton.setAlignment(Pos.CENTER);
-                        buttonReturn.setText("Return to menu");
-                        borderPane.setBottom(vBoxReturnButton);
-                        case1.show();
-
+                        l.showAllQuestionsInUI();
                     }
 
-
-                    //   JOptionPane.showMessageDialog(null, " print select");
                 } else if (addQrb.isSelected()) {
                     theStage.hide();
                     case2.setTitle("Add Question");
@@ -149,8 +132,6 @@ public class QuestionFxView implements AbstractQuestionView {
                     textQuestion.setVisible(false);
                     TextField questionTextField = new TextField();
                     questionTextField.setVisible(false);
-
-
                     Button addAmricanQuestionText = new Button("Add Question Text");
                     Label countOfQuestionslbl = new Label("Choose How Many Answers Do You Want: ");
                     countOfQuestionslbl.setVisible(false);
@@ -158,7 +139,6 @@ public class QuestionFxView implements AbstractQuestionView {
                     for (int i = 2; i <= 12; i++) {
                         cmdCountOfQuestions.getItems().add(i);
                     }
-
                     cmdCountOfQuestions.setVisible(false);
                     Label andTextLbl = new Label("Type a Text Answer:");
                     TextField answerTextField = new TextField();
@@ -178,14 +158,10 @@ public class QuestionFxView implements AbstractQuestionView {
                     Button addAmericanQuestionbt = new Button("Add Question");
                     addAmericanQuestionbt.setVisible(false);
                     addAmericanQuestionbt.setOnAction(new EventHandler<ActionEvent>() {
-
                         @Override
                         public void handle(ActionEvent actionEvent) {
-
                             for (viewListener l : allListeners) {
-                                 l.addAmericanQuestion(questionTextField.getText(), answerArray, correctnessArray);
-
-
+                                l.addAmericanQuestion(questionTextField.getText(), answerArray, correctnessArray);
                             }
                             addAmericanQuestionbt.setDisable(true);
                         }
@@ -289,8 +265,7 @@ public class QuestionFxView implements AbstractQuestionView {
                             if (!answerTextField.getText().isEmpty()) {
                                 answerTextField.setDisable(true);
                                 for (viewListener l : allListeners) {
-                                    String addOpenUpdate = l.addOpenQuestion(questionTextField.getText(), answerTextField.getText());
-                                    JOptionPane.showMessageDialog(null, addOpenUpdate);
+                                    l.addOpenQuestion(questionTextField.getText(), answerTextField.getText());
                                 }
                             } else {
                                 String questionTextFieldEmptyString = new String("Error:answer text cannot be empty");
@@ -402,16 +377,16 @@ public class QuestionFxView implements AbstractQuestionView {
                     theStage.hide();
                     //print all questions and their answers and allow user to choose a question by radio button
                     BorderPane bpCase4 = new BorderPane();
-                    ScrollPane spCase4=new ScrollPane(bpCase4);
+                    ScrollPane spCase4 = new ScrollPane(bpCase4);
                     spCase4.setContent(bpCase4);
                     HBox hbCase4 = new HBox();
                     bpCase4.setBottom(hbCase4);
                     System.out.println("sss");
                     Label questionComboBoxLbl = new Label("Please choose a question by ID");
                     for (viewListener l : allListeners) {
-                        String allQuestions = l.showAllQuestionsInUI();
-                        Label allQustionslbl = new Label(allQuestions);
-                        bpCase4.setCenter(allQustionslbl);
+                        l.showAllQuestionsInUI();
+//                        Label allQustionslbl = new Label(allQuestions);
+//                        bpCase4.setCenter(allQustionslbl);
                         ArrayList<Integer> allId;
                         allId = l.GetAllIDfromModel();
                         ComboBox<Integer> cmdId = new ComboBox<>();
@@ -425,7 +400,7 @@ public class QuestionFxView implements AbstractQuestionView {
 
                         hbCase4.setPadding(new Insets(20));
                         case4.setTitle("Change answer wording");
-                        case4.setScene(new Scene(spCase4,700,700));
+                        case4.setScene(new Scene(spCase4, 700, 700));
                         case4.show();
 
                         chooseIdBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -589,35 +564,29 @@ public class QuestionFxView implements AbstractQuestionView {
                     selectQuestion.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
-                            if(americanQuestionIdCmb.getValue()!=null){
+                            if (americanQuestionIdCmb.getValue() != null) {
                                 case5.hide();
-                                Stage case5Stage2=new Stage();
-                                VBox answersVbox=new VBox();
-                                VBox chosenAnswerVbox=new VBox();
-                                BorderPane bpCase5Stage2=new BorderPane();
+                                Stage case5Stage2 = new Stage();
+                                VBox answersVbox = new VBox();
+                                VBox chosenAnswerVbox = new VBox();
+                                BorderPane bpCase5Stage2 = new BorderPane();
                                 bpCase5Stage2.setCenter(answersVbox);
                                 bpCase5Stage2.setRight(chosenAnswerVbox);
-                                Scene case5Scene2=new Scene(bpCase5Stage2);
+                                Scene case5Scene2 = new Scene(bpCase5Stage2);
                                 case5Stage2.setScene(case5Scene2);
                                 case5Stage2.show();
 
-                                Vector<RadioButton> chooseAnswerToDeleteRb=new Vector<>();
+                                Vector<RadioButton> chooseAnswerToDeleteRb = new Vector<>();
                                 //print the chosen question with its answers
-                                for(viewListener l:allListeners){
-                                    RadioButton generalRb=new RadioButton(""+l);
+                                for (viewListener l : allListeners) {
+                                    RadioButton generalRb = new RadioButton("" + l);
                                     answersVbox.getChildren().add(generalRb);
                                     chooseAnswerToDeleteRb.add(generalRb);
                                 }
 
 
-
-
-
-
-
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(null,"Error:No question was chosen");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error:No question was chosen");
                             }
 
                         }
@@ -625,122 +594,119 @@ public class QuestionFxView implements AbstractQuestionView {
 
 
                     case5.setTitle("Delete answer of an american question");
-                    case5.show();                } else if (manualExamrb.isSelected()) {
+                    case5.show();
+                } else if (manualExamrb.isSelected()) {
                     theStage.hide();
                     case6.setTitle("Create Manual Exam");
                     GridPane gpRootCase6 = new GridPane();
                     gpRootCase6.setPadding(new Insets((10)));
                     gpRootCase6.setHgap(10);
                     gpRootCase6.setHgap(10);
-                    Label selectQuestionlbl=new Label("select the Questions do you want in the test:");
-                    ScrollPane scCase6=new ScrollPane();
+                    Label selectQuestionlbl = new Label("select the Questions do you want in the test:");
+                    ScrollPane scCase6 = new ScrollPane();
                     scCase6.setContent(gpRootCase6);
-                    Button selectQuestions=new Button("Select Questions");
-                    for (viewListener l:allListeners){
+                    Button selectQuestions = new Button("Select Questions");
+                    for (viewListener l : allListeners) {
 
-                        String allQuestions= l.PrintAllQuestions();
-                        Label printAllQustionlbl=new Label(allQuestions);
-                      //  gpRootCase6.add(printAllQustionlbl,2,1);
-                       ArrayList <CheckBox> idCb=new ArrayList<>();
-                       ArrayList<Integer>id =l.GetAllIDfromModel();
-                       ArrayList<Label>questionsOneByOne=new ArrayList<>();
+                        String allQuestions = l.PrintAllQuestions();
+                        Label printAllQustionlbl = new Label(allQuestions);
+                        //  gpRootCase6.add(printAllQustionlbl,2,1);
+                        ArrayList<CheckBox> idCb = new ArrayList<>();
+                        ArrayList<Integer> id = l.GetAllIDfromModel();
+                        ArrayList<Label> questionsOneByOne = new ArrayList<>();
                         System.out.println(id.toString());
                         System.out.println(idCb.toString());
                         selectQuestions.setDisable(true);
 
 
-
-
-
-                        for (int i=0;i<id.size();i++){
-                           String question= l.showChosenQuestion(id.get(i));
-                           Label showQuestionlbl=new Label(question);
-                           questionsOneByOne.add(showQuestionlbl);
-                           CheckBox checkBox=new CheckBox(""+id.get(i));
-                           idCb.add(checkBox);
-                           gpRootCase6.add(idCb.get(i),0,i+1);
-                           gpRootCase6.add(questionsOneByOne.get(i),2,i+1);
-                           Vector<Integer> countVector=new Vector<>();
+                        for (int i = 0; i < id.size(); i++) {
+                            String question = l.showChosenQuestion(id.get(i));
+                            Label showQuestionlbl = new Label(question);
+                            questionsOneByOne.add(showQuestionlbl);
+                            CheckBox checkBox = new CheckBox("" + id.get(i));
+                            idCb.add(checkBox);
+                            gpRootCase6.add(idCb.get(i), 0, i + 1);
+                            gpRootCase6.add(questionsOneByOne.get(i), 2, i + 1);
+                            Vector<Integer> countVector = new Vector<>();
                             selectQuestions.setDisable(true);
 
 
                             idCb.get(i).setOnAction(new EventHandler<ActionEvent>() {
 
-                               @Override
+                                @Override
 
-                               public void handle(ActionEvent actionEvent) {
+                                public void handle(ActionEvent actionEvent) {
 
-                                   selectQuestions.setDisable(true);
-                                   for(int j=0;j<idCb.size();j++){
+                                    selectQuestions.setDisable(true);
+                                    for (int j = 0; j < idCb.size(); j++) {
 
-                                       if(idCb.get(j).isSelected()){
-                                           selectQuestions.setDisable(false);
-                                       }
+                                        if (idCb.get(j).isSelected()) {
+                                            selectQuestions.setDisable(false);
+                                        }
 
-                                       selectQuestions.setOnAction(new EventHandler<ActionEvent>() {
-                                     // if the question is American what comes after the 0 elements are the answers
-                                    //indexes
-                                    // this list holds arrays of the indexes
-                                    ArrayList<ArrayList<Integer>> manualQuestionArrayList = new ArrayList<ArrayList<Integer>>();
-                                    Stage qusstionSelectedSt=new Stage();
-                                           @Override
-                                           public void handle(ActionEvent actionEvent) {
-                                               case6.hide();
-                                               for(int k=0;k<idCb.size();k++){
-                                                   ArrayList<Integer> indexesOfQuestionsAndIndexesOfAnswers = new ArrayList<Integer>();
+                                        selectQuestions.setOnAction(new EventHandler<ActionEvent>() {
+                                            // if the question is American what comes after the 0 elements are the answers
+                                            //indexes
+                                            // this list holds arrays of the indexes
+                                            ArrayList<ArrayList<Integer>> manualQuestionArrayList = new ArrayList<ArrayList<Integer>>();
+                                            Stage qusstionSelectedSt = new Stage();
 
-                                                   if(idCb.get(k).isSelected()){
-                                                       //if question is open
-                                                       indexesOfQuestionsAndIndexesOfAnswers.add(k);
-                                                       manualQuestionArrayList.add(indexesOfQuestionsAndIndexesOfAnswers);
-                                                   }
-                                                   GridPane gpselectedQuestion=new GridPane();
-                                                   gpselectedQuestion.setPadding(new Insets((10)));
-                                                   gpselectedQuestion.setHgap(10);
-                                                   gpselectedQuestion.setHgap(10);
-                                                   ScrollPane scselect=new ScrollPane();
-                                                   scselect.setContent(gpselectedQuestion);
+                                            @Override
+                                            public void handle(ActionEvent actionEvent) {
+                                                case6.hide();
+                                                for (int k = 0; k < idCb.size(); k++) {
+                                                    ArrayList<Integer> indexesOfQuestionsAndIndexesOfAnswers = new ArrayList<Integer>();
 
-                                                   qusstionSelectedSt.setScene(new Scene(scselect, 800, 500));
-                                                   ArrayList<Label> lblSelectedQ=new ArrayList<>();
+                                                    if (idCb.get(k).isSelected()) {
+                                                        //if question is open
+                                                        indexesOfQuestionsAndIndexesOfAnswers.add(k);
+                                                        manualQuestionArrayList.add(indexesOfQuestionsAndIndexesOfAnswers);
+                                                    }
+                                                    GridPane gpselectedQuestion = new GridPane();
+                                                    gpselectedQuestion.setPadding(new Insets((10)));
+                                                    gpselectedQuestion.setHgap(10);
+                                                    gpselectedQuestion.setHgap(10);
+                                                    ScrollPane scselect = new ScrollPane();
+                                                    scselect.setContent(gpselectedQuestion);
+
+                                                    qusstionSelectedSt.setScene(new Scene(scselect, 800, 500));
+                                                    ArrayList<Label> lblSelectedQ = new ArrayList<>();
 
 
-                                                   for (int i=0;i<manualQuestionArrayList.size();i++){
+                                                    for (int i = 0; i < manualQuestionArrayList.size(); i++) {
 //                                                       for(int j=0;j<manualQuestionArrayList.get(i).size();j++)
-                                                    String selectStr=   l.showChosenQuestion(manualQuestionArrayList.get(i).get(0));
-                                                       Label label=new Label(selectStr);
-                                                       lblSelectedQ.add(label);
-                                                       gpselectedQuestion.add(lblSelectedQ.get(i),0,i+1);
+                                                        String selectStr = l.showChosenQuestion(manualQuestionArrayList.get(i).get(0));
+                                                        Label label = new Label(selectStr);
+                                                        lblSelectedQ.add(label);
+                                                        gpselectedQuestion.add(lblSelectedQ.get(i), 0, i + 1);
 
 
-                                                   }
-                                                   qusstionSelectedSt.show();
-                                               }
-                                               System.out.println(manualQuestionArrayList.toString());
+                                                    }
+                                                    qusstionSelectedSt.show();
+                                                }
+                                                System.out.println(manualQuestionArrayList.toString());
 
 
-                                           }
-                                       });
+                                            }
+                                        });
 
-                                   }
-
-
+                                    }
 
 
-                               }
-                           });
+                                }
+                            });
 
 
-                       }
+                        }
 
                     }
 
                     case6.setScene(new Scene(scCase6, 800, 500));
-                    gpRootCase6.add(selectQuestionlbl,2,0);
-                    gpRootCase6.add(selectQuestions,2,11);
-                    gpRootCase6.add(buttonReturn,1,11);
+                    gpRootCase6.add(selectQuestionlbl, 2, 0);
+                    gpRootCase6.add(selectQuestions, 2, 11);
+                    gpRootCase6.add(buttonReturn, 1, 11);
                     case6.show();
-                   // JOptionPane.showMessageDialog(null, "  manual exam select");
+                    // JOptionPane.showMessageDialog(null, "  manual exam select");
 
                 } else if (autoExamrb.isSelected()) {
                     JOptionPane.showMessageDialog(null, "  automatic exam select");
@@ -774,7 +740,6 @@ public class QuestionFxView implements AbstractQuestionView {
         theStage.show();
 
 
-
     }
 
 
@@ -789,14 +754,30 @@ public class QuestionFxView implements AbstractQuestionView {
     }
 
     @Override
-    public void showAmricanQuestionMsg(String american_question_added) {
-        JOptionPane.showMessageDialog(null,american_question_added);
-
+    public void showAmericanQuestionMsg(String result) {
+        JOptionPane.showMessageDialog(null, result);
     }
+
 
     @Override
     public void printAllQuestionstoString(String allQuestions) {
-        JOptionPane.showMessageDialog(null,allQuestions);
+        BorderPane borderPane = new BorderPane();
+        ScrollPane scrollPane = new ScrollPane();
+        Label printLbl = new Label(allQuestions);
+        Scene case1scene=new Scene(scrollPane);
+        Stage case1= new Stage();
+        case1.setScene(case1scene);
+        case1.setTitle("All Questions");
+        borderPane.setCenter(printLbl);
+        scrollPane.setContent(borderPane);
+        Label allQuestionLbl = new Label("The questions are:");
+        borderPane.setTop(allQuestionLbl);
+        Button buttonReturn=new Button("Return to menu");
+        VBox vBoxReturnButton = new VBox(buttonReturn);
+        vBoxReturnButton.setAlignment(Pos.CENTER);
+        borderPane.setBottom(vBoxReturnButton);
+        case1.show();
+
     }
 
 

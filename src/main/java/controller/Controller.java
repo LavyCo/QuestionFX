@@ -22,14 +22,14 @@ public class Controller implements modelListener, viewListener {
 
 
     @Override
-    public String showAllQuestionsInUI() {
+    public void showAllQuestionsInUI() {
+        qrModel.toString();
 
-        return qrModel.toString() ;
     }
 
     @Override
-    public String addOpenQuestion(String questionText, String answerText) {
-       return  qrModel.addOpenQuestion(questionText,answerText);
+    public void addOpenQuestion(String questionText, String answerText) {
+         qrModel.addOpenQuestion(questionText,answerText);
     }
 
     @Override
@@ -97,14 +97,13 @@ public class Controller implements modelListener, viewListener {
     }
 
     @Override
-    public void fireUpdateUserAddAmerican(String american_question_added) {
-        questionView.showAmricanQuestionMsg(american_question_added);
+    public void fireUpdateUserAddedQuestion(String american_question_added) {
+        questionView.showAmericanQuestionMsg(american_question_added);
     }
 
     @Override
-    public void fireSbToString(String toString) {
+    public void fireQuestionString(String toString) {
         questionView.printAllQuestionstoString(toString);
-
     }
 
 
