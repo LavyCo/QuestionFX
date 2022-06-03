@@ -15,7 +15,7 @@ public class QuestionReservoir implements Serializable {
     private Exam manualExamClone;
     private Exam automaticExam;
     private Exam automaticExamClone;
-    private Vector <modelListener> qrListeners;
+    private Vector<modelListener> qrListeners;
 
 
     public QuestionReservoir() {
@@ -101,12 +101,12 @@ public class QuestionReservoir implements Serializable {
 
     public String changeQuestionWording(String newQuestionText, int choosenId) {
         // loop that checks if the question exists
-        String msg=null;
+        String msg = null;
         Questions testQuestionText = new Questions(newQuestionText);
         for (int i = 0; i < this.numberOfQuestions; i++) {
             if (testQuestionText.equals(this.questionArray.get(i))) {
                 System.out.println("Can't change question text-There a Question with the same text");
-              return   msg="Can't change question text-There a Question with the same text";
+                return msg = "Can't change question text-There a Question with the same text";
 
             }
 
@@ -119,7 +119,7 @@ public class QuestionReservoir implements Serializable {
 
         }
         System.out.println("Question wording changed succesfully!");
-       return msg="Question wording changed succesfully!";
+        return msg = "Question wording changed succesfully!";
 
     }
 
@@ -238,7 +238,7 @@ public class QuestionReservoir implements Serializable {
             manualExamClone = manualExam.clone();
             System.out.println("Manual exam cloned");
             System.out.println(manualExamClone.toString());
-            manualExam=automaticExam;
+            manualExam = automaticExam;
             System.out.println(manualExam.toString());
             System.out.println(manualExamClone.toString());
             return true;
@@ -261,14 +261,19 @@ public class QuestionReservoir implements Serializable {
 
 
     public void addOpenQuestion(String questionText, String answerText) {
-        String updateUserMessage="Error";
+        String updateUserMessage = "Error";
         OpenQuestions newQuestion = new OpenQuestions(questionText, answerText);
 
         if (this.equals(newQuestion.getQuestionText())) {
             System.out.println("Cannot add:This question is already in the reservoir");
-            updateUserMessage="Cannot add:This question is already in the reservoir";
+            updateUserMessage = "Cannot add:This question is already in the reservoir";
             //decreasing id counter by 1
             newQuestion.decreaseIdCounter();
+
+            for (modelListener l : qrListeners) {
+                l.fireOpenQuestionAddedResult(updateUserMessage);
+
+            }
 
 
         }
@@ -276,42 +281,50 @@ public class QuestionReservoir implements Serializable {
 
         if (newQuestion instanceof OpenQuestions) {
             Questions newOpenQuestion = newQuestion;
-            for (int i = 0; i < numberOfQuestions; i++) {
-                if (questionArray.get(i).equals(newOpenQuestion)) {
-                    System.out.println("Cannot add:This question is already in the reservoir");
-                    updateUserMessage="Cannot add:This question is already in the reservoir";
-                    //decreasing id counter by 1
-                    newQuestion.decreaseIdCounter();
+            if (questionArray.contains(newOpenQuestion)) {
+                System.out.println("Cannot add:This question is already in the reservoir");
+                updateUserMessage = "Cannot add:This question is already in the reservoir";
+                //decreasing id counter by 1
+                newQuestion.decreaseIdCounter();
+                for (modelListener l : qrListeners) {
+                    l.fireOpenQuestionAddedResult(updateUserMessage);
+                }
+
+            } else {
+                questionArray.add(newOpenQuestion);
+                numberOfQuestions++;
+                updateUserMessage = "Successful";
+                for (modelListener l : qrListeners) {
+                    l.fireOpenQuestionAddedResult(updateUserMessage);
                 }
             }
 
-            questionArray.add(newOpenQuestion);
-            numberOfQuestions++;
-            updateUserMessage="Successful";
-
-
         }
-
     }
 
-    public void addAmericanQuestion(String questionText, ArrayList<String> answersArray, ArrayList<Boolean> correctnessArray) {
+    public void addAmericanQuestion(String
+                                            questionText, ArrayList<String> answersArray, ArrayList<Boolean> correctnessArray) {
+
 
         Set<AmericanAnswer> answerArrayList = new Set<>();
         for (int i = 0; i < answersArray.size(); i++) {
             answerArrayList.add(new AmericanAnswer(answersArray.get(i), correctnessArray.get(i)));
         }
         AmericanQuestions newAmericanQuestion = new AmericanQuestions(questionText, answerArrayList);
-        questionArray.add(newAmericanQuestion);
-        numberOfQuestions++;
-        System.out.println("American Question added");
+        if (questionArray.contains(newAmericanQuestion)) {
+            for (modelListener l : qrListeners) {
+                l.fireAmericanQuestionAddedResult("Question wasn't added:Already in the reservoir");
+            }
 
+        } else {
+            questionArray.add(newAmericanQuestion);
+            numberOfQuestions++;
+            for (modelListener l : qrListeners) {
+                l.fireAmericanQuestionAddedResult("Question added successfully!");
+            }
 
-        for (modelListener l:qrListeners){
-          l.fireUpdateUserAddedQuestion("American Question added");
+            System.out.println("American Question added");
         }
-
-
-
 
 
     }
@@ -329,7 +342,8 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-    public void manualExamCreate(int numOfQuestInTest, ArrayList<ArrayList<Integer>> manualQuestionArrayList) throws FileNotFoundException {
+    public void manualExamCreate(int numOfQuestInTest, ArrayList<ArrayList<Integer>> manualQuestionArrayList) throws
+            FileNotFoundException {
 
         for (int arrayIndex = 0; arrayIndex < numOfQuestInTest; arrayIndex++) {
             for (int allQuestionsIndex = 0; allQuestionsIndex < numberOfQuestions; allQuestionsIndex++) {
@@ -419,9 +433,9 @@ public class QuestionReservoir implements Serializable {
         return numberOfQuestions;
     }
 
-    public Questions fetchQuestionById(int id){
-        for(int i=0;i<numberOfQuestions;i++){
-            if(questionArray.get(i).getQuestionId()==id){
+    public Questions fetchQuestionById(int id) {
+        for (int i = 0; i < numberOfQuestions; i++) {
+            if (questionArray.get(i).getQuestionId() == id) {
                 return questionArray.get(i);
             }
         }
@@ -435,29 +449,29 @@ public class QuestionReservoir implements Serializable {
         for (int i = 0; i < numberOfQuestions; i++) {
             sb.append(questionArray.get(i).toString());
         }
-        for (modelListener l:qrListeners){
+        for (modelListener l : qrListeners) {
             l.fireQuestionString(sb.toString());
         }
         return sb.toString();
     }
 
 
-
-    public void registerListener( modelListener qrListener) {
+    public void registerListener(modelListener qrListener) {
         qrListeners.add(qrListener);
     }
+
     public String PrintAllQustionsModel() {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < this.getNumberOfQuestions(); i++) {
             sb.append("id is:(" + this.getQuestionArray().get(i).getQuestionId() + ")" + " ");
-            sb.append("Question text is: " + this.getQuestionArray().get(i).getQuestionText()+"'\n");
+            sb.append("Question text is: " + this.getQuestionArray().get(i).getQuestionText() + "'\n");
 
         }
         return sb.toString();
     }
 
     public String getAmericanQuestionsToPrint() {
-        for(modelListener l:qrListeners) {
+        for (modelListener l : qrListeners) {
             StringBuffer americanQuestionString = new StringBuffer();
             for (Questions q : questionArray) {
                 if (q instanceof AmericanQuestions) {
@@ -484,7 +498,7 @@ public class QuestionReservoir implements Serializable {
     }
 
     public boolean checkIfAmerican(int id) {
-        if(this.fetchQuestionById(id) instanceof AmericanQuestions){
+        if (this.fetchQuestionById(id) instanceof AmericanQuestions) {
             return true;
         }
         return false;

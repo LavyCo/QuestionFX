@@ -1,0 +1,151 @@
+package view;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import listeners.viewListener;
+
+import javax.swing.*;
+import java.util.Vector;
+
+public  class  MenuView implements AbstractQuestionView{
+
+
+    private ComboBox<String> cmdAllQuestions = new ComboBox<String>();
+    private Vector<viewListener> allViewListeners=new Vector<>();
+    private PrintQuestionsView printQuestionsView=new PrintQuestionsView(allViewListeners,this);
+    private  AddQuestionView addQuestionView=new AddQuestionView(allViewListeners,this);
+    private UpdateQuestionTextView updateQuestionTextView=new UpdateQuestionTextView(allViewListeners,this);
+
+
+
+
+    public MenuView() {
+        Stage theStage=new Stage();
+        showMainMenu(theStage);
+    }
+
+    public void showMainMenu(Stage theStage){
+        theStage.setTitle("Exam generator");
+        GridPane gpRoot = new GridPane();
+        gpRoot.setPadding(new Insets((10)));
+        gpRoot.setHgap(10);
+        gpRoot.setHgap(10);
+        Button selectButtonMain = new Button();
+        selectButtonMain.setText("Select");
+        Label welcomelbl = new Label("Welcome to the Exam generator program");
+        Label choselbl = new Label("Please choose an option from the menu below");
+        ToggleGroup tglOpt = new ToggleGroup();
+        RadioButton printrb = new RadioButton("Show all questions and their answers in the in the reservoir");
+        RadioButton addQrb = new RadioButton("Add questions");
+        RadioButton changeWordQrb = new RadioButton("Change the question wording");
+        RadioButton updateAnsWordrb = new RadioButton("Update the wording of an answer");
+        RadioButton deleteAns = new RadioButton("Delete an answer to a question");
+        RadioButton manualExamrb = new RadioButton("Create a test manually");
+        RadioButton autoExamrb = new RadioButton("Create a test automatically");
+        RadioButton clonerb = new RadioButton("Clone an exam");
+        RadioButton saveExitrb = new RadioButton("Save changes in questions reservoir and exit program");
+        //make the radio button group
+        printrb.setToggleGroup(tglOpt);
+        addQrb.setToggleGroup(tglOpt);
+        changeWordQrb.setToggleGroup(tglOpt);
+        updateAnsWordrb.setToggleGroup(tglOpt);
+        deleteAns.setToggleGroup(tglOpt);
+        manualExamrb.setToggleGroup(tglOpt);
+        autoExamrb.setToggleGroup(tglOpt);
+        clonerb.setToggleGroup(tglOpt);
+        saveExitrb.setToggleGroup(tglOpt);
+        //change color text
+        printrb.setTextFill(Color.GREEN);
+        addQrb.setTextFill(Color.GREEN);
+        changeWordQrb.setTextFill(Color.GREEN);
+        updateAnsWordrb.setTextFill(Color.GREEN);
+        deleteAns.setTextFill(Color.GREEN);
+        manualExamrb.setTextFill(Color.GREEN);
+        autoExamrb.setTextFill(Color.GREEN);
+        clonerb.setTextFill(Color.GREEN);
+        saveExitrb.setTextFill(Color.GREEN);
+        Scene newScene=new Scene(gpRoot,500,300);
+        theStage.setScene(newScene);
+        gpRoot.add(welcomelbl, 0, 0);
+        gpRoot.add(choselbl, 0, 1);
+        gpRoot.add(printrb, 0, 2);
+        gpRoot.add(addQrb, 0, 3);
+        gpRoot.add(changeWordQrb, 0, 4);
+        gpRoot.add(updateAnsWordrb, 0, 5);
+        gpRoot.add(deleteAns, 0, 6);
+        gpRoot.add(manualExamrb, 0, 7);
+        gpRoot.add(autoExamrb, 0, 8);
+        gpRoot.add(clonerb, 0, 9);
+        gpRoot.add(saveExitrb, 0, 10);
+        gpRoot.add(selectButtonMain, 1, 11);
+        theStage.show();
+
+        selectButtonMain.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(printrb.isSelected()){
+                    theStage.hide();
+                    showQuestionsUI();
+                }
+                if(addQrb.isSelected()){
+                    theStage.hide();
+                    addQuestionToUI();
+                }
+                if(changeWordQrb.isSelected()){
+                    theStage.hide();
+                    updateQuestionTextUI();
+                }
+            }
+
+        });
+
+    }
+
+
+
+    @Override
+    public void registerListener(viewListener newListener) {
+        allViewListeners.add(newListener);
+    }
+
+    @Override
+    public void showStatusMassage(String result) {
+        JOptionPane.showMessageDialog(null,result);
+
+    }
+
+    @Override
+    public void showQuestionsUI() {
+        printQuestionsView.printAllQuestionInView();
+    }
+
+    @Override
+    public void addQuestionToUI() {
+        addQuestionView.addQuestionToUI();
+    }
+
+    @Override
+    public void updateQuestionTextUI() {
+        updateQuestionTextView.updateQuestionText();
+    }
+
+    @Override
+    public void printAllQuestionsToString(String questionString) {
+        printQuestionsView.printAllQuestionstoString(questionString);
+    }
+
+
+
+
+//    public AddQuestionView getAddQuestionView(){
+//        return addQuestionView;
+//    }
+
+
+}

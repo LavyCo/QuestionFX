@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import view.AbstractQuestionView;
-import view.QuestionFxView;
+import view.MenuView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Program extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        AbstractQuestionView theView1 = new QuestionFxView(stage);
+        MenuView theView1 = new MenuView();
 //		QuestionReservoir qr1=new QuestionReservoir();
 //		// open question #1
 //		qr1.addOpenQuestion("A Who was Yitzhak Rabin?", "Israeli prime minister");
@@ -76,7 +76,7 @@ public class Program extends Application {
 		QuestionReservoir qr1 = new QuestionReservoir();
 		qr1.readBin();
 
-        Controller controller=new Controller(qr1,theView1);
+        Controller controller=new Controller(qr1, (MenuView) theView1);
     }
 
     public static void main(String[] args) {

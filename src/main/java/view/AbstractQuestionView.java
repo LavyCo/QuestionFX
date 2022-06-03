@@ -2,13 +2,21 @@ package view;
 
 import listeners.viewListener;
 
+import java.util.ArrayList;
+
 public interface AbstractQuestionView {
   void registerListener(viewListener newListener);
 
-  String addOpenQuestionToUI(String updateUserMessage);
+  void showStatusMassage(String result);
+
+  void showQuestionsUI();
+
+  void addQuestionToUI();
+
+  void updateQuestionTextUI();
+
+  void printAllQuestionsToString(String questionString);
 
 
-  void showAmericanQuestionMsg(String american_question_added);
 
-  void printAllQuestionstoString(String allQuestions);
 }

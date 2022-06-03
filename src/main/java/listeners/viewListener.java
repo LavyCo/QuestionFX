@@ -4,33 +4,39 @@ import java.util.ArrayList;
 
 public interface viewListener {
 
-    void showAllQuestionsInUI();
+    void showStringInUI();
 
-    void addOpenQuestion(String questionText, String answerText);
+    void addAmericanQuestionUI(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray);
 
-    void addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray);
+    void addOpenQuestionUI(String text, String text1);
 
-    String PrintAllQuestions();
-
-    ArrayList<Integer> GetAllIDfromModel();
-
-
-    String changeOpenQuestionAnswerUI(String newAnswerText, int id);
-
-    String showChosenQuestion(int id);
-
-    String ChangeWording(String text, int id);
-
-    int addAmericanAnswersSizeToUI(int size);
-
-    String changeAmericanAnswerUI(int id,String answerText,boolean correctness,int numOfAnswer);
-
-
-    int getNumOfAnswersToUI(int id);
-
-    String showAmericanQuestionUI();
-
-    ArrayList<Integer> getAmericanQuestionIDArrayListUI();
-
-    boolean checkIfAmerican(int id);
+//    void showAllQuestionsInUI();
+//
+//    void addOpenQuestion(String questionText, String answerText);
+//
+//    void addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray);
+//
+//    String PrintAllQuestions();
+//
+//    ArrayList<Integer> GetAllIDfromModel();
+//
+//
+//    String changeOpenQuestionAnswerUI(String newAnswerText, int id);
+//
+//    String showChosenQuestion(int id);
+//
+//    String ChangeWording(String text, int id);
+//
+//    int addAmericanAnswersSizeToUI(int size);
+//
+//    String changeAmericanAnswerUI(int id,String answerText,boolean correctness,int numOfAnswer);
+//
+//
+//    int getNumOfAnswersToUI(int id);
+//
+//    String showAmericanQuestionUI();
+//
+//    ArrayList<Integer> getAmericanQuestionIDArrayListUI();
+//
+//    boolean checkIfAmerican(int id);
 }
