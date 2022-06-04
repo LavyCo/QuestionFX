@@ -8,7 +8,7 @@ import view.MenuView;
 
 import java.util.ArrayList;
 
-public class Controller implements modelListener, viewListener {
+public class  Controller implements modelListener, viewListener {
     private QuestionReservoir qrModel;
     private AbstractQuestionView questionView;
     public Controller(QuestionReservoir qrModel,MenuView questionView )throws Exception {
