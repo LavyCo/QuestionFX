@@ -10,6 +10,23 @@ public interface modelListener {
 
     void fireOpenQuestionAddedResult(String string);
 
+    void fireIdToUI(ArrayList<Integer> idArray);
+
+    void fireQuestionsStringAndId(String toString, ArrayList<Integer> idArray);
+
+    void fireNumberOfQuestion(int numberOfQuestions);
+
+    void fireAutoExam(String autoExam);
+
+    void fireQuestionText(String questionText,int id);
+
+    void updateResult(String msg);
+
+    void fireIdArrayAndQuestionStringToUpdateAnswer(String toString, ArrayList<Integer> idArray);
+
+    void fireAmericanAnswersString(String toString, int numOfAmericanAnswers, int id);
+
+
 //    void addOpenQuestionMsg(String updateUserMessage);
 //
 //    String returnChosenQuestion(int id);

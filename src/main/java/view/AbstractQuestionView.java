@@ -14,10 +14,21 @@ public interface AbstractQuestionView {
 
   void addQuestionToUI();
 
-  void updateQuestionTextUI();
-
   void printAllQuestionsToString(String questionString);
 
 
+  //add
+  void showStringAndIDinQuestionView(ArrayList<Integer> idArray, String questionsString);
 
+  void getNumOfQuestionFromModel(int numberOfQuestions);
+
+  void showAutoExamToUI(String autoExam);
+
+  void showIdInUpdateQuestionView(ArrayList<Integer> idArray);
+
+    void showChosenQuestionToUpdateInView(String questionText,int id);
+
+  void updateAnswerMenuView(String toString, ArrayList<Integer> idArray);
+
+  void showAmericanAnswerInView(String toString, int numOfAmericanAnswers, int id);
 }

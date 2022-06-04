@@ -1,8 +1,12 @@
 package listeners;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public interface viewListener {
+
+    static void showSelectQuestionAndID(String toString, ArrayList<Integer> idArray) {
+    }
 
     void showStringInUI();
 
@@ -10,7 +14,27 @@ public interface viewListener {
 
     void addOpenQuestionUI(String text, String text1);
 
-    void updateQuestionUI();
+
+    //add
+    void updateQuestionTextUI();
+
+    void showIDInUI();
+
+    void showQuestionsAndIdToUpdate();
+
+    void getNumOfQuestions();
+
+    void createAutoExam(int value) throws FileNotFoundException;
+
+    void showChosenQuestionToUpdate(int id);
+
+    void changeQuestionText(String text, int id);
+
+    void updateDeleteAmericanAnswer();
+
+    void updateAnswerView();
+
+    void showAnswerToUpdate(int intValue);
 
 
     //    void showAllQuestionsInUI();

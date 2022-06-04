@@ -12,14 +12,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 
-public class PrintQuestionsView   {
+public class PrintQuestionsView    {
     private Vector<viewListener> allViewListeners;
     private MenuView menuView;
 
-    public PrintQuestionsView(Vector<viewListener> allViewListeners,MenuView menuView){
+    public  PrintQuestionsView(Vector<viewListener> allViewListeners, MenuView menuView){
         this.menuView=menuView;
         this.allViewListeners=allViewListeners;
+
     }
+
 
     public void printAllQuestionInView() {
         for (viewListener l:allViewListeners){

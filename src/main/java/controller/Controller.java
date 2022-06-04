@@ -6,6 +6,7 @@ import listeners.viewListener;
 import view.AbstractQuestionView;
 import view.MenuView;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class  Controller implements modelListener, viewListener {
@@ -16,13 +17,12 @@ public class  Controller implements modelListener, viewListener {
         this.questionView=questionView;
         this.questionView.registerListener(this);
         this.qrModel.registerListener(this);
-
     }
 
 
     @Override
     public void showStringInUI() {
-        qrModel.toString();
+        qrModel.getAllQuestionsToView();
     }
 
 
@@ -44,6 +44,108 @@ public class  Controller implements modelListener, viewListener {
 
 
     @Override
+    public void updateQuestionTextUI() {
+
+    }
+
+    //add
+    @Override
+    public void fireIdToUI(ArrayList<Integer> idArray) {
+        questionView.showIdInUpdateQuestionView(idArray);
+    }
+
+    @Override
+    public void fireQuestionsStringAndId(String toString, ArrayList<Integer> idArray) {
+        questionView.showStringAndIDinQuestionView(idArray,toString);
+    }
+
+    @Override
+    public void fireNumberOfQuestion(int numberOfQuestions) {
+        questionView.getNumOfQuestionFromModel(numberOfQuestions);
+
+    }
+
+    @Override
+    public void fireAutoExam(String autoExam) {
+        questionView.showAutoExamToUI(autoExam);
+
+    }
+
+
+    //add
+    @Override
+    public void showIDInUI() {
+        qrModel.getIDNumberArray();
+    }
+
+    //update question
+    @Override
+    public void showQuestionsAndIdToUpdate() {
+        qrModel.sendIdAndQuestionsToUpdate();
+    }
+
+    @Override
+    public void showChosenQuestionToUpdate(int id) {
+        qrModel.getQuestionTextById(id);
+    }
+
+
+    @Override
+    public void fireQuestionText(String questionText,int id) {
+        questionView.showChosenQuestionToUpdateInView(questionText,id);
+    }
+
+    @Override
+    public void updateResult(String msg) {
+        questionView.showStatusMassage(msg);
+    }
+
+    @Override
+    public void fireIdArrayAndQuestionStringToUpdateAnswer(String toString, ArrayList<Integer> idArray) {
+        questionView.updateAnswerMenuView(toString,idArray);
+    }
+
+    @Override
+    public void fireAmericanAnswersString(String toString, int numOfAmericanAnswers, int id) {
+        questionView.showAmericanAnswerInView(toString,numOfAmericanAnswers,id);
+    }
+
+    @Override
+    public void changeQuestionText(String text, int id) {
+        qrModel.changeQuestionWording(text,id);
+
+    }
+
+    @Override
+    public void updateDeleteAmericanAnswer() {
+
+    }
+
+    @Override
+    public void updateAnswerView() {
+        qrModel.sendIdAndQuestionsToUpdateAnswer();
+    }
+
+    @Override
+    public void showAnswerToUpdate(int id) {
+        System.out.println("test2");
+        qrModel.getAnswerById(id);
+    }
+
+
+    @Override
+    public void getNumOfQuestions() {
+        qrModel.getNumberOfQuestions();
+    }
+
+    @Override
+    public void createAutoExam(int value) throws FileNotFoundException {
+        qrModel.automaticExam(value);
+    }
+
+
+
+    @Override
     public void fireAmericanQuestionAddedResult(String string) {
         questionView.showStatusMassage(string);
 
@@ -53,6 +155,9 @@ public class  Controller implements modelListener, viewListener {
     public void fireOpenQuestionAddedResult(String string) {
         questionView.showStatusMassage(string);
     }
+
+
+
 
 
 //    @Override
@@ -177,23 +282,6 @@ public class  Controller implements modelListener, viewListener {
 //    }
 //
 
-   @Override
-   public ArrayList<Integer> GetAllIDfromModel() {
-       ArrayList<Integer>allID=new ArrayList<>();
-       for (int i=0;i<qrModel.getNumberOfQuestions();i++){
-            allID.add(qrModel.getQuestionArray().get(i).getQuestionId());
-
-      }
-       return allID;
-    }
-//
-//
-    @Override
-    public String ChangeWording(String text, int id) {
-       return qrModel.changeQuestionWording(text,id);
-    }
-//
-//
 //
 //    @Override
 //    public void addOpenQuestionMsg(String updateUserMessage) {

@@ -1,0 +1,33 @@
+the test without answers:
+
+1) the question is : A Who was Yitzhak Rabin?
+
+2) the question is : D Which one of these is not dessert?
+
+1) Muffin
+
+2) Burger
+
+3) Ice cream
+
+4) Choclate cake
+
+5) There are more than 1 right answers
+
+6) All the answers are false
+
+3) the question is : E Which one of these next Programming languages is Low-Level programming language?
+
+1) Machine Code
+
+2) C#
+
+3) Java
+
+4) Swift
+
+5) There are more than 1 right answers
+
+6) All the answers are false
+
+Good Luck

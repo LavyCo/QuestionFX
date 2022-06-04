@@ -1,91 +1,136 @@
 package view;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import listeners.viewListener;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Vector;
-import javafx.event.EventHandler;
-
-import javax.swing.*;
 
 public class UpdateQuestionTextView {
     private Vector<viewListener> allViewListeners;
     private MenuView menuView;
 
-    public UpdateQuestionTextView(Vector<viewListener> allViewListeners, MenuView menuView){
+
+    public  UpdateQuestionTextView(Vector<viewListener> allViewListeners, MenuView menuView){
         this.menuView=menuView;
         this.allViewListeners=allViewListeners;
-    }
 
-    public void updateQuestionText(){
-          for(viewListener l:allViewListeners){
-            l.updateQuestionUI();
-          }
-
-//        Stage case3=new Stage();//
-//        GridPane gpRootCase3 = new GridPane();
-//        gpRootCase3.setPadding(new Insets((10)));
-//        gpRootCase3.setHgap(10);
-//        gpRootCase3.setHgap(10);
-//        Label chooseFromListlbl = new Label("Choose from the list the Question do you want to Change: ");
-//        for (viewListener l : allViewListeners) {
-//            l.showStringInUI();
-//               gpRootCase3.add(allQustionslbl, 0, 1);
-//            ArrayList<Integer> allId = new ArrayList<>();
-//            allId = l.GetAllIDfromModel();
-//            ComboBox<Integer> cmdId = new ComboBox<>();
-//            for (int i = 0; i < allId.size(); i++) {
-//                cmdId.getItems().add(allId.get(i));
-//            }
-//           TextField newWordingtf = new TextField();
-//            newWordingtf.setVisible(false);
-//            Label newWordinglbl = new Label("Type new Wording for the Question:");
-//            newWordinglbl.setVisible(false);
-//            Button changeWordingbt = new Button("Change Wording");
-//            changeWordingbt.setVisible(false);
-//            changeWordingbt.setOnAction(new EventHandler<ActionEvent>() {
-//                @Override
-//                public void handle(ActionEvent actionEvent) {
-//                    String msg = l.ChangeWording(newWordingtf.getText(), cmdId.getValue());
-//                    JOptionPane.showMessageDialog(null, msg);
-//                }
-//            });
-//            gpRootCase3.add(cmdId, 1, 1);
-//            cmdId.setOnAction(new EventHandler<ActionEvent>() {
-//                @Override
-//                public void handle(ActionEvent actionEvent) {
-//                    if (cmdId.getValue() != null) {
-//                        newWordingtf.setVisible(true);
-//                        newWordinglbl.setVisible(true);
-//                        changeWordingbt.setVisible(true);
-//                    }
-//                }
-//            });
-//            gpRootCase3.add(newWordinglbl, 0, 2);
-//            gpRootCase3.add(newWordingtf, 1, 2);
-//            gpRootCase3.add(changeWordingbt, 1, 3);
-//        }
-//
-//        buttonReturn.setText("Return To Menu");
-//        case3.setScene(new Scene(gpRootCase3, 850, 350));
-//        gpRootCase3.add(chooseFromListlbl, 0, 0);
-//
-//        gpRootCase3.add(buttonReturn, 1, 11);
-//        case3.show();
-//
     }
 
 
+    public void showSelectAndIdUpdateQuestion(String questionsString, ArrayList<Integer> idArray) {
+        Stage questionToUpdateStage=new Stage();
+        BorderPane selectQuestionBp=new BorderPane();
+        Scene questionToUpdateScene=new Scene(selectQuestionBp);
+        VBox questionStringVbox=new VBox(new Label(questionsString));
+        ScrollPane questionsStringSp=new ScrollPane(questionStringVbox);
+        selectQuestionBp.setLeft(questionsStringSp);
+        VBox selectQuestionVbox=new VBox();
+        ComboBox<Integer> questionIdCombo=new ComboBox<>();
+
+        for(int i=0;i<idArray.size();i++){
+            questionIdCombo.getItems().add(idArray.get(i));
+        }
+
+        selectQuestionVbox.setAlignment(Pos.CENTER);
+        selectQuestionVbox.setSpacing(30);
+        Label choseIdLabel=new Label("Please choose question by ID");
+        Button selectId=new Button("Select");
+        Button returnToMenu=new Button("Return to menu");
+        selectQuestionVbox.getChildren().addAll(choseIdLabel,questionIdCombo,selectId,returnToMenu);
+        selectQuestionBp.setRight(selectQuestionVbox);
+        questionToUpdateStage.setScene(questionToUpdateScene);
+        questionToUpdateStage.show();
+
+        selectId.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(questionIdCombo.getValue()!=null){
+                for(viewListener l:allViewListeners){
+                    l.showChosenQuestionToUpdate(questionIdCombo.getValue().intValue());
+                    questionToUpdateStage.hide();
+
+                }}
+                else{
+                    JOptionPane.showMessageDialog(null,"Please select an ID before proceeding");
+                }
+            }
+        });
+
+        returnToMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                menuView.showMainMenu(new Stage());
+                questionToUpdateStage.hide();
+            }
+        });
 
 
+    }
+
+    public void changeQuestionTextView(String questionText, int id) {
+        Label questionTextLbl=new Label("Choosen question is:"+questionText);
+        Button submitButton=new Button("Submit");
+        Button chooseAnother=new Button("Choose another question");
+        Button returnToMenu=new Button("Return to menu");
+        Label enterText=new Label("Enter new question text:");
+        TextField questionTextField=new TextField();
+        VBox questionTextVbox=new VBox(questionTextLbl,enterText,questionTextField);
+        HBox buttonsHbox=new HBox(submitButton,chooseAnother,returnToMenu);
+        BorderPane updateTextBp=new BorderPane();
+        updateTextBp.setCenter(questionTextVbox);
+        updateTextBp.setBottom(buttonsHbox);
+        updateTextBp.setPadding(new Insets(10));
+        buttonsHbox.setSpacing(10);
+        buttonsHbox.setPadding(new Insets(10));
+        questionTextVbox.setSpacing(10);
+
+        Scene updateQuestionScene=new Scene(updateTextBp);
+        Stage updateQuestionStage=new Stage();
+        updateQuestionStage.setScene(updateQuestionScene);
+        updateQuestionStage.show();
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(!questionTextField.getText().isBlank())
+                for(viewListener l:allViewListeners){
+                    l.changeQuestionText(questionTextField.getText(),id);
+                    submitButton.setDisable(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Text field cannot be empty");
+                    questionTextField.clear();
+                }
+            }
+        });
+        chooseAnother.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                updateQuestionStage.hide();
+                for(viewListener l:allViewListeners){
+                    l.showQuestionsAndIdToUpdate();
+                }
+            }
+        });
+        returnToMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                updateQuestionStage.hide();
+                menuView.showMainMenu(new Stage());
+            }
+        });
 
 
-
+    }
 }
+

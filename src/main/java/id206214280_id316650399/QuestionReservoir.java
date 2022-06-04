@@ -99,27 +99,29 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-    public String changeQuestionWording(String newQuestionText, int choosenId) {
+    public boolean changeQuestionWording(String newQuestionText, int choosenId) {
         // loop that checks if the question exists
         String msg = null;
         Questions testQuestionText = new Questions(newQuestionText);
         for (int i = 0; i < this.numberOfQuestions; i++) {
             if (testQuestionText.equals(this.questionArray.get(i))) {
                 System.out.println("Can't change question text-There a Question with the same text");
-                return msg = "Can't change question text-There a Question with the same text";
-
+                msg = "Can't change question text-There a Question with the same text";
+                for (modelListener l : qrListeners) {
+                    l.updateResult(msg);
+                }
+                return false;
             }
-
         }
 
-        for (int i = 0; i < this.numberOfQuestions; i++) {
-            if (this.questionArray.get(i).questionId == choosenId) {
-                this.questionArray.get(i).setQuestionText(newQuestionText);
-            }
-
-        }
+        fetchQuestionById(choosenId).setQuestionText(newQuestionText);
         System.out.println("Question wording changed succesfully!");
-        return msg = "Question wording changed succesfully!";
+        msg = "Question wording changed succesfully!";
+        for (modelListener l : qrListeners) {
+            l.updateResult(msg);
+        }
+        return true;
+
 
     }
 
@@ -224,6 +226,9 @@ public class QuestionReservoir implements Serializable {
         }
         automaticExam.saveToText();
         automaticExam.sortExamByShortestAnswers();
+        for(modelListener l:qrListeners){
+            l.fireAutoExam(automaticExam.toString());
+        }
         System.out.println(automaticExam.toString());
 
     }
@@ -331,9 +336,7 @@ public class QuestionReservoir implements Serializable {
 
     public int takeNumOfAnswers(QuestionReservoir qr1, int index) {
         AmericanQuestions americanQuestion = (AmericanQuestions) this.getQuestionArray().get(index);
-
         return americanQuestion.getNumOfAmericanAnswers();
-
 
     }
 
@@ -370,6 +373,10 @@ public class QuestionReservoir implements Serializable {
         manualExam.saveToText();
         System.out.println("Manual exam created successfully !");
         manualExam.toString();
+        for (modelListener l : qrListeners) {
+            l.fireAutoExam(automaticExam.toString());
+        }
+
 
     }
 
@@ -429,7 +436,22 @@ public class QuestionReservoir implements Serializable {
         return questionArray;
     }
 
+    //new
+    public void getIDNumberArray() {
+        ArrayList<Integer> idArray = new ArrayList<>();
+        for (int i = 0; i < numberOfQuestions; i++) {
+            idArray.add(questionArray.get(i).getQuestionId());
+        }
+        for (modelListener l : qrListeners) {
+            l.fireIdToUI(idArray);
+        }
+    }
+
     public int getNumberOfQuestions() {
+        for (modelListener l : qrListeners) {
+            l.fireNumberOfQuestion(numberOfQuestions);
+        }
+
         return numberOfQuestions;
     }
 
@@ -442,15 +464,19 @@ public class QuestionReservoir implements Serializable {
         return null;
     }
 
+    public void getAllQuestionsToView() {
+        String allQuestionString = this.toString();
+        for (modelListener l : qrListeners) {
+            l.fireQuestionString(allQuestionString);
+        }
+    }
+
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("The number of questions in the Reservoir is: " + numberOfQuestions + "\n" + "\nThe questions are:\n");
         for (int i = 0; i < numberOfQuestions; i++) {
             sb.append(questionArray.get(i).toString());
-        }
-        for (modelListener l : qrListeners) {
-            l.fireQuestionString(sb.toString());
         }
         return sb.toString();
     }
@@ -483,6 +509,7 @@ public class QuestionReservoir implements Serializable {
         return null;
     }
 
+
     public ArrayList<Integer> fireAmericanQuestionIDArrayList() {
         ArrayList<Integer> americanQuestionIDArray = null;
         for (modelListener l : qrListeners) {
@@ -502,6 +529,44 @@ public class QuestionReservoir implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public void sendIdAndQuestionsToUpdate() {
+        ArrayList<Integer> idArray = new ArrayList<>();
+        for (int i = 0; i < numberOfQuestions; i++) {
+            idArray.add(questionArray.get(i).getQuestionId());
+        }
+        for (modelListener l : qrListeners) {
+            l.fireQuestionsStringAndId(this.toString(), idArray);
+        }
+
+    }
+
+    public void sendIdAndQuestionsToUpdateAnswer() {
+        ArrayList<Integer> idArray = new ArrayList<>();
+        for (int i = 0; i < numberOfQuestions; i++) {
+            idArray.add(questionArray.get(i).getQuestionId());
+        }
+        for (modelListener l : qrListeners) {
+            l.fireIdArrayAndQuestionStringToUpdateAnswer(this.toString(), idArray);
+        }
+
+    }
+
+
+    public void getQuestionTextById(int id) {
+        for (modelListener l : qrListeners) {
+            l.fireQuestionText(fetchQuestionById(id).getQuestionText(), id);
+        }
+    }
+
+    public void getAnswerById(int id) {
+        if(fetchQuestionById(id) instanceof AmericanQuestions){
+            for(modelListener l:qrListeners){
+                System.out.println("test 3");
+                l.fireAmericanAnswersString(fetchQuestionById(id).toString(),((AmericanQuestions) fetchQuestionById(id)).getNumOfAmericanAnswers(),id);
+            }
+        }
     }
 }
 

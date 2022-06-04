@@ -1,5 +1,7 @@
 package view;
 
+import id206214280_id316650399.Examble;
+import id206214280_id316650399.QuestionReservoir;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,19 +13,19 @@ import javafx.stage.Stage;
 import listeners.viewListener;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Vector;
 
-public  class  MenuView implements AbstractQuestionView{
+public  class  MenuView implements AbstractQuestionView {
 
 
     private ComboBox<String> cmdAllQuestions = new ComboBox<String>();
     private Vector<viewListener> allViewListeners=new Vector<>();
-    private PrintQuestionsView printQuestionsView=new PrintQuestionsView(allViewListeners,this);
     private  AddQuestionView addQuestionView=new AddQuestionView(allViewListeners,this);
     private UpdateQuestionTextView updateQuestionTextView=new UpdateQuestionTextView(allViewListeners,this);
-
-
-
+    private PrintQuestionsView printQuestionsView=new PrintQuestionsView(allViewListeners,this);
+    private AutomaticExamView automaticExamView=new AutomaticExamView(allViewListeners,this);
+    private UpdateAnswerWordingView updateAnswerView=new UpdateAnswerWordingView(allViewListeners,this);
 
     public MenuView() {
         Stage theStage=new Stage();
@@ -89,24 +91,71 @@ public  class  MenuView implements AbstractQuestionView{
         selectButtonMain.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
                 if(printrb.isSelected()){
                     theStage.hide();
                     showQuestionsUI();
                 }
+
                 if(addQrb.isSelected()){
                     theStage.hide();
                     addQuestionToUI();
                 }
+
                 if(changeWordQrb.isSelected()){
                     theStage.hide();
-                    updateQuestionTextUI();
+                    for(viewListener l:allViewListeners){
+                        l.showQuestionsAndIdToUpdate();
+                    }
                 }
+                if(updateAnsWordrb.isSelected()){
+                    theStage.hide();
+                    for(viewListener l:allViewListeners){
+                        l.updateAnswerView();
+                    }
+                }
+                if (autoExamrb.isSelected()){
+                    theStage.hide();
+                    automaticExamView.automaticExam();
+                }
+
             }
 
         });
 
     }
 
+
+    @Override
+    public void getNumOfQuestionFromModel(int numberOfQuestions) {
+        automaticExamView.showNumbersOfQuestions(numberOfQuestions);
+    }
+
+    @Override
+    public void showAutoExamToUI(String autoExam) {
+        JOptionPane.showMessageDialog(null,autoExam);
+    }
+
+    @Override
+    public void showIdInUpdateQuestionView(ArrayList<Integer> idArray) {
+
+    }
+
+    @Override
+    public void showChosenQuestionToUpdateInView(String questionText,int id) {
+        updateQuestionTextView.changeQuestionTextView(questionText,id);
+    }
+
+    @Override
+    public void updateAnswerMenuView(String toString, ArrayList<Integer> idArray) {
+        updateAnswerView.showQuestionsAndId(toString,idArray);
+    }
+
+    @Override
+    public void showAmericanAnswerInView(String toString, int numOfAmericanAnswers, int id) {
+        System.out.println("test");
+        updateAnswerView.showAmericanAnswerView(toString,numOfAmericanAnswers,id);
+    }
 
 
     @Override
@@ -121,6 +170,12 @@ public  class  MenuView implements AbstractQuestionView{
     }
 
     @Override
+    public void showStringAndIDinQuestionView(ArrayList<Integer> idArray, String questionsString) {
+        updateQuestionTextView.showSelectAndIdUpdateQuestion(questionsString,idArray);
+    }
+
+
+    @Override
     public void showQuestionsUI() {
         printQuestionsView.printAllQuestionInView();
     }
@@ -130,10 +185,6 @@ public  class  MenuView implements AbstractQuestionView{
         addQuestionView.addQuestionToUI();
     }
 
-    @Override
-    public void updateQuestionTextUI() {
-        updateQuestionTextView.updateQuestionText();
-    }
 
     @Override
     public void printAllQuestionsToString(String questionString) {
@@ -141,6 +192,8 @@ public  class  MenuView implements AbstractQuestionView{
     }
 
 
+
+    //add
 
 
 //    public AddQuestionView getAddQuestionView(){
