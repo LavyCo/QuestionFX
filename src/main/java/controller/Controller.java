@@ -176,21 +176,22 @@ public class Controller implements modelListener, viewListener {
 //        return qrModel.PrintAllQustionsModel();
 //    }
 //
-//    @Override
-//    public ArrayList<Integer> GetAllIDfromModel() {
-//        ArrayList<Integer>allID=new ArrayList<>();
-//        for (int i=0;i<qrModel.getNumberOfQuestions();i++){
-//            allID.add(qrModel.getQuestionArray().get(i).getQuestionId());
+
+   @Override
+   public ArrayList<Integer> GetAllIDfromModel() {
+       ArrayList<Integer>allID=new ArrayList<>();
+       for (int i=0;i<qrModel.getNumberOfQuestions();i++){
+            allID.add(qrModel.getQuestionArray().get(i).getQuestionId());
+
+      }
+       return allID;
+    }
 //
-//        }
-//        return allID;
-//    }
 //
-//
-//    @Override
-//    public String ChangeWording(String text, int id) {
-//        return qrModel.changeQuestionWording(text,id);
-//    }
+    @Override
+    public String ChangeWording(String text, int id) {
+       return qrModel.changeQuestionWording(text,id);
+    }
 //
 //
 //
