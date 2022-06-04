@@ -28,7 +28,7 @@ public class AutomaticExamView {
         Label titlelbl=new Label("select how much questions do yoy want in the test :");
         ComboBox<Integer> cmdCountOfQuestions = new ComboBox<>();
         for(viewListener l:allViewListeners){
-            int l.getNumOf
+             l.getNumOf
         }
         for (int i=0;)
 
