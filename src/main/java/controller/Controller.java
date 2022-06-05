@@ -1,5 +1,6 @@
 package controller;
 
+import id206214280_id316650399.AmericanQuestions;
 import id206214280_id316650399.QuestionReservoir;
 import listeners.modelListener;
 import listeners.viewListener;
@@ -8,6 +9,7 @@ import view.MenuView;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class  Controller implements modelListener, viewListener {
     private QuestionReservoir qrModel;
@@ -106,8 +108,23 @@ public class  Controller implements modelListener, viewListener {
     }
 
     @Override
-    public void fireAmericanAnswersString(String toString, int numOfAmericanAnswers, int id) {
-        questionView.showAmericanAnswerInView(toString,numOfAmericanAnswers,id);
+    public void fireAmericanAnswersString(Vector<String> americanAnswerVector, int numOfAmericanAnswers, int id) {
+        questionView.showAmericanAnswerInView(americanAnswerVector,numOfAmericanAnswers,id);
+    }
+
+    @Override
+    public void fireUpdateAmericanAnswerResult(String msg) {
+        questionView.showStatusMassage(msg);
+    }
+
+    @Override
+    public void fireOpenAnswerUpdateString(String questionText, String answerText, int id) {
+        questionView.updateOpenAnswerMainView(questionText,answerText,id);
+    }
+
+    @Override
+    public void fireOpenAnswerUpdateResult(String s) {
+        questionView.showStatusMassage(s);
     }
 
     @Override
@@ -130,6 +147,16 @@ public class  Controller implements modelListener, viewListener {
     public void showAnswerToUpdate(int id) {
         System.out.println("test2");
         qrModel.getAnswerById(id);
+    }
+
+    @Override
+    public void updateAmericanAnswer(String text, int id, int answerNumber, boolean opt) {
+        qrModel.changeAnswerWordingOfAmericanQuestions(text, (AmericanQuestions) qrModel.fetchQuestionById(id),answerNumber,opt);
+    }
+
+    @Override
+    public void updateOpenQuestionViewToModel(String text, int id) {
+        qrModel.changeAnswerWordingOfOpenQuestion(text,qrModel.fetchQuestionById(id));
     }
 
 

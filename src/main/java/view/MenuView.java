@@ -1,7 +1,5 @@
 package view;
 
-import id206214280_id316650399.Examble;
-import id206214280_id316650399.QuestionReservoir;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -152,9 +150,14 @@ public  class  MenuView implements AbstractQuestionView {
     }
 
     @Override
-    public void showAmericanAnswerInView(String toString, int numOfAmericanAnswers, int id) {
+    public void updateOpenAnswerMainView(String questionText, String answerText, int id) {
+        updateAnswerView.updateOpenAnswerView(questionText,answerText,id);
+    }
+
+    @Override
+    public void showAmericanAnswerInView(Vector<String> americanAnswerText, int numOfAmericanAnswers, int id) {
         System.out.println("test");
-        updateAnswerView.showAmericanAnswerView(toString,numOfAmericanAnswers,id);
+        updateAnswerView.showAmericanAnswerView(americanAnswerText,numOfAmericanAnswers,id);
     }
 
 

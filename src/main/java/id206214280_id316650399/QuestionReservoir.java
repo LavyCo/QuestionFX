@@ -27,18 +27,27 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-    public String changeAnswerWordingOfOpenQuestion(String newAnswerText, Questions editorQuestionAnswer) {
+    public boolean changeAnswerWordingOfOpenQuestion(String newAnswerText, Questions editorQuestionAnswer) {
         if (editorQuestionAnswer instanceof OpenQuestions) {
             if (((OpenQuestions) editorQuestionAnswer).getAnswerText().equalsIgnoreCase(newAnswerText)) {
 
-                return "Can't change Answer text-There a Answer with the same text";
+                for(modelListener l:qrListeners){
+                    l.fireOpenAnswerUpdateResult("Can't change Answer text-There a Answer with the same text");
+                }
+                return false;
             } else {
                 ((OpenQuestions) editorQuestionAnswer).setAnswerText(newAnswerText);
-                return "Question answer changed successfully !";
+
+                for(modelListener l:qrListeners){
+                    l.fireOpenAnswerUpdateResult("Question answer changed successfully !");
+                }
+
+
+                return true;
             }
 
         }
-        return null;
+        return false;
     }
 
 
@@ -75,7 +84,7 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-    public String changeAnswerWordingOfAmericanQuestions(String newAnswerText, AmericanQuestions editorQuestionAnswer, int numOfAnswer, boolean opt) {
+    public boolean changeAnswerWordingOfAmericanQuestions(String newAnswerText, AmericanQuestions editorQuestionAnswer, int numOfAnswer, boolean opt) {
 
 
         if (editorQuestionAnswer instanceof AmericanQuestions) {
@@ -85,7 +94,11 @@ public class QuestionReservoir implements Serializable {
                 americanAnswerArr = editorQuestionAnswer.getAnswerArray().toArray();
 
                 if (((AmericanAnswer) americanAnswerArr[i]).getAnswerText().equalsIgnoreCase(newAnswerText)) {
-                    return "Can't change Answer text-There's an Answer with the same text";
+                    String msg="Can't change Answer text-There's an Answer with the same text";
+                    for(modelListener l:qrListeners){
+                        l.fireUpdateAmericanAnswerResult(msg);
+                    }
+                    return false;
                 }
             }
 
@@ -93,9 +106,14 @@ public class QuestionReservoir implements Serializable {
             ((AmericanAnswer) americanAnswerArr[numOfAnswer]).setAnswerText(newAnswerText);
 
 
-            return "Answer changed successfully !";
+            String msg="Answer changed successfully !";
+            for(modelListener l:qrListeners){
+                l.fireUpdateAmericanAnswerResult(msg);
+            }
+
+            return true;
         }
-        return null;
+        return false;
     }
 
 
@@ -562,11 +580,24 @@ public class QuestionReservoir implements Serializable {
 
     public void getAnswerById(int id) {
         if(fetchQuestionById(id) instanceof AmericanQuestions){
+            AmericanQuestions americanQuestions=(AmericanQuestions) fetchQuestionById(id);
+            Object[] answerArray=americanQuestions.getAnswerArray().toArray();
+            Vector<String> answerString=new Vector<>();
+            for(int i=0;i<answerArray.length;i++){
+                answerString.add(answerArray[i].toString());
+            }
             for(modelListener l:qrListeners){
-                System.out.println("test 3");
-                l.fireAmericanAnswersString(fetchQuestionById(id).toString(),((AmericanQuestions) fetchQuestionById(id)).getNumOfAmericanAnswers(),id);
+                l.fireAmericanAnswersString(answerString,((AmericanQuestions) fetchQuestionById(id)).getNumOfAmericanAnswers(),id);
             }
         }
+         if(fetchQuestionById(id) instanceof OpenQuestions){
+             for(modelListener l:qrListeners){
+                 l.fireOpenAnswerUpdateString(fetchQuestionById(id).getQuestionText(),((OpenQuestions) fetchQuestionById(id)).getAnswerText(),id);
+             }
+
+
+        }
     }
+
 }
 

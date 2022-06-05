@@ -1,6 +1,7 @@
 package listeners;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public interface modelListener {
 
@@ -24,7 +25,13 @@ public interface modelListener {
 
     void fireIdArrayAndQuestionStringToUpdateAnswer(String toString, ArrayList<Integer> idArray);
 
-    void fireAmericanAnswersString(String toString, int numOfAmericanAnswers, int id);
+    void fireAmericanAnswersString(Vector<String> americanAnswers, int numOfAmericanAnswers, int id);
+
+    void fireUpdateAmericanAnswerResult(String msg);
+
+    void fireOpenAnswerUpdateString(String questionText, String answerText, int id);
+
+    void fireOpenAnswerUpdateResult(String s);
 
 
 //    void addOpenQuestionMsg(String updateUserMessage);

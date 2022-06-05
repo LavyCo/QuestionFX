@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 public interface viewListener {
 
-    static void showSelectQuestionAndID(String toString, ArrayList<Integer> idArray) {
-    }
 
     void showStringInUI();
 
@@ -35,6 +33,10 @@ public interface viewListener {
     void updateAnswerView();
 
     void showAnswerToUpdate(int intValue);
+
+    void updateAmericanAnswer(String text, int id, int answerNumber, boolean opt);
+
+    void updateOpenQuestionViewToModel(String text, int id);
 
 
     //    void showAllQuestionsInUI();

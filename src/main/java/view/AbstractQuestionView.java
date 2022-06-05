@@ -3,8 +3,11 @@ package view;
 import listeners.viewListener;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public interface AbstractQuestionView {
+
+  void showAmericanAnswerInView(Vector<String> americanAnswerText, int numOfAmericanAnswers, int id);
 
   void registerListener(viewListener newListener);
 
@@ -30,5 +33,5 @@ public interface AbstractQuestionView {
 
   void updateAnswerMenuView(String toString, ArrayList<Integer> idArray);
 
-  void showAmericanAnswerInView(String toString, int numOfAmericanAnswers, int id);
+  void updateOpenAnswerMainView(String questionText, String answerText, int id);
 }
