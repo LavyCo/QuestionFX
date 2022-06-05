@@ -1,6 +1,7 @@
 package listeners;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface viewListener {
@@ -37,6 +38,10 @@ public interface viewListener {
     void updateAmericanAnswer(String text, int id, int answerNumber, boolean opt);
 
     void updateOpenQuestionViewToModel(String text, int id);
+
+    void cloneLastExam(int chose) throws FileNotFoundException, CloneNotSupportedException;
+
+    void saveQuestions() throws IOException, ClassNotFoundException;
 
 
     //    void showAllQuestionsInUI();

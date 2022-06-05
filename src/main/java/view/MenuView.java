@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import listeners.viewListener;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -24,6 +25,7 @@ public  class  MenuView implements AbstractQuestionView {
     private PrintQuestionsView printQuestionsView=new PrintQuestionsView(allViewListeners,this);
     private AutomaticExamView automaticExamView=new AutomaticExamView(allViewListeners,this);
     private UpdateAnswerWordingView updateAnswerView=new UpdateAnswerWordingView(allViewListeners,this);
+    private CloneExamView cloneExamView=new CloneExamView(allViewListeners,this);
 
     public MenuView() {
         Stage theStage=new Stage();
@@ -69,7 +71,7 @@ public  class  MenuView implements AbstractQuestionView {
         manualExamrb.setTextFill(Color.GREEN);
         autoExamrb.setTextFill(Color.GREEN);
         clonerb.setTextFill(Color.GREEN);
-        saveExitrb.setTextFill(Color.GREEN);
+        saveExitrb.setTextFill(Color.RED);
         Scene newScene=new Scene(gpRoot,500,300);
         theStage.setScene(newScene);
         gpRoot.add(welcomelbl, 0, 0);
@@ -116,6 +118,23 @@ public  class  MenuView implements AbstractQuestionView {
                     theStage.hide();
                     automaticExamView.automaticExam();
                 }
+                if(clonerb.isSelected()){
+                    theStage.hide();
+                    cloneExamView.cloneExam();
+
+                }
+                if(saveExitrb.isSelected()){
+                    for (viewListener l:allViewListeners){
+                        try {
+                            l.saveQuestions();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    theStage.close();
+                }
 
             }
 
@@ -131,7 +150,8 @@ public  class  MenuView implements AbstractQuestionView {
 
     @Override
     public void showAutoExamToUI(String autoExam) {
-        JOptionPane.showMessageDialog(null,autoExam);
+        automaticExamView.showExam(autoExam);
+
     }
 
     @Override
@@ -152,6 +172,16 @@ public  class  MenuView implements AbstractQuestionView {
     @Override
     public void updateOpenAnswerMainView(String questionText, String answerText, int id) {
         updateAnswerView.updateOpenAnswerView(questionText,answerText,id);
+    }
+
+    @Override
+    public void massageFromModel(String msg) {
+        JOptionPane.showMessageDialog(null,msg);
+    }
+
+    @Override
+    public void SaveMsgFromModel(String msg) {
+        JOptionPane.showMessageDialog(null,msg);
     }
 
     @Override

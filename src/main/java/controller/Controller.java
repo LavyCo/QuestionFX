@@ -8,6 +8,7 @@ import view.AbstractQuestionView;
 import view.MenuView;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -128,6 +129,17 @@ public class  Controller implements modelListener, viewListener {
     }
 
     @Override
+    public void fireCloneMassege(String msg) {
+        questionView.massageFromModel(msg);
+    }
+
+    @Override
+    public void fireSaveMsg(String msg) {
+        questionView.SaveMsgFromModel(msg);
+    }
+
+
+    @Override
     public void changeQuestionText(String text, int id) {
         qrModel.changeQuestionWording(text,id);
 
@@ -157,6 +169,16 @@ public class  Controller implements modelListener, viewListener {
     @Override
     public void updateOpenQuestionViewToModel(String text, int id) {
         qrModel.changeAnswerWordingOfOpenQuestion(text,qrModel.fetchQuestionById(id));
+    }
+
+    @Override
+    public void cloneLastExam(int chose) throws FileNotFoundException, CloneNotSupportedException {
+        qrModel.cloneExam(chose);
+    }
+
+    @Override
+    public void saveQuestions() throws IOException, ClassNotFoundException {
+        qrModel.saveBin();
     }
 
 

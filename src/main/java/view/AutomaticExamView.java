@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import listeners.viewListener;
@@ -22,11 +24,14 @@ public class AutomaticExamView {
         this.menuView=menuView;
         this.allViewListeners=allViewListeners;
     }
-
+    public void showMainMenu(){
+        menuView.showMainMenu(new Stage());
+    }
     public void showNumbersOfQuestions(int numberOfQuestions) {
+
         ComboBox<Integer> cmdCountOfQuestions = new ComboBox<>();
         for (int i=0;i<numberOfQuestions;i++){
-            cmdCountOfQuestions.getItems().add(i);
+            cmdCountOfQuestions.getItems().add(i+1);
 
         }
         Stage case7=new Stage();
@@ -38,6 +43,17 @@ public class AutomaticExamView {
         Label titlelbl=new Label("select how much questions do you want in the test :");
         Scene newScene=new Scene(gpRoot,500,300);
         case7.setScene(newScene);
+        Button returnToMenu=new Button("Return to menu");
+        returnToMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                case7.hide();
+                showMainMenu();
+
+
+
+            }
+        });
 
         Button selectb=new Button("Select");
         selectb.setOnAction(new EventHandler<ActionEvent>() {
@@ -51,6 +67,8 @@ public class AutomaticExamView {
                             e.printStackTrace();
                         }
                     }
+                    case7.hide();
+
                 }
 
             }
@@ -58,6 +76,8 @@ public class AutomaticExamView {
         gpRoot.add(titlelbl,0,0);
         gpRoot.add(cmdCountOfQuestions,1,1);
         gpRoot.add(selectb,1,2);
+        gpRoot.add(returnToMenu,2,2);
+
         case7.show();
 
 
@@ -72,6 +92,32 @@ public class AutomaticExamView {
 
 
 
+
+
+    }
+
+    public void showExam(String autoExam) {
+        Stage autoExamStage=new Stage();
+        autoExamStage.setTitle("The new Automatic Exam");
+        BorderPane borderPane = new BorderPane();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(borderPane);
+        Scene newScene=new Scene(scrollPane,500,300);
+        Label autoExamText=new Label(autoExam);
+        borderPane.setTop( autoExamText);
+        autoExamStage.setScene(newScene);
+        Button okbt=new Button("OK");
+        okbt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                autoExamStage.close();
+                showMainMenu();
+
+            }
+
+        });
+        borderPane.setBottom(okbt);
+        autoExamStage.show();
 
 
     }

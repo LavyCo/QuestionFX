@@ -33,6 +33,10 @@ public interface modelListener {
 
     void fireOpenAnswerUpdateResult(String s);
 
+    void fireCloneMassege(String msg);
+
+    void fireSaveMsg(String msg);
+
 
 //    void addOpenQuestionMsg(String updateUserMessage);
 //

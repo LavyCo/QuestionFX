@@ -34,4 +34,8 @@ public interface AbstractQuestionView {
   void updateAnswerMenuView(String toString, ArrayList<Integer> idArray);
 
   void updateOpenAnswerMainView(String questionText, String answerText, int id);
+
+  void massageFromModel(String msg);
+
+  void SaveMsgFromModel(String msg);
 }

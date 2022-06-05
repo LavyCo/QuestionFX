@@ -1,0 +1,43 @@
+the test with answers:
+
+1) the question is : D Which one of these is not dessert?
+
+solutions for question 1) is: 
+
+1)  Ice cream (False)
+
+2)  Pizza (True)
+
+3)  Brownies (False)
+
+4)  Muffin (False)
+
+5)  There are more than 1 right answers (False)
+
+6)  All the answers are false (False)
+
+2) the question is : E Which one of these next Programming languages is Low-Level programming language?
+
+solutions for question 2) is: 
+
+1)  Swift (False)
+
+2)  C# (False)
+
+3)  JavaScript (False)
+
+4)  Python (False)
+
+5)  There is more than 1 right answers (False)
+
+6)  All the answers are false (True)
+
+3) the question is : C What is the difference between Choclate cake and a Salad?
+
+solution for question 3) is: Salad wont give you Diabetes
+
+4) the question is : B Who solved the Engima machine during WWII?
+
+solution for question 4) is: Alan Turing
+
+End

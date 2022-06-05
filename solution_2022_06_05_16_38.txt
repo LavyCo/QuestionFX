@@ -1,0 +1,43 @@
+the test with answers:
+
+1) the question is : D Which one of these is not dessert?
+
+solutions for question 1) is: 
+
+1)  Choclate cake (False)
+
+2)  Muffin (False)
+
+3)  Burger (True)
+
+4)  Ice cream (False)
+
+5)  There are more than 1 right answers (False)
+
+6)  All the answers are false (False)
+
+2) the question is : B Who solved the Engima machine during WWII?
+
+solution for question 2) is: Alan Turing
+
+3) the question is : E Which one of these next Programming languages is Low-Level programming language?
+
+solutions for question 3) is: 
+
+1)  C (False)
+
+2)  JavaScript (False)
+
+3)  Java (False)
+
+4)  Swift (False)
+
+5)  There is more than 1 right answers (False)
+
+6)  All the answers are false (True)
+
+4) the question is : A Who was Yitzhak Rabin?
+
+solution for question 4) is: Israeli prime minister
+
+End

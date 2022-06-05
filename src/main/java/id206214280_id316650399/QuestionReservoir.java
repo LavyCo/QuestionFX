@@ -59,6 +59,10 @@ public class QuestionReservoir implements Serializable {
         }
         outFile.writeObject(questionArray);
         outFile.close();
+        for (modelListener l:qrListeners){
+            String msg="your Questions Saved";
+            l.fireSaveMsg(msg);
+        }
 
 
     }
@@ -251,34 +255,44 @@ public class QuestionReservoir implements Serializable {
 
     }
 
-    public boolean cloneExam(int whichExamOpt) throws CloneNotSupportedException, FileNotFoundException {
+    public void cloneExam(int whichExamOpt) throws CloneNotSupportedException, FileNotFoundException {
+        String msg=null;
 
         if (whichExamOpt == 1) {
             if (manualExam.getNumOfQuestions() == 0) {
                 System.out.println("Can't clone the exam. Manual exam not created yet.");
-                return false;
+                msg="Can't clone the exam. Manual exam not created yet.";
+
             }
-            manualExamClone = manualExam.clone();
-            System.out.println("Manual exam cloned");
-            System.out.println(manualExamClone.toString());
-            manualExam = automaticExam;
-            System.out.println(manualExam.toString());
-            System.out.println(manualExamClone.toString());
-            return true;
+            else{
+                manualExamClone = manualExam.clone();
+                System.out.println("Manual exam cloned");
+                System.out.println(manualExamClone.toString());
+                manualExam = automaticExam;
+                System.out.println(manualExam.toString());
+                System.out.println(manualExamClone.toString());
+                msg="Manual exam cloned";
+            }
+
         }
 
         if (whichExamOpt == 2) {
             if (automaticExam.getNumOfQuestions() == 0) {
                 System.out.println("Can't clone the exam. Automatic exam not created yet.");
-                return false;
+                msg="Can't clone the exam. Automatic exam not created yet.";
             }
-            automaticExamClone = automaticExam.clone();
-            System.out.println("Automatic exam cloned");
-            System.out.println(automaticExamClone.toString());
-            return true;
+            else{
+                automaticExamClone = automaticExam.clone();
+                System.out.println("Automatic exam cloned");
+                System.out.println(automaticExamClone.toString());
+                msg="Automatic exam cloned";
+            }
+
 
         }
-        return true;
+        for (modelListener l:qrListeners){
+            l.fireCloneMassege(msg);
+        }
 
     }
 
