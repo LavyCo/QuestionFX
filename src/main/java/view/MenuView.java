@@ -222,17 +222,19 @@ public  class  MenuView implements AbstractQuestionView {
         manualExamView.showQuestionsForManualExam();
     }
 
-
-
     @Override
-    public void showAmericanQuestionAndAnswersManualExam(String questionText, Vector<String> answerString, int size,int questionNumber) {
-        manualExamView.showAmericanAnswerManualExam(questionText,answerString,size,questionNumber);
+    public void showAmericanAnswerInView(Vector<String> americanAnswerVector, int numOfAmericanAnswers, int id) {
+
     }
 
+    @Override
+    public void showAmericanAnswersSelectionManualExams(String questionText, int questionNumber, int size, Vector<String> answersString) {
+        manualExamView.showAmericanAnswerManualExam(questionText,answersString,size,questionNumber);
+    }
 
     @Override
-    public void showAmericanAnswerInView(Vector<String> americanAnswerText, int numOfAmericanAnswers, int id) {
-        updateAnswerView.showAmericanAnswerView(americanAnswerText,numOfAmericanAnswers,id);
+    public void showManualExamUI(String examString) {
+        manualExamView.showManualExamUI(examString);
     }
 
 

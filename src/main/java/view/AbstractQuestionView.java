@@ -8,7 +8,6 @@ import java.util.Vector;
 public interface AbstractQuestionView {
 
 
-  void showAmericanAnswerInView(Vector<String> americanAnswerText, int numOfAmericanAnswers, int id);
 
   void registerListener(viewListener newListener);
 
@@ -50,5 +49,10 @@ public interface AbstractQuestionView {
     void showManualExamSelection(Vector<String> allQuestionString);
 
 
-  void showAmericanQuestionAndAnswersManualExam(String questionText, Vector<String> answerString, int size,int questionNumber);
+  void showAmericanAnswerInView(Vector<String> americanAnswerVector, int numOfAmericanAnswers, int id);
+
+
+  void showAmericanAnswersSelectionManualExams(String questionText, int questionNumber, int size, Vector<String> answersString);
+
+    void showManualExamUI(String examString);
 }

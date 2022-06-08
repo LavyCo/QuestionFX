@@ -159,9 +159,15 @@ public class  Controller implements modelListener, viewListener {
     }
 
 
+
     @Override
-    public void fireAmericanQuestionManual(String questionText, Vector<String> answerString, int questionNumber, int size) {
-        questionView.showAmericanQuestionAndAnswersManualExam(questionText,answerString,questionNumber,size);
+    public void fireAmericanAnswersManualExam(String questionText,int questionNumber, int size, Vector<String> answersString) {
+        questionView.showAmericanAnswersSelectionManualExams(questionText,questionNumber,size,answersString);
+    }
+
+    @Override
+    public void fireShowManualExam(String examString) {
+        questionView.showManualExamUI(examString);
     }
 
 
@@ -171,10 +177,6 @@ public class  Controller implements modelListener, viewListener {
 
     }
 
-    @Override
-    public void updateDeleteAmericanAnswer() {
-
-    }
 
     @Override
     public void updateAnswerView() {
@@ -228,9 +230,13 @@ public class  Controller implements modelListener, viewListener {
     }
 
     @Override
-    public void addQuestionToManualUI(int questionNumber, int size, Vector<Integer> answers) {
-        qrModel.addQuestionToManual(questionNumber,size,answers);
+    public void addQuestionToManualUI(int questionNumber, int size) {
+        qrModel.addQuestionToManual(questionNumber,size);
+    }
 
+    @Override
+    public void addAmericanQuestionManualExamUI(int questionNumber, Vector<Integer> chosenAmericanAnswers, int size) {
+        qrModel.addAmericanQuestionManualExam(questionNumber,chosenAmericanAnswers,size);
     }
 
 

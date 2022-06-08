@@ -47,7 +47,10 @@ public interface modelListener {
     void fireQuestionStringManualExam(Vector<String> allQuestionString);
 
 
-    void fireAmericanQuestionManual(String questionText, Vector<String> answerString, int questionNumber, int number);
+
+    void fireAmericanAnswersManualExam(String questionText,int questionNumber, int size, Vector<String> answersString);
+
+    void fireShowManualExam(String toString);
 
 
 //    void addOpenQuestionMsg(String updateUserMessage);

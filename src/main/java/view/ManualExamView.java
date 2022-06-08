@@ -24,7 +24,8 @@ public class ManualExamView {
     private Vector<viewListener> allViewListeners;
     private Stage manualExamStage = new Stage();
     private MenuView menuView;
-
+    private Stage americanAnswerStage =new Stage();
+    private Scene americanAnswerScene;
 
     public ManualExamView(Vector<viewListener> allViewListeners, MenuView menuView, Vector<String> allQuestionString) {
         this.allViewListeners = allViewListeners;
@@ -49,8 +50,7 @@ public class ManualExamView {
         ArrayList<CheckBox> questionCb = new ArrayList<>();
         Button selectQuestions = new Button("Select");
         Button returnButton = new Button("Return to menu");
-        Button clearAllButton = new Button("Clear all");
-        selectQuestionsButtons.getChildren().addAll(selectQuestions, clearAllButton, returnButton);
+        selectQuestionsButtons.getChildren().addAll(selectQuestions, returnButton);
         selectQuestionsButtons.setAlignment(Pos.CENTER);
         selectQuestionsButtons.setSpacing(20);
         BorderPane selectQuestionBorderPane = new BorderPane();
@@ -105,59 +105,115 @@ public class ManualExamView {
 
                 }
                 for (int i = 0; i < numOfQuestions.size(); i++) {
-                    Vector<Integer> noAnswers=new Vector<>();
                     for (viewListener l : allViewListeners) {
-                        l.addQuestionToManualUI(numOfQuestions.get(i).intValue(),numOfQuestions.size(),noAnswers);
+                        l.addQuestionToManualUI(numOfQuestions.get(i).intValue(),numOfQuestions.size());
                     }
                 }
+                manualExamStage.hide();
+
 
             }
 
+
+
         });
+
 
     }
 
 
-    public void showAmericanAnswerManualExam(String questionText, Vector<String> americanAnswers,int size, int numOfQuestion) {
-        VBox americanAnswersSelect=new VBox();
-        System.out.println(numOfQuestion);
 
-        BorderPane selectAnswerBorderPane=new BorderPane();
-        Scene americanAnswersScene;
-        Button selectAnswers=new Button("Select Answers");
-        HBox selectAnswersHBox=new HBox();
-        selectAnswersHBox.getChildren().add(selectAnswers);
-        selectAnswersHBox.setAlignment(Pos.CENTER);
-        selectAnswerBorderPane.setRight(selectAnswersHBox);
-        Stage americanAnswersStage=new Stage();
-        Vector<CheckBox> americanAnswersCb=new Vector<>();
-        americanAnswersSelect.getChildren().add(new Label(questionText));
-        for(int i=0;i<americanAnswers.size();i++){
-            CheckBox checkBox=new CheckBox(americanAnswers.get(i).toString());
-            americanAnswersCb.add(checkBox);
-            americanAnswersSelect.getChildren().add(americanAnswersCb.get(i));
+    public void showAmericanAnswerManualExam(String questionText, Vector<String> answerString, int size, int questionNumber) {
+        VBox americanQuestionVbox=new VBox();
+        Vector<CheckBox> answersCb=new Vector<>();
+        Button selectButton=new Button("Select answers");
+        HBox americanQuestionHbox=new HBox();
+        BorderPane americanQuestionBp=new BorderPane();
+        americanQuestionHbox.getChildren().add(selectButton);
+        americanQuestionVbox.getChildren().add(new Label(questionText));
+        americanQuestionBp.setLeft(americanQuestionVbox);
+        americanQuestionBp.setRight(americanQuestionHbox);
+        for(int i=0;i<answerString.size();i++){
+            System.out.println(answerString.get(i));
+            CheckBox checkBox=new CheckBox(answerString.get(i));
+            answersCb.add(checkBox);
+            americanQuestionVbox.getChildren().add(answersCb.get(i));
         }
-        selectAnswerBorderPane.setLeft(americanAnswersSelect);
-        americanAnswersScene=new Scene(selectAnswerBorderPane);
-        americanAnswersStage.setScene(americanAnswersScene);
-        americanAnswersStage.show();
+        americanAnswerScene=new Scene(americanQuestionBp);
+        americanAnswerStage.setScene(americanAnswerScene);
+        selectButton.setDisable(true);
 
-        selectAnswers.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Vector<Integer> americanAnswersSelected=new Vector<>();
-                for(int i=0;i<americanAnswersCb.size();i++){
-                    if(americanAnswersCb.get(i).isSelected()){
-                        americanAnswersSelected.add(i);
+
+
+        for (int i = 0; i < answersCb.size(); i++) {
+
+            answersCb.get(i).setOnAction(new EventHandler<ActionEvent>() {
+                int counter = 0;
+
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    int selectCounter = 0;
+                    for (int j = 0; j < answersCb.size(); j++) {
+                        if (answersCb.get(j).isSelected()) {
+                            selectCounter++;
+                        }
+                    }
+                    if (selectCounter < 4) {
+                        selectButton.setDisable(true);
+                    } else {
+                        selectButton.setDisable(false);
                     }
                 }
-                for(viewListener l:allViewListeners){
-                    l.addQuestionToManualUI(numOfQuestion,size,americanAnswersSelected);
+            });
+        }
+
+
+        selectButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Vector<Integer> chosenAmericanAnswers=new Vector<>();
+                for(int i=0;i< answersCb.size();i++){
+                    if(answersCb.get(i).isSelected()){
+                        chosenAmericanAnswers.add(i);
+                    }
                 }
-                americanAnswersStage.hide();
+                for(int i=0;i<answersCb.size();i++){
+                    answersCb.get(i).setDisable(true);
+                }
+                for(viewListener l:allViewListeners){
+                    l.addAmericanQuestionManualExamUI(questionNumber,chosenAmericanAnswers,size);
+                    selectButton.setDisable(true);
+                    americanAnswerStage.close();
+                }
             }
-
         });
+        americanAnswerStage.showAndWait();
 
+    }
+
+    public void showManualExamUI(String examString) {
+        ScrollPane examScrollPane=new ScrollPane();
+        Button returnToMenu=new Button("Return to menu");
+        Stage showExamStage=new Stage();
+        VBox examVbox=new VBox(new Label(examString));
+        examVbox.setPadding(new Insets(20));
+        BorderPane examBorderPane=new BorderPane();
+        examBorderPane.setPadding(new Insets(10));
+        examScrollPane.setContent(examVbox);
+        HBox buttonsHbox=new HBox();
+        buttonsHbox.getChildren().add(returnToMenu);
+        buttonsHbox.setAlignment(Pos.CENTER);
+        examBorderPane.setLeft(examScrollPane);
+        examBorderPane.setRight(buttonsHbox);
+        Scene examScene=new Scene(examBorderPane);
+        showExamStage.setScene(examScene);
+        showExamStage.show();
+        returnToMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                menuView.showMainMenu(new Stage());
+                showExamStage.close();
+            }
+        });
     }
 }

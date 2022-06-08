@@ -30,7 +30,6 @@ public interface viewListener {
 
     void changeQuestionText(String text, int id);
 
-    void updateDeleteAmericanAnswer();
 
     void updateAnswerView();
 
@@ -53,7 +52,9 @@ public interface viewListener {
     void manualExamUI();
 
 
-    void addQuestionToManualUI(int questionNumber, int size, Vector<Integer> noAnswers);
+    void addQuestionToManualUI(int questionNumber, int size);
+
+    void addAmericanQuestionManualExamUI(int questionNumber, Vector<Integer> chosenAmericanAnswers, int size);
 
 
     //    void showAllQuestionsInUI();
