@@ -37,6 +37,18 @@ public interface modelListener {
 
     void fireSaveMsg(String msg);
 
+    void fireAmericanId(String americanQuestionsString, Vector<Integer> americanIdVector);
+
+    void fireAmericanQuestionData(String americanQuestionString, Vector<String> americanAnswerString, int id);
+
+
+    void fireRemoveAmericanAnswerMsg(String toString, Vector<String> americanAnswerToDelete, int id, String result);
+
+    void fireQuestionStringManualExam(Vector<String> allQuestionString);
+
+
+    void fireAmericanQuestionManual(String questionText, Vector<String> answerString, int questionNumber, int number);
+
 
 //    void addOpenQuestionMsg(String updateUserMessage);
 //

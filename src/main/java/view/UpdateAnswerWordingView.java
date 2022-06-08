@@ -59,7 +59,13 @@ public class UpdateAnswerWordingView {
                 }
             }
         });
-
+        returnToMenuButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                questionAndIdStage.hide();
+                menuView.showMainMenu(new Stage());
+            }
+        });
 
     }
 
@@ -156,14 +162,11 @@ public class UpdateAnswerWordingView {
         returnToMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                System.out.println("ff");
                 selectAmericanAnswerUpdateStage.hide();
                 menuView.showMainMenu(new Stage());
             }
         });
-
-
-
-
 
     }
 
@@ -209,6 +212,7 @@ public class UpdateAnswerWordingView {
             @Override
             public void handle(ActionEvent actionEvent) {
                 for(viewListener l:allViewListeners){
+                    updateOpenAnswerStage.hide();
                     l.updateAnswerView();
                 }
             }

@@ -26,6 +26,8 @@ public  class  MenuView implements AbstractQuestionView {
     private AutomaticExamView automaticExamView=new AutomaticExamView(allViewListeners,this);
     private UpdateAnswerWordingView updateAnswerView=new UpdateAnswerWordingView(allViewListeners,this);
     private CloneExamView cloneExamView=new CloneExamView(allViewListeners,this);
+    private DeleteAmericanAnswerView deleteAmericanAnswerView=new DeleteAmericanAnswerView(allViewListeners,this);
+    private ManualExamView manualExamView=new ManualExamView(allViewListeners,this);
 
     public MenuView() {
         Stage theStage=new Stage();
@@ -114,6 +116,17 @@ public  class  MenuView implements AbstractQuestionView {
                         l.updateAnswerView();
                     }
                 }
+                if(deleteAns.isSelected()){
+                    theStage.hide();
+                        for (viewListener l : allViewListeners) {
+                            l.deleteAmericanAnswer();}
+                }
+                if(manualExamrb.isSelected()){
+                    theStage.hide();
+                    for(viewListener l:allViewListeners){
+                        l.manualExamUI();
+                    }
+                }
                 if (autoExamrb.isSelected()){
                     theStage.hide();
                     automaticExamView.automaticExam();
@@ -154,10 +167,6 @@ public  class  MenuView implements AbstractQuestionView {
 
     }
 
-    @Override
-    public void showIdInUpdateQuestionView(ArrayList<Integer> idArray) {
-
-    }
 
     @Override
     public void showChosenQuestionToUpdateInView(String questionText,int id) {
@@ -185,8 +194,44 @@ public  class  MenuView implements AbstractQuestionView {
     }
 
     @Override
+    public void showAmericanQuestionId(String americanQuestionsString, Vector<Integer> americanIdVector) {
+        DeleteAmericanAnswerView deleteAmericanAnswerView=new DeleteAmericanAnswerView(this,allViewListeners,americanIdVector,americanQuestionsString);
+        deleteAmericanAnswerView.showAmericanQuestionsData();
+
+    }
+
+    @Override
+    public void showChosenAmericanQuestionToDelete(String americanQuestionString, Vector<String> americanAnswerString, int id) {
+        deleteAmericanAnswerView.showChosenAmericanQuestionDelete(americanQuestionString,americanAnswerString,id);
+    }
+
+    @Override
+    public void updateDeleteAnswerView(String toString, Vector<String> americanAnswerToDelete, int id, String result) {
+        JOptionPane.showMessageDialog(null,result);
+        deleteAmericanAnswerView.showChosenAmericanQuestionDelete(toString,americanAnswerToDelete,id);
+    }
+
+    @Override
+    public void showIdInUpdateQuestionView(ArrayList<Integer> idArray) {
+
+    }
+
+    @Override
+    public void showManualExamSelection(Vector<String> allQuestionString) {
+        ManualExamView manualExamView=new ManualExamView(allViewListeners,this,allQuestionString);
+        manualExamView.showQuestionsForManualExam();
+    }
+
+
+
+    @Override
+    public void showAmericanQuestionAndAnswersManualExam(String questionText, Vector<String> answerString, int size,int questionNumber) {
+        manualExamView.showAmericanAnswerManualExam(questionText,answerString,size,questionNumber);
+    }
+
+
+    @Override
     public void showAmericanAnswerInView(Vector<String> americanAnswerText, int numOfAmericanAnswers, int id) {
-        System.out.println("test");
         updateAnswerView.showAmericanAnswerView(americanAnswerText,numOfAmericanAnswers,id);
     }
 
@@ -218,20 +263,10 @@ public  class  MenuView implements AbstractQuestionView {
         addQuestionView.addQuestionToUI();
     }
 
-
     @Override
     public void printAllQuestionsToString(String questionString) {
         printQuestionsView.printAllQuestionstoString(questionString);
     }
-
-
-
-    //add
-
-
-//    public AddQuestionView getAddQuestionView(){
-//        return addQuestionView;
-//    }
 
 
 }

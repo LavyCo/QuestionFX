@@ -2,6 +2,7 @@ package id206214280_id316650399;
 
 
 import java.util.Iterator;
+import java.util.Vector;
 
 public class AmericanQuestions extends Questions implements Cloneable{
 
@@ -34,17 +35,21 @@ public class AmericanQuestions extends Questions implements Cloneable{
 
     }
 
-    public boolean americanAnswerRemove(int answerNumber) {
-        Object[] americanAnswerArr=this.answerArrayList.toArray();
-        AmericanAnswer americanAnswerToDelete= (AmericanAnswer) americanAnswerArr[answerNumber];
-        if (numOfAmericanAnswers > 1) {
+    public String americanAnswerRemove(int answerNumber) {
+        AmericanAnswer americanAnswerToDelete= this.getAnswerArray().get(answerNumber);
+        String msg=null;
+        if((counterTrueFalse(this.getAnswerArray())==4)&&americanAnswerToDelete.getCorrectness()){
+            msg="Cannot delete must have at least 1 true answer";
+            return msg;
+        }
+        if (numOfAmericanAnswers > 2) {
             this.answerArrayList.remove(americanAnswerToDelete);
             numOfAmericanAnswers--;
-            System.out.println("Deleted answer succesfuly->"+americanAnswerToDelete);
-            return true;
+            msg=americanAnswerToDelete.toString() + "Deleted answer succesfuly ";
+            return msg;
         }
-        System.out.println("Error:American question must have at least 2 answers");
-        return false;
+        msg="Error:American question must have at least 2 answers";
+        return msg;
     }
 
 
@@ -149,7 +154,6 @@ public class AmericanQuestions extends Questions implements Cloneable{
 
     //הפונקציה סופרת את את מספר התשובות הנכונות ולא נכונות ומחזירה אינדקס
     public int counterTrueFalse(Set<AmericanAnswer> americanAnswers) {
-
         //function that check how many true and false there are
         //check how many false or true answers there are for the question
         Object[] americanAnswer=answerArrayList.toArray();
@@ -173,6 +177,9 @@ public class AmericanQuestions extends Questions implements Cloneable{
         //if tC>1 (there is more than 1 right answer)
         if ((trueCounter > 1)) {
             return 3;
+        }
+        if(trueCounter==1&&falseCounter>0){
+            return 4;
         }
         return 0;
     }
@@ -236,6 +243,14 @@ public class AmericanQuestions extends Questions implements Cloneable{
 
     public Set<AmericanAnswer> getAnswerArray() {
         return answerArrayList;
+    }
+
+    public Vector<String> getAnswerStringVector(){
+        Vector<String> answerStringVector=new Vector<>();
+        for(int i=0;i<this.getNumOfAmericanAnswers();i++){
+            answerStringVector.add(this.getAnswerArray().get(i).toString());
+        }
+        return answerStringVector;
     }
 
 }

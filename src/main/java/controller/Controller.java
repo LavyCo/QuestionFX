@@ -138,6 +138,32 @@ public class  Controller implements modelListener, viewListener {
         questionView.SaveMsgFromModel(msg);
     }
 
+    @Override
+    public void fireAmericanId(String americanQuestionsString, Vector<Integer> americanIdVector) {
+        questionView.showAmericanQuestionId(americanQuestionsString,americanIdVector);
+    }
+
+    @Override
+    public void fireAmericanQuestionData(String americanQuestionString, Vector<String> americanAnswerString, int id) {
+        questionView.showChosenAmericanQuestionToDelete(americanQuestionString,americanAnswerString,id);
+    }
+
+    @Override
+    public void fireRemoveAmericanAnswerMsg(String toString, Vector<String> americanAnswerToDelete, int id, String result) {
+        questionView.updateDeleteAnswerView(toString,americanAnswerToDelete,id,result);
+    }
+
+    @Override
+    public void fireQuestionStringManualExam(Vector<String> allQuestionString) {
+        questionView.showManualExamSelection(allQuestionString);
+    }
+
+
+    @Override
+    public void fireAmericanQuestionManual(String questionText, Vector<String> answerString, int questionNumber, int size) {
+        questionView.showAmericanQuestionAndAnswersManualExam(questionText,answerString,questionNumber,size);
+    }
+
 
     @Override
     public void changeQuestionText(String text, int id) {
@@ -157,7 +183,7 @@ public class  Controller implements modelListener, viewListener {
 
     @Override
     public void showAnswerToUpdate(int id) {
-        System.out.println("test2");
+
         qrModel.getAnswerById(id);
     }
 
@@ -179,6 +205,32 @@ public class  Controller implements modelListener, viewListener {
     @Override
     public void saveQuestions() throws IOException, ClassNotFoundException {
         qrModel.saveBin();
+    }
+
+    @Override
+    public void deleteAmericanAnswer() {
+        qrModel.getAmericanQuestionsData();
+    }
+
+    @Override
+    public void getAmericanQuestionToDelete(int id) {
+        qrModel.getSelectedAmericanQuestionData(id);
+    }
+
+    @Override
+    public void deleteAmericanAnswerFromModel(int id, int numberOfAnswerToDelete) {
+        qrModel.deleteAmericanAnswer(id,numberOfAnswerToDelete);
+    }
+
+    @Override
+    public void manualExamUI() {
+        qrModel.getAllQuestionToManualExamView();
+    }
+
+    @Override
+    public void addQuestionToManualUI(int questionNumber, int size, Vector<Integer> answers) {
+        qrModel.addQuestionToManual(questionNumber,size,answers);
+
     }
 
 

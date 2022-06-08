@@ -3,6 +3,7 @@ package listeners;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public interface viewListener {
 
@@ -42,6 +43,17 @@ public interface viewListener {
     void cloneLastExam(int chose) throws FileNotFoundException, CloneNotSupportedException;
 
     void saveQuestions() throws IOException, ClassNotFoundException;
+
+    void deleteAmericanAnswer();
+
+    void getAmericanQuestionToDelete(int intValue);
+
+    void deleteAmericanAnswerFromModel(int id, int numberOfAnswerToDelete);
+
+    void manualExamUI();
+
+
+    void addQuestionToManualUI(int questionNumber, int size, Vector<Integer> noAnswers);
 
 
     //    void showAllQuestionsInUI();

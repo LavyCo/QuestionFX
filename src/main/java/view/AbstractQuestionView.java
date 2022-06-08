@@ -7,6 +7,7 @@ import java.util.Vector;
 
 public interface AbstractQuestionView {
 
+
   void showAmericanAnswerInView(Vector<String> americanAnswerText, int numOfAmericanAnswers, int id);
 
   void registerListener(viewListener newListener);
@@ -27,9 +28,8 @@ public interface AbstractQuestionView {
 
   void showAutoExamToUI(String autoExam);
 
-  void showIdInUpdateQuestionView(ArrayList<Integer> idArray);
 
-    void showChosenQuestionToUpdateInView(String questionText,int id);
+  void showChosenQuestionToUpdateInView(String questionText,int id);
 
   void updateAnswerMenuView(String toString, ArrayList<Integer> idArray);
 
@@ -38,4 +38,17 @@ public interface AbstractQuestionView {
   void massageFromModel(String msg);
 
   void SaveMsgFromModel(String msg);
+
+  void showAmericanQuestionId(String americanQuestionsString, Vector<Integer> americanIdVector);
+
+  void showChosenAmericanQuestionToDelete(String americanQuestionString, Vector<String> americanAnswerString, int id);
+
+    void updateDeleteAnswerView(String toString, Vector<String> americanAnswerToDelete, int id, String result);
+
+  void showIdInUpdateQuestionView(ArrayList<Integer> idArray);
+
+    void showManualExamSelection(Vector<String> allQuestionString);
+
+
+  void showAmericanQuestionAndAnswersManualExam(String questionText, Vector<String> answerString, int size,int questionNumber);
 }

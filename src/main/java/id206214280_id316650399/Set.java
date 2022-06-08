@@ -25,6 +25,10 @@ public class Set<T> implements Serializable {
         }
     }
 
+    public T get(int i){
+        return  genericArray[i];
+    }
+
 
     public boolean remove(T e) {
         if (contains(e)) {
