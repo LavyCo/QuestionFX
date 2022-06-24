@@ -1,0 +1,27 @@
+the test with answers:
+
+1) the question is : B Who solved the Engima machine during WWII?
+
+solution for question 1) is: Alan Turing
+
+2) the question is : D Which one of these is not dessert?
+
+solutions for question 2) is: 
+
+1)  Ice cream (False)
+
+2)  Pizza (True)
+
+3)  Choclate cake (False)
+
+4)  Muffin (False)
+
+5)  There are more than 1 right answers (False)
+
+6)  All the answers are false (False)
+
+3) the question is : C What is the difference between Choclate cake and a Salad?
+
+solution for question 3) is: Salad wont give you Diabetes
+
+End

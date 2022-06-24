@@ -134,6 +134,10 @@ public class UpdateAnswerWordingView {
                                 l.updateAmericanAnswer(answerTextField.getText(),id,answerNumber,opt);
                             }
                             submitButton.setDisable(true);
+                            answerTextField.setDisable(true);
+                            trueRb.setDisable(true);
+                            falseRb.setDisable(true);
+
                         }
                         else{
                             JOptionPane.showMessageDialog(null,"Must choose at least 1 True/False");
@@ -162,7 +166,6 @@ public class UpdateAnswerWordingView {
         returnToMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("ff");
                 selectAmericanAnswerUpdateStage.hide();
                 menuView.showMainMenu(new Stage());
             }

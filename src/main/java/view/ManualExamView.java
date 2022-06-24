@@ -88,6 +88,14 @@ public class ManualExamView {
             });
         }
 
+        returnButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                menuView.showMainMenu(new Stage());
+                manualExamStage.hide();
+            }
+        });
+
 
         selectQuestions.setOnAction(new EventHandler<ActionEvent>() {
             @Override

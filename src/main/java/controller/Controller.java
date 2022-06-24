@@ -45,13 +45,6 @@ public class  Controller implements modelListener, viewListener {
         qrModel.addOpenQuestion(text,text1);
     }
 
-
-    @Override
-    public void updateQuestionTextUI() {
-
-    }
-
-    //add
     @Override
     public void fireIdToUI(ArrayList<Integer> idArray) {
         questionView.showIdInUpdateQuestionView(idArray);
@@ -72,13 +65,6 @@ public class  Controller implements modelListener, viewListener {
     public void fireAutoExam(String autoExam) {
         questionView.showAutoExamToUI(autoExam);
 
-    }
-
-
-    //add
-    @Override
-    public void showIDInUI() {
-        qrModel.getIDNumberArray();
     }
 
     //update question
@@ -185,7 +171,6 @@ public class  Controller implements modelListener, viewListener {
 
     @Override
     public void showAnswerToUpdate(int id) {
-
         qrModel.getAnswerById(id);
     }
 

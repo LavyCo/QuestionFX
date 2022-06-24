@@ -19,11 +19,11 @@ public class AmericanAnswer implements Serializable,Cloneable {
 	public String toString() {
 		String sb; 
 		if(correctness) {
-			sb=" (True)";
+			sb="(True)";
 		
 		}
 		else {
-			sb=" (False)";
+			sb="(False)";
 					
 		}
 		return " "+answerText+sb;

@@ -224,6 +224,7 @@ public  class  MenuView implements AbstractQuestionView {
 
     @Override
     public void showAmericanAnswerInView(Vector<String> americanAnswerVector, int numOfAmericanAnswers, int id) {
+        updateAnswerView.showAmericanAnswerView(americanAnswerVector,numOfAmericanAnswers,id);
 
     }
 

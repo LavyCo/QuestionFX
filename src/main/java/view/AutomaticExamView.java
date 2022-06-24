@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import listeners.viewListener;
 
@@ -49,9 +50,6 @@ public class AutomaticExamView {
             public void handle(ActionEvent actionEvent) {
                 case7.hide();
                 showMainMenu();
-
-
-
             }
         });
 
@@ -80,8 +78,6 @@ public class AutomaticExamView {
 
         case7.show();
 
-
-
     }
 
 
@@ -89,11 +85,6 @@ public class AutomaticExamView {
         for(viewListener l:allViewListeners){
             l.getNumOfQuestions();
         }
-
-
-
-
-
     }
 
     public void showExam(String autoExam) {
@@ -102,21 +93,19 @@ public class AutomaticExamView {
         BorderPane borderPane = new BorderPane();
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(borderPane);
-        Scene newScene=new Scene(scrollPane,500,300);
+        Scene newScene=new Scene(scrollPane,300,300);
         Label autoExamText=new Label(autoExam);
         borderPane.setTop( autoExamText);
         autoExamStage.setScene(newScene);
-        Button okbt=new Button("OK");
-        okbt.setOnAction(new EventHandler<ActionEvent>() {
+        Button okBt=new Button("OK");
+        okBt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 autoExamStage.close();
                 showMainMenu();
-
             }
-
         });
-        borderPane.setBottom(okbt);
+        borderPane.setBottom(okBt);
         autoExamStage.show();
 
 

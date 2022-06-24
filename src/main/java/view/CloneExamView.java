@@ -10,7 +10,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import listeners.viewListener;
-
 import java.io.FileNotFoundException;
 import java.util.Vector;
 
@@ -27,19 +26,19 @@ public class CloneExamView {
     public void cloneExam(){
         Stage case8=new Stage();
         BorderPane borderPane = new BorderPane();
-        Scene newScene=new Scene(borderPane,500,300);
+        Scene newScene=new Scene(borderPane,400,200);
         case8.setScene(newScene);
-        Label titlelbl=new Label("Chose how exam do you want to clone:");
-        borderPane.setTop(titlelbl);
-        RadioButton autoExamrb=new RadioButton("Automatic Exam");
-        RadioButton menualExamrb=new RadioButton("Menual Exam");
+        Label titleLbl=new Label("Choose which exam do you want to clone:");
+        borderPane.setTop(titleLbl);
+        RadioButton autoExamRb=new RadioButton("Automatic Exam");
+        RadioButton manualExamRb=new RadioButton("Manual Exam");
         ToggleGroup tglOpt = new ToggleGroup();
-        autoExamrb.setToggleGroup(tglOpt);
-        menualExamrb.setToggleGroup(tglOpt);
-        borderPane.setRight(autoExamrb);
-        borderPane.setLeft(menualExamrb);
-        Button selectbt=new Button("select");
-        borderPane.setCenter(selectbt);
+        autoExamRb.setToggleGroup(tglOpt);
+        manualExamRb.setToggleGroup(tglOpt);
+        borderPane.setRight(autoExamRb);
+        borderPane.setLeft(manualExamRb);
+        Button selectBt=new Button("Select");
+        borderPane.setCenter(selectBt);
         Button returnToMenu=new Button("Return To Menu");
         borderPane.setBottom(returnToMenu);
         returnToMenu.setOnAction(new EventHandler<ActionEvent>() {
@@ -50,10 +49,10 @@ public class CloneExamView {
             }
         });
 
-            selectbt.setOnAction(new EventHandler<ActionEvent>() {
+            selectBt.setOnAction(new EventHandler<ActionEvent>() {
                                      @Override
                                      public void handle(ActionEvent actionEvent) {
-                                         if (menualExamrb.isSelected()){
+                                         if (manualExamRb.isSelected()){
                                              int chose=1;
                                              for(viewListener l:allViewListeners){
                                                  try {
@@ -65,7 +64,7 @@ public class CloneExamView {
                                                  }
                                              }
                                          }
-                                         if(autoExamrb.isSelected()){
+                                         if(autoExamRb.isSelected()){
                                              int chose=2;
                                              for(viewListener l:allViewListeners){
                                                  try {

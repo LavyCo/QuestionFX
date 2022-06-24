@@ -597,6 +597,7 @@ public class QuestionReservoir implements Serializable {
         }
     }
 
+
     public void getAnswerById(int id) {
         if (fetchQuestionById(id) instanceof AmericanQuestions) {
             AmericanQuestions americanQuestions = (AmericanQuestions) fetchQuestionById(id);

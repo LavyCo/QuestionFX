@@ -15,11 +15,6 @@ public interface viewListener {
     void addOpenQuestionUI(String text, String text1);
 
 
-    //add
-    void updateQuestionTextUI();
-
-    void showIDInUI();
-
     void showQuestionsAndIdToUpdate();
 
     void getNumOfQuestions();
@@ -57,31 +52,4 @@ public interface viewListener {
     void addAmericanQuestionManualExamUI(int questionNumber, Vector<Integer> chosenAmericanAnswers, int size);
 
 
-    //    void showAllQuestionsInUI();
-//
-//    void addOpenQuestion(String questionText, String answerText);
-//
-//    void addAmericanQuestion(String text, ArrayList<String> answerArray, ArrayList<Boolean> correctnessArray);
-//
-//    String PrintAllQuestions();
-//
-//
-//
-//    String changeOpenQuestionAnswerUI(String newAnswerText, int id);
-//
-//    String showChosenQuestion(int id);
-//
-//
-//    int addAmericanAnswersSizeToUI(int size);
-//
-//    String changeAmericanAnswerUI(int id,String answerText,boolean correctness,int numOfAnswer);
-//
-//
-//    int getNumOfAnswersToUI(int id);
-//
-//    String showAmericanQuestionUI();
-//
-//    ArrayList<Integer> getAmericanQuestionIDArrayListUI();
-//
-//    boolean checkIfAmerican(int id);
 }
