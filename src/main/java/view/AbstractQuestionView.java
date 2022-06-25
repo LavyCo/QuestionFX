@@ -15,7 +15,6 @@ public interface AbstractQuestionView {
 
   void showQuestionsUI();
 
-  void addQuestionToUI();
 
   void printAllQuestionsToString(String questionString);
 

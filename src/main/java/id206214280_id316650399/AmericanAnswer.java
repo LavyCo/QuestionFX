@@ -14,7 +14,6 @@ public class AmericanAnswer implements Serializable,Cloneable {
 	}
 
 
-
 	@Override
 	public String toString() {
 		String sb; 

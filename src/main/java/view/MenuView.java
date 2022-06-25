@@ -101,7 +101,7 @@ public  class  MenuView implements AbstractQuestionView {
 
                 if(addQrb.isSelected()){
                     theStage.hide();
-                    addQuestionToUI();
+                    addQuestionView.chooseWhichQuestionTypeView();
                 }
 
                 if(changeWordQrb.isSelected()){
@@ -261,10 +261,6 @@ public  class  MenuView implements AbstractQuestionView {
         printQuestionsView.printAllQuestionInView();
     }
 
-    @Override
-    public void addQuestionToUI() {
-        addQuestionView.addQuestionToUI();
-    }
 
     @Override
     public void printAllQuestionsToString(String questionString) {

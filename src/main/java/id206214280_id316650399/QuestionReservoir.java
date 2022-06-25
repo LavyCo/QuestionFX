@@ -306,7 +306,6 @@ public class QuestionReservoir implements Serializable {
 
             for (modelListener l : qrListeners) {
                 l.fireOpenQuestionAddedResult(updateUserMessage);
-
             }
 
 
@@ -327,7 +326,7 @@ public class QuestionReservoir implements Serializable {
             } else {
                 questionArray.add(newOpenQuestion);
                 numberOfQuestions++;
-                updateUserMessage = "Successful";
+                updateUserMessage = "Added Question:"+"\n"+newOpenQuestion.toString();
                 for (modelListener l : qrListeners) {
                     l.fireOpenQuestionAddedResult(updateUserMessage);
                 }
@@ -341,23 +340,32 @@ public class QuestionReservoir implements Serializable {
 
 
         Set<AmericanAnswer> answerArrayList = new Set<>();
+        boolean duplicateAnswer=false;
         for (int i = 0; i < answersArray.size(); i++) {
-            answerArrayList.add(new AmericanAnswer(answersArray.get(i), correctnessArray.get(i)));
+            if(!answerArrayList.add(new AmericanAnswer(answersArray.get(i), correctnessArray.get(i)))){
+                for (modelListener l:qrListeners){
+                    l.fireAmericanQuestionAddedResult(answersArray.get(i)+" Wasn't added-Duplicate of another answer");
+                }
+            }
         }
         AmericanQuestions newAmericanQuestion = new AmericanQuestions(questionText, answerArrayList);
         if (questionArray.contains(newAmericanQuestion)) {
             for (modelListener l : qrListeners) {
                 l.fireAmericanQuestionAddedResult("Question wasn't added:Already in the reservoir");
             }
-
-        } else {
+        }
+        else if(answerArrayList.size()<=1){
+            for (modelListener l:qrListeners){
+                l.fireAmericanQuestionAddedResult("Didn't add american Question-Question needs at least 2 answers");
+            }
+        }
+        else {
             questionArray.add(newAmericanQuestion);
             numberOfQuestions++;
             for (modelListener l : qrListeners) {
-                l.fireAmericanQuestionAddedResult("Question added successfully!");
+                l.fireAmericanQuestionAddedResult("Question added successfully!"+"\n"+newAmericanQuestion.toString());
             }
 
-            System.out.println("American Question added");
         }
 
 
@@ -567,7 +575,6 @@ public class QuestionReservoir implements Serializable {
     }
 
 
-
     public void sendIdAndQuestionsToUpdate() {
         ArrayList<Integer> idArray = new ArrayList<>();
         for (int i = 0; i < numberOfQuestions; i++) {
@@ -654,42 +661,41 @@ public class QuestionReservoir implements Serializable {
 
 
     public void addQuestionToManual(int questionNumber, int size) {
-        System.out.println(manualExam.getNumOfQuestions()+"<"+size);
+        System.out.println(manualExam.getNumOfQuestions() + "<" + size);
 
-            System.out.println(manualExam.getNumOfQuestions());
-            if (questionArray.get(questionNumber) instanceof OpenQuestions) {
-                manualExam.addQuestion(questionArray.get(questionNumber));
+        System.out.println(manualExam.getNumOfQuestions());
+        if (questionArray.get(questionNumber) instanceof OpenQuestions) {
+            manualExam.addQuestion(questionArray.get(questionNumber));
+        }
+        if (questionArray.get(questionNumber) instanceof AmericanQuestions) {
+            AmericanQuestions americanQuestions = (AmericanQuestions) questionArray.get(questionNumber);
+            Vector<String> answersString = americanQuestions.getAnswerStringVector();
+            for (modelListener l : qrListeners) {
+                l.fireAmericanAnswersManualExam(americanQuestions.getQuestionText(), questionNumber, size, answersString);
             }
-            if (questionArray.get(questionNumber) instanceof AmericanQuestions) {
-                AmericanQuestions americanQuestions = (AmericanQuestions) questionArray.get(questionNumber);
-                Vector<String> answersString = americanQuestions.getAnswerStringVector();
-                for (modelListener l : qrListeners) {
-                    l.fireAmericanAnswersManualExam(americanQuestions.getQuestionText(), questionNumber, size, answersString);
-                }
+        }
+        if (manualExam.getNumOfQuestions() > size - 1) {
+            for (modelListener l : qrListeners) {
+                l.fireShowManualExam(manualExam.toString());
             }
-            if(manualExam.getNumOfQuestions()>size-1){
-                for(modelListener l:qrListeners){
-                    l.fireShowManualExam(manualExam.toString());
-                }
-            }
+        }
     }
 
     public void addAmericanQuestionManualExam(int questionNumber, Vector<Integer> chosenAmericanAnswers, int size) {
-        System.out.println(manualExam.getNumOfQuestions()+"<"+size);
-        if(manualExam.getNumOfQuestions()<size){
-            if(questionArray.get(questionNumber) instanceof AmericanQuestions){
-                AmericanQuestions americanQuestions= (AmericanQuestions) questionArray.get(questionNumber);
-                Set<AmericanAnswer> americanAnswerSet=new Set<>();
-                for(int i=0;i<chosenAmericanAnswers.size();i++){
+        System.out.println(manualExam.getNumOfQuestions() + "<" + size);
+        if (manualExam.getNumOfQuestions() < size) {
+            if (questionArray.get(questionNumber) instanceof AmericanQuestions) {
+                AmericanQuestions americanQuestions = (AmericanQuestions) questionArray.get(questionNumber);
+                Set<AmericanAnswer> americanAnswerSet = new Set<>();
+                for (int i = 0; i < chosenAmericanAnswers.size(); i++) {
                     americanAnswerSet.add(americanQuestions.getAnswerArray().get(chosenAmericanAnswers.get(i)));
                 }
 
-                AmericanQuestions manualExamAmericanQuestion=new AmericanQuestions(americanQuestions.getQuestionText(),americanAnswerSet);
+                AmericanQuestions manualExamAmericanQuestion = new AmericanQuestions(americanQuestions.getQuestionText(), americanAnswerSet);
                 manualExamAmericanQuestion.add2Answers();
                 manualExam.addQuestion(manualExamAmericanQuestion);
             }
-        }
-        else{
+        } else {
             System.out.println("print test");
         }
     }
