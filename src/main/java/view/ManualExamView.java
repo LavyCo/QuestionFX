@@ -199,6 +199,7 @@ public class ManualExamView {
 
     }
 
+
     public void showManualExamUI(String examString) {
         ScrollPane examScrollPane=new ScrollPane();
         Button returnToMenu=new Button("Return to menu");

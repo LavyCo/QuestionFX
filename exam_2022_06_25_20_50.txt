@@ -1,0 +1,35 @@
+the test without answers:
+
+1) the question is : E Which one of these next Programming languages is Low-Level programming language?
+
+1) C#
+
+2) C++
+
+3) Java
+
+4) Python
+
+5) There is more than 1 right answers
+
+6) All the answers are false
+
+2) the question is : D Which one of these is not dessert?
+
+1) Brownies
+
+2) Choclate cake
+
+3) Salad
+
+4) Muffin
+
+5) There are more than 1 right answers
+
+6) All the answers are false
+
+3) the question is : A Who was Yitzhak Rabin?
+
+4) the question is : B Who solved the Engima machine during WWII?
+
+Good Luck

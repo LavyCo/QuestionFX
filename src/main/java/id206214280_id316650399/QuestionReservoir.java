@@ -266,7 +266,6 @@ public class QuestionReservoir implements Serializable {
                 manualExamClone = manualExam.clone();
                 System.out.println("Manual exam cloned");
                 System.out.println(manualExamClone.toString());
-                manualExam = automaticExam;
                 System.out.println(manualExam.toString());
                 System.out.println(manualExamClone.toString());
                 msg = "Manual exam cloned";
@@ -335,10 +334,7 @@ public class QuestionReservoir implements Serializable {
         }
     }
 
-    public void addAmericanQuestion(String
-                                            questionText, ArrayList<String> answersArray, ArrayList<Boolean> correctnessArray) {
-
-
+    public void addAmericanQuestion(String questionText, ArrayList<String> answersArray, ArrayList<Boolean> correctnessArray) {
         Set<AmericanAnswer> answerArrayList = new Set<>();
         boolean duplicateAnswer=false;
         for (int i = 0; i < answersArray.size(); i++) {
@@ -525,6 +521,9 @@ public class QuestionReservoir implements Serializable {
     }
 
     public void getAllQuestionToManualExamView() {
+        if(manualExam.getNumOfQuestions()>=1){
+            manualExam.removeAllQuestions();
+        }
         Vector<String> allQuestionsString = new Vector<>();
         for (int i = 0; i < numberOfQuestions; i++) {
             allQuestionsString.add(questionArray.get(i).toString());
@@ -661,9 +660,7 @@ public class QuestionReservoir implements Serializable {
 
 
     public void addQuestionToManual(int questionNumber, int size) {
-        System.out.println(manualExam.getNumOfQuestions() + "<" + size);
 
-        System.out.println(manualExam.getNumOfQuestions());
         if (questionArray.get(questionNumber) instanceof OpenQuestions) {
             manualExam.addQuestion(questionArray.get(questionNumber));
         }
@@ -682,7 +679,6 @@ public class QuestionReservoir implements Serializable {
     }
 
     public void addAmericanQuestionManualExam(int questionNumber, Vector<Integer> chosenAmericanAnswers, int size) {
-        System.out.println(manualExam.getNumOfQuestions() + "<" + size);
         if (manualExam.getNumOfQuestions() < size) {
             if (questionArray.get(questionNumber) instanceof AmericanQuestions) {
                 AmericanQuestions americanQuestions = (AmericanQuestions) questionArray.get(questionNumber);
@@ -695,8 +691,6 @@ public class QuestionReservoir implements Serializable {
                 manualExamAmericanQuestion.add2Answers();
                 manualExam.addQuestion(manualExamAmericanQuestion);
             }
-        } else {
-            System.out.println("print test");
         }
     }
 }
