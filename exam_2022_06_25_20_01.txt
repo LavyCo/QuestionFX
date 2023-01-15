@@ -1,0 +1,21 @@
+the test without answers:
+
+1) the question is : A Who was Yitzhak Rabin?
+
+2) the question is : B Who solved the Engima machine during WWII?
+
+3) the question is : D Which one of these is not dessert?
+
+1) Shawrma
+
+2) Brownies
+
+3) Muffin
+
+4) Ice cream
+
+5) There are more than 1 right answers
+
+6) All the answers are false
+
+Good Luck
