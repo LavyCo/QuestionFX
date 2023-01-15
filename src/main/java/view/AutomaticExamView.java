@@ -3,6 +3,7 @@ package view;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -10,10 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import listeners.viewListener;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.Vector;
 
@@ -28,23 +31,39 @@ public class AutomaticExamView {
     public void showMainMenu(){
         menuView.showMainMenu(new Stage());
     }
+
     public void showNumbersOfQuestions(int numberOfQuestions) {
 
         ComboBox<Integer> cmdCountOfQuestions = new ComboBox<>();
         for (int i=0;i<numberOfQuestions;i++){
             cmdCountOfQuestions.getItems().add(i+1);
-
         }
+
+        HBox selectHowManyHbox=new HBox();
+
         Stage case7=new Stage();
         case7.setTitle("Automatic Exam");
+
         GridPane gpRoot = new GridPane();
         gpRoot.setPadding(new Insets((10)));
         gpRoot.setHgap(10);
         gpRoot.setHgap(10);
-        Label titlelbl=new Label("select how much questions do you want in the test :");
-        Scene newScene=new Scene(gpRoot,500,300);
+        selectHowManyHbox.setSpacing(10);
+
+        Label titleLbl=new Label("select how much questions do you want in the test :");
+        selectHowManyHbox.getChildren().addAll(titleLbl,cmdCountOfQuestions);
+        HBox selectButtonReturnHbox=new HBox();
+        selectButtonReturnHbox.setSpacing(10);
+
+        VBox vBoxContainer=new VBox(selectHowManyHbox,selectButtonReturnHbox);
+        vBoxContainer.setPadding(new Insets(10));
+        Scene newScene=new Scene(vBoxContainer);
         case7.setScene(newScene);
+        Button selectBtn=new Button("Select");
+
         Button returnToMenu=new Button("Return to menu");
+        selectButtonReturnHbox.getChildren().addAll(selectBtn,returnToMenu);
+
         returnToMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -53,8 +72,7 @@ public class AutomaticExamView {
             }
         });
 
-        Button selectb=new Button("Select");
-        selectb.setOnAction(new EventHandler<ActionEvent>() {
+        selectBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if(cmdCountOfQuestions.getValue()!=null){
@@ -68,13 +86,13 @@ public class AutomaticExamView {
                     case7.hide();
 
                 }
+                else{
+                    JOptionPane.showMessageDialog(null,"Please choose number of questions");
+                }
 
             }
         });
-        gpRoot.add(titlelbl,0,0);
-        gpRoot.add(cmdCountOfQuestions,1,1);
-        gpRoot.add(selectb,1,2);
-        gpRoot.add(returnToMenu,2,2);
+        gpRoot.setPadding(new Insets(10));
 
         case7.show();
 
@@ -93,11 +111,11 @@ public class AutomaticExamView {
         BorderPane borderPane = new BorderPane();
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(borderPane);
-        Scene newScene=new Scene(scrollPane,300,300);
+        Scene newScene=new Scene(scrollPane,500,500);
         Label autoExamText=new Label(autoExam);
         borderPane.setTop( autoExamText);
         autoExamStage.setScene(newScene);
-        Button okBt=new Button("OK");
+        Button okBt=new Button("Return to menu");
         okBt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

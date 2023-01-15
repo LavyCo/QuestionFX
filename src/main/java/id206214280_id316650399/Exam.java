@@ -131,6 +131,11 @@ public class Exam<examQuestionArray> implements Cloneable, Serializable {
         this.examQuestionArray= (ArrayList<Questions>) examQuestionArray.clone();
     }
 
+    public void removeAllQuestions(){
+        examQuestionArray.removeAll(examQuestionArray);
+        numOfQuestions=0;
+    }
+
 
     @Override
     public String toString() {
